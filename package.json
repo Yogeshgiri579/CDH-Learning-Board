@@ -1,0 +1,14 @@
+{
+  "name": "learnwithcdh-monorepo",
+  "version": "1.0.0",
+  "description": "CloudDevOpsHub 55-Session MultiCloud & DevOps LMS System",
+  "scripts": {
+    "server": "npm --prefix server run dev",
+    "client": "npm --prefix client run dev",
+    "admin": "npm --prefix admin run dev",
+    "install:all": "npm --prefix server install && npm --prefix client install && npm --prefix admin install"
+  },
+  "keywords": ["lms", "mern", "clouddevopshub", "devops", "multicloud", "takeuforward"],
+  "author": "CloudDevOpsHub",
+  "license": "MIT"
+}
