@@ -33,20 +33,20 @@ export const SessionPreviewModal = ({ session, onClose, onOpenGitHub, onOpenQuiz
   };
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
       <div 
-        className="relative bg-[#0d1322] w-full max-w-2xl rounded-2xl shadow-2xl border border-slate-800 overflow-hidden animate-in fade-in zoom-in-95 duration-150 text-slate-200"
+        className="relative bg-[#0d1117] w-full max-w-2xl rounded-2xl shadow-2xl border border-[#30363d] overflow-hidden animate-in fade-in zoom-in-95 duration-150 text-[#f0f6fc]"
         onClick={(e) => e.stopPropagation()}
       >
         
         {/* Modal Top Bar */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-800 bg-[#0a0f1d]">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-[#30363d] bg-[#161b22]">
           <div className="flex items-center space-x-2">
-            <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-blue-500/20 text-blue-400 border border-blue-500/30">
+            <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-[#21262d] text-[#58a6ff] border border-[#30363d]">
               Session #{session.sessionNumber.toString().padStart(2, '0')}
             </span>
             {isFree ? (
-              <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-emerald-950/60 text-emerald-400 border border-emerald-800/60">
+              <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-[#238636]/20 text-[#3fb950] border border-[#238636]/40">
                 🟢 Free Access
               </span>
             ) : isLocked ? (
@@ -55,7 +55,7 @@ export const SessionPreviewModal = ({ session, onClose, onOpenGitHub, onOpenQuiz
                 <span>Requires Sign In</span>
               </span>
             ) : (
-              <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-blue-950/60 text-blue-300 border border-blue-800/60">
+              <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-[#21262d] text-emerald-400 border border-[#30363d]">
                 ✓ Unlocked
               </span>
             )}
@@ -63,40 +63,40 @@ export const SessionPreviewModal = ({ session, onClose, onOpenGitHub, onOpenQuiz
 
           <button
             onClick={onClose}
-            className="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer"
+            className="p-1 rounded-lg text-[#8b949e] hover:text-white hover:bg-[#21262d] transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Modal Body */}
-        <div className="px-6 py-5 space-y-5 max-h-[75vh] overflow-y-auto custom-scrollbar">
+        <div className="px-6 py-5 space-y-5 max-h-[75vh] overflow-y-auto custom-scrollbar bg-[#010409]">
           
           {/* Module & Title */}
           <div>
-            <p className="text-xs font-bold uppercase tracking-wider text-blue-400">
+            <p className="text-xs font-bold uppercase tracking-wider text-[#58a6ff]">
               {session.module}
             </p>
             <h2 className="text-xl sm:text-2xl font-extrabold text-white mt-1">
               {session.title}
             </h2>
-            <div className="flex items-center space-x-3 text-xs text-slate-400 mt-2">
+            <div className="flex items-center space-x-3 text-xs text-[#8b949e] mt-2">
               <span className="flex items-center space-x-1">
-                <Clock className="w-3.5 h-3.5 text-slate-500" />
+                <Clock className="w-3.5 h-3.5 text-[#8b949e]" />
                 <span>Est. Duration: {session.duration}</span>
               </span>
               <span>•</span>
-              <span className="font-semibold text-slate-300">Level: {session.difficulty}</span>
+              <span className="font-semibold text-[#c9d1d9]">Level: {session.difficulty}</span>
             </div>
           </div>
 
           {/* Preview Overview */}
-          <div className="p-4 rounded-xl bg-[#080d19] border border-slate-800/80">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5 flex items-center space-x-1.5">
-              <Layers className="w-4 h-4 text-blue-400" />
+          <div className="p-4 rounded-xl bg-[#161b22] border border-[#30363d]">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-[#8b949e] mb-1.5 flex items-center space-x-1.5">
+              <Layers className="w-4 h-4 text-[#58a6ff]" />
               <span>Session Overview</span>
             </h4>
-            <p className="text-sm text-slate-300 leading-relaxed">
+            <p className="text-sm text-[#c9d1d9] leading-relaxed">
               {session.preview}
             </p>
           </div>
@@ -104,14 +104,14 @@ export const SessionPreviewModal = ({ session, onClose, onOpenGitHub, onOpenQuiz
           {/* Key Topics */}
           {session.topics && (
             <div>
-              <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2 flex items-center space-x-1.5">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-[#8b949e] mb-2 flex items-center space-x-1.5">
                 <Sparkles className="w-3.5 h-3.5 text-amber-400" />
                 <span>What You Will Learn</span>
               </h4>
               <ul className="space-y-1.5">
                 {session.topics.map((t, i) => (
-                  <li key={i} className="flex items-start space-x-2 text-xs sm:text-sm text-slate-300">
-                    <span className="text-blue-400 font-bold mt-0.5">•</span>
+                  <li key={i} className="flex items-start space-x-2 text-xs sm:text-sm text-[#c9d1d9]">
+                    <span className="text-[#58a6ff] font-bold mt-0.5">•</span>
                     <span>{t}</span>
                   </li>
                 ))}
@@ -122,13 +122,13 @@ export const SessionPreviewModal = ({ session, onClose, onOpenGitHub, onOpenQuiz
           {/* Hands-on Labs */}
           {session.labs && (
             <div>
-              <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2 flex items-center space-x-1.5">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-[#8b949e] mb-2 flex items-center space-x-1.5">
                 <Terminal className="w-4 h-4 text-emerald-400" />
                 <span>Hands-on Tasks on GitHub</span>
               </h4>
               <div className="space-y-1.5">
                 {session.labs.map((lab, i) => (
-                  <div key={i} className="flex items-center space-x-2 p-2.5 rounded-lg bg-emerald-950/20 border border-emerald-900/40 text-xs sm:text-sm text-emerald-300 font-medium">
+                  <div key={i} className="flex items-center space-x-2 p-2.5 rounded-lg bg-[#161b22] border border-[#30363d] text-xs sm:text-sm text-[#c9d1d9] font-medium">
                     <span className="w-4 h-4 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-[10px] flex-shrink-0">
                       {i + 1}
                     </span>
@@ -140,22 +140,22 @@ export const SessionPreviewModal = ({ session, onClose, onOpenGitHub, onOpenQuiz
           )}
 
           {/* GitHub Destination Path Info */}
-          <div className="p-3 bg-[#080d19] border border-slate-800 rounded-xl text-slate-300 flex items-center justify-between gap-3 text-xs font-mono">
+          <div className="p-3 bg-[#161b22] border border-[#30363d] rounded-xl text-[#c9d1d9] flex items-center justify-between gap-3 text-xs font-mono">
             <div className="flex items-center space-x-2 truncate">
               <Github className="w-4 h-4 text-white flex-shrink-0" />
-              <span className="text-slate-500">Path:</span>
-              <span className="text-blue-400 truncate">{session.folder}</span>
+              <span className="text-[#8b949e]">Path:</span>
+              <span className="text-[#58a6ff] truncate">{session.folder}</span>
             </div>
-            <span className="text-[10px] text-slate-500 uppercase tracking-wider flex-shrink-0">main branch</span>
+            <span className="text-[10px] text-[#8b949e] uppercase tracking-wider flex-shrink-0">main branch</span>
           </div>
 
           {/* Lock Alert Banner if applicable */}
           {isLocked && (
-            <div className="p-3.5 rounded-xl bg-amber-950/30 border border-amber-800/50 text-xs text-amber-200 flex items-start space-x-2.5">
+            <div className="p-3.5 rounded-xl bg-[#161b22] border border-amber-800/50 text-xs text-amber-200 flex items-start space-x-2.5">
               <Lock className="w-4 h-4 text-amber-400 flex-shrink-0 mt-0.5" />
               <div>
                 <p className="font-bold text-amber-300">Sign in required to access this resource</p>
-                <p className="text-amber-200/80 mt-0.5">
+                <p className="text-[#8b949e] mt-0.5">
                   Sessions 0 to 4 are free. To unlock Sessions 5-54 and sync your progress, sign in with your Google account or email.
                 </p>
               </div>
@@ -165,17 +165,17 @@ export const SessionPreviewModal = ({ session, onClose, onOpenGitHub, onOpenQuiz
         </div>
 
         {/* Modal Footer Controls */}
-        <div className="px-6 py-4 border-t border-slate-800 bg-[#0a0f1d] flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div className="px-6 py-4 border-t border-[#30363d] bg-[#161b22] flex flex-col sm:flex-row items-center justify-between gap-3">
           {/* Mark Complete Checkbox */}
           <button
             onClick={() => toggleComplete(session.sessionNumber)}
             className={`w-full sm:w-auto px-4 py-2 rounded-xl text-xs font-semibold border transition-colors flex items-center justify-center space-x-2 cursor-pointer ${
               completed
                 ? 'bg-emerald-950/40 border-emerald-800/80 text-emerald-400'
-                : 'bg-[#080d19] border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white'
+                : 'bg-[#21262d] border-[#30363d] text-[#c9d1d9] hover:bg-[#30363d] hover:text-white'
             }`}
           >
-            <CheckCircle2 className={`w-4 h-4 ${completed ? 'fill-emerald-400 text-slate-900' : 'text-slate-500'}`} />
+            <CheckCircle2 className={`w-4 h-4 ${completed ? 'fill-emerald-400 text-slate-900' : 'text-[#8b949e]'}`} />
             <span>{completed ? 'Completed ✓' : 'Mark as Done'}</span>
           </button>
 
@@ -191,7 +191,7 @@ export const SessionPreviewModal = ({ session, onClose, onOpenGitHub, onOpenQuiz
 
             <button
               onClick={handleActionClick}
-              className="w-full sm:w-auto px-6 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 shadow-md transition-all flex items-center justify-center space-x-2 cursor-pointer hover:shadow-blue-500/25"
+              className="w-full sm:w-auto px-6 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-white bg-[#238636] hover:bg-[#2ea043] shadow-md transition-all flex items-center justify-center space-x-2 cursor-pointer"
             >
               {isLocked ? (
                 <>

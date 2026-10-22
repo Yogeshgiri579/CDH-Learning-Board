@@ -66,9 +66,10 @@ export const getSessionFiles = async (req, res) => {
 export const addSessionFile = async (req, res) => {
   try {
     const sessionNum = parseInt(req.params.id, 10);
-    const { url, name, description, fileType, isPrimary, isDefault } = req.body;
+    const targetUrl = req.body.url || req.body.githubUrl || req.body.rawUrl;
+    const { name, description, fileType, isPrimary, isDefault } = req.body;
 
-    if (!url) {
+    if (!targetUrl) {
       return res.status(400).json({ success: false, message: 'GitHub URL is required' });
     }
 
@@ -79,7 +80,7 @@ export const addSessionFile = async (req, res) => {
 
     let parsed;
     try {
-      parsed = parseGitHubUrl(url);
+      parsed = parseGitHubUrl(targetUrl);
     } catch (parseErr) {
       return res.status(400).json({ success: false, message: parseErr.message });
     }
@@ -177,7 +178,8 @@ export const setPrimarySessionFile = async (req, res) => {
 export const updateSessionFile = async (req, res) => {
   try {
     const { fileId } = req.params;
-    const { name, url, description, fileType } = req.body;
+    const targetUrl = req.body.url || req.body.githubUrl || req.body.rawUrl;
+    const { name, description, fileType } = req.body;
 
     const isMongo = getDbStatus();
 
@@ -186,9 +188,9 @@ export const updateSessionFile = async (req, res) => {
     if (description !== undefined) updatedPayload.description = description.trim();
     if (fileType) updatedPayload.fileType = fileType;
 
-    if (url) {
+    if (targetUrl) {
       try {
-        const parsed = parseGitHubUrl(url);
+        const parsed = parseGitHubUrl(targetUrl);
         updatedPayload.githubUrl = parsed.githubUrl;
         updatedPayload.rawUrl = parsed.rawUrl;
         if (!name) updatedPayload.name = parsed.fileName;

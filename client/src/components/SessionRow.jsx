@@ -51,16 +51,16 @@ export const SessionRow = ({ session, onPreview, onOpenGitHub, onOpenQuiz }) => 
       badge: 'text-purple-400 bg-purple-950/40 border-purple-800/60',
     },
   }[session.difficulty] || {
-    dot: 'bg-slate-400',
-    badge: 'text-slate-400 bg-slate-800 border-slate-700',
+    dot: 'bg-[#8b949e]',
+    badge: 'text-[#8b949e] bg-[#21262d] border-[#30363d]',
   };
 
   return (
     <div 
-      className={`group border-b border-slate-800/70 last:border-b-0 transition-all duration-150 ${
+      className={`group border-b border-[#21262d] last:border-b-0 transition-all duration-150 ${
         completed 
-          ? 'bg-emerald-950/20 hover:bg-emerald-950/30' 
-          : 'bg-[#0d1322] hover:bg-[#121a2d]'
+          ? 'bg-[#0e2417] hover:bg-[#12311f]' 
+          : 'bg-[#0d1117] hover:bg-[#161b22]'
       }`}
     >
       {/* Main Row */}
@@ -75,26 +75,26 @@ export const SessionRow = ({ session, onPreview, onOpenGitHub, onOpenQuiz }) => 
           <button
             onClick={handleToggleComplete}
             title={completed ? 'Completed' : 'Mark as done'}
-            className="flex-shrink-0 text-slate-500 hover:text-emerald-400 transition-colors focus:outline-none p-0.5 cursor-pointer"
+            className="flex-shrink-0 text-[#8b949e] hover:text-emerald-400 transition-colors focus:outline-none p-0.5 cursor-pointer"
           >
             <CheckCircle2 
               className={`w-5 h-5 sm:w-5.5 sm:h-5.5 ${
-                completed ? 'fill-emerald-400 text-slate-900' : 'text-slate-600 group-hover:text-slate-400'
+                completed ? 'fill-emerald-400 text-slate-900' : 'text-[#484f58] group-hover:text-[#8b949e]'
               }`} 
             />
           </button>
 
           {/* Session Number */}
-          <span className="font-mono text-xs sm:text-sm font-bold text-slate-500 group-hover:text-slate-300 flex-shrink-0 w-8 sm:w-9">
+          <span className="font-mono text-xs sm:text-sm font-bold text-[#8b949e] group-hover:text-[#c9d1d9] flex-shrink-0 w-8 sm:w-9">
             #{session.sessionNumber.toString().padStart(2, '0')}
           </span>
 
-          {/* Title & Preview info (Bigger typography) */}
+          {/* Title & Preview info */}
           <div className="min-w-0 flex-1">
             <div className="flex items-center space-x-2.5">
               <h4 
                 className={`text-sm sm:text-base font-bold truncate transition-colors ${
-                  completed ? 'text-slate-500 line-through decoration-slate-600' : 'text-slate-100 group-hover:text-blue-400'
+                  completed ? 'text-[#8b949e] line-through decoration-[#484f58]' : 'text-[#f0f6fc] group-hover:text-[#58a6ff]'
                 }`}
               >
                 {session.title}
@@ -102,24 +102,24 @@ export const SessionRow = ({ session, onPreview, onOpenGitHub, onOpenQuiz }) => 
 
               {/* Free or Lock indicator */}
               {isFree ? (
-                <span className="hidden sm:inline-flex items-center px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-950/50 text-emerald-400 border border-emerald-800/50 flex-shrink-0">
+                <span className="hidden sm:inline-flex items-center px-2 py-0.5 rounded text-[11px] font-bold bg-[#238636]/20 text-[#3fb950] border border-[#238636]/40 flex-shrink-0">
                   FREE
                 </span>
               ) : isLocked ? (
-                <span className="hidden sm:inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-slate-800 text-slate-400 border border-slate-700 flex-shrink-0">
-                  <Lock className="w-3 h-3 mr-0.5 text-slate-400" />
+                <span className="hidden sm:inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-[#21262d] text-[#8b949e] border border-[#30363d] flex-shrink-0">
+                  <Lock className="w-3 h-3 mr-0.5 text-[#8b949e]" />
                   Sign in
                 </span>
               ) : null}
             </div>
 
-            {/* Sub-line: Topics Tags (visible on desktop with bigger text) */}
-            <div className="hidden md:flex items-center space-x-2 mt-1 text-xs text-slate-400">
-              <span className="text-slate-400 truncate max-w-md">{session.preview}</span>
+            {/* Sub-line: Topics Tags */}
+            <div className="hidden md:flex items-center space-x-2 mt-1 text-xs text-[#8b949e]">
+              <span className="text-[#8b949e] truncate max-w-md">{session.preview}</span>
               {session.topics && session.topics.length > 0 && (
                 <>
-                  <span className="text-slate-600">•</span>
-                  <span className="text-slate-300 font-medium truncate max-w-xs">{session.topics[0]}</span>
+                  <span className="text-[#484f58]">•</span>
+                  <span className="text-[#c9d1d9] font-medium truncate max-w-xs">{session.topics[0]}</span>
                 </>
               )}
             </div>
@@ -132,22 +132,22 @@ export const SessionRow = ({ session, onPreview, onOpenGitHub, onOpenQuiz }) => 
           {/* Difficulty pill */}
           <div className="hidden lg:flex items-center space-x-1.5">
             <span className={`w-2 h-2 rounded-full ${diffBadge.dot}`}></span>
-            <span className="text-xs sm:text-sm text-slate-400 font-medium">{session.difficulty}</span>
+            <span className="text-xs sm:text-sm text-[#8b949e] font-medium">{session.difficulty}</span>
           </div>
 
           {/* Duration */}
-          <div className="hidden sm:flex items-center space-x-1 text-xs sm:text-sm text-slate-400">
-            <Clock className="w-3.5 h-3.5 text-slate-500" />
+          <div className="hidden sm:flex items-center space-x-1 text-xs sm:text-sm text-[#8b949e]">
+            <Clock className="w-3.5 h-3.5 text-[#484f58]" />
             <span>{session.duration}</span>
           </div>
 
           {/* Quick Preview button */}
           <button
             onClick={handlePreviewClick}
-            className="p-1.5 sm:px-3 sm:py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 border border-slate-700/80 transition-colors text-xs font-semibold flex items-center space-x-1 cursor-pointer bg-[#080d19]"
+            className="p-1.5 sm:px-3 sm:py-1.5 rounded-lg text-[#c9d1d9] hover:text-white hover:bg-[#30363d] border border-[#30363d] transition-colors text-xs font-semibold flex items-center space-x-1 cursor-pointer bg-[#21262d]"
             title="Quick preview session breakdown"
           >
-            <Eye className="w-3.5 h-3.5 text-slate-400" />
+            <Eye className="w-3.5 h-3.5 text-[#8b949e]" />
             <span className="hidden xl:inline">Overview</span>
           </button>
 
@@ -164,10 +164,10 @@ export const SessionRow = ({ session, onPreview, onOpenGitHub, onOpenQuiz }) => 
             <span className="hidden md:inline">Quiz</span>
           </button>
 
-          {/* Read button with Github icon & clean dark styling */}
+          {/* Read button with Github icon & GitHub green styling */}
           <button
             onClick={handleStartClick}
-            className="px-3 py-1.5 sm:px-3.5 sm:py-1.5 rounded-lg text-xs font-semibold flex items-center space-x-1.5 transition-all shadow-xs cursor-pointer bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white active:scale-95"
+            className="px-3 py-1.5 sm:px-3.5 sm:py-1.5 rounded-lg text-xs font-semibold flex items-center space-x-1.5 transition-all shadow-xs cursor-pointer bg-[#238636] hover:bg-[#2ea043] text-white active:scale-95"
             title="Read session GitHub README in-app"
           >
             {isLocked ? (
@@ -185,11 +185,11 @@ export const SessionRow = ({ session, onPreview, onOpenGitHub, onOpenQuiz }) => 
 
           {/* Row expansion arrow */}
           <div 
-            className="p-1 text-slate-500 hover:text-slate-300 transition-transform duration-200"
+            className="p-1 text-[#8b949e] hover:text-[#f0f6fc] transition-transform duration-200"
             aria-label="Expand details"
           >
             {expanded ? (
-              <ChevronUp className="w-4 h-4 text-slate-400" />
+              <ChevronUp className="w-4 h-4 text-[#8b949e]" />
             ) : (
               <ChevronDown className="w-4 h-4" />
             )}
@@ -198,83 +198,76 @@ export const SessionRow = ({ session, onPreview, onOpenGitHub, onOpenQuiz }) => 
         </div>
       </div>
 
-      {/* Expanded Drawer Details (Compact & clean inline breakdown) */}
+      {/* Expanded Drawer Details */}
       {expanded && (
-        <div className="px-5 sm:px-12 py-4 bg-[#080d19] border-t border-slate-800 text-xs sm:text-sm text-slate-300 animate-in fade-in duration-200">
+        <div className="px-5 sm:px-12 py-4 bg-[#010409] border-t border-[#21262d] text-xs sm:text-sm text-[#c9d1d9] animate-in fade-in duration-200">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-5xl">
             
             {/* Overview & Topics */}
             <div>
               <p className="font-bold text-white mb-1 flex items-center space-x-1.5 text-xs sm:text-sm">
-                <BookOpen className="w-4 h-4 text-blue-400" />
+                <BookOpen className="w-4 h-4 text-[#58a6ff]" />
                 <span>Session Summary</span>
               </p>
-              <p className="text-slate-300 leading-relaxed text-xs sm:text-sm">
+              <p className="text-[#8b949e] leading-relaxed text-xs sm:text-sm">
                 {session.preview}
               </p>
 
               {session.topics && session.topics.length > 0 && (
                 <div className="mt-3 space-y-1.5">
-                  <p className="text-[11px] uppercase font-bold text-slate-400 tracking-wider">Key Learnings:</p>
-                  <ul className="list-disc list-inside space-y-1 text-slate-300 text-xs">
+                  <p className="text-[11px] uppercase font-bold text-[#8b949e] tracking-wider">Key Learnings:</p>
+                  <ul className="list-disc list-inside space-y-1 text-[#c9d1d9] text-xs">
                     {session.topics.slice(0, 3).map((topic, i) => (
-                      <li key={i} className="truncate">{topic}</li>
+                      <li key={i}>{topic}</li>
                     ))}
                   </ul>
                 </div>
               )}
             </div>
 
-            {/* Practical Hands-on Labs & GitHub redirect */}
-            <div className="flex flex-col justify-between">
-              {session.labs && session.labs.length > 0 && (
-                <div>
-                  <p className="font-bold text-white mb-1 flex items-center space-x-1.5 text-xs sm:text-sm">
-                    <Terminal className="w-4 h-4 text-emerald-400" />
-                    <span>Hands-on Tasks:</span>
-                  </p>
-                  <ul className="space-y-1.5 text-xs text-slate-300">
-                    {session.labs.slice(0, 2).map((lab, i) => (
-                      <li key={i} className="flex items-center space-x-2 truncate">
-                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 flex-shrink-0" />
-                        <span className="truncate">{lab}</span>
-                      </li>
-                    ))}
-                  </ul>
+            {/* Hands-on Tasks */}
+            <div>
+              <p className="font-bold text-white mb-1 flex items-center space-x-1.5 text-xs sm:text-sm">
+                <Terminal className="w-4 h-4 text-emerald-400" />
+                <span>Hands-on Lab Exercise</span>
+              </p>
+              {session.labs && session.labs.length > 0 ? (
+                <div className="space-y-2 mt-1">
+                  {session.labs.slice(0, 2).map((lab, i) => (
+                    <div key={i} className="p-2.5 rounded-lg bg-[#0d1117] border border-[#21262d] flex items-start space-x-2">
+                      <span className="text-[10px] font-mono font-bold text-emerald-400 bg-emerald-950/40 px-1.5 py-0.5 rounded border border-emerald-800/40 flex-shrink-0">
+                        Task {i + 1}
+                      </span>
+                      <p className="text-xs text-[#c9d1d9]">{lab}</p>
+                    </div>
+                  ))}
                 </div>
+              ) : (
+                <p className="text-xs text-[#8b949e]">Lab steps available inside the session reader notes.</p>
               )}
 
-              <div className="mt-4 flex flex-wrap items-center justify-between gap-2.5 pt-3 border-t border-slate-800 text-xs">
-                <span className="text-slate-400 font-mono text-xs">
-                  Folder: <code className="bg-slate-800 px-1.5 py-0.5 rounded text-slate-200 border border-slate-700">{session.folder}</code>
-                </span>
-                <div className="flex items-center space-x-2">
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      onOpenQuiz && onOpenQuiz(session);
-                    }}
-                    className="px-3 py-1.5 rounded-lg border border-amber-500/30 bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 font-semibold flex items-center space-x-1.5 transition-colors cursor-pointer"
-                  >
-                    <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-                    <span>Quick Quiz</span>
-                  </button>
-
-                  <button
-                    onClick={handleStartClick}
-                    className="px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-semibold flex items-center space-x-1.5 shadow-xs transition-all cursor-pointer"
-                  >
-                    <Github className="w-3.5 h-3.5" />
-                    <span>Read in App</span>
-                  </button>
-                </div>
+              {/* Direct Open CTA */}
+              <div className="mt-4 flex items-center space-x-3">
+                <button
+                  onClick={handleStartClick}
+                  className="px-3.5 py-1.5 rounded-lg bg-[#238636] hover:bg-[#2ea043] text-white text-xs font-semibold flex items-center space-x-1.5 cursor-pointer shadow-xs"
+                >
+                  <Github className="w-3.5 h-3.5 text-white" />
+                  <span>Launch Session Reader</span>
+                </button>
+                <button
+                  onClick={() => onOpenQuiz && onOpenQuiz(session)}
+                  className="px-3.5 py-1.5 rounded-lg bg-[#21262d] hover:bg-[#30363d] text-[#c9d1d9] hover:text-white border border-[#30363d] text-xs font-semibold flex items-center space-x-1.5 cursor-pointer"
+                >
+                  <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+                  <span>Take Quiz</span>
+                </button>
               </div>
             </div>
 
           </div>
         </div>
       )}
-
     </div>
   );
 };

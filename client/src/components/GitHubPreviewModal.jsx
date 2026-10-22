@@ -5,7 +5,6 @@ import {
   X, 
   ExternalLink, 
   CheckCircle2, 
-  Clock, 
   Sparkles, 
   ChevronLeft, 
   ChevronRight, 
@@ -18,10 +17,8 @@ import {
   FileText,
   Image as ImageIcon,
   Terminal,
-  Link2,
   AlertCircle,
-  Eye,
-  Plus
+  BookOpen
 } from 'lucide-react';
 import { Github } from './GithubIcon';
 import { useAuth } from '../context/AuthContext';
@@ -36,7 +33,7 @@ const CodeBlock = ({ className, children, ...props }) => {
 
   if (isInline) {
     return (
-      <code className="bg-slate-800 text-blue-300 font-mono text-xs px-1.5 py-0.5 rounded border border-slate-700/60" {...props}>
+      <code className="bg-[#161b22] text-[#58a6ff] font-mono text-xs px-1.5 py-0.5 rounded border border-[#30363d]" {...props}>
         {children}
       </code>
     );
@@ -49,12 +46,12 @@ const CodeBlock = ({ className, children, ...props }) => {
   };
 
   return (
-    <div className="relative group my-3 rounded-xl overflow-hidden border border-slate-800 bg-[#060a12]">
-      <div className="flex items-center justify-between px-3.5 py-1.5 bg-[#0a0f1d] border-b border-slate-800/80 text-[11px] font-mono text-slate-400">
+    <div className="relative group my-3 rounded-xl overflow-hidden border border-[#30363d] bg-[#010409]">
+      <div className="flex items-center justify-between px-3.5 py-1.5 bg-[#161b22] border-b border-[#30363d] text-[11px] font-mono text-[#8b949e]">
         <span>{match ? match[1] : 'bash'}</span>
         <button
           onClick={handleCopy}
-          className="flex items-center space-x-1 px-2 py-0.5 rounded hover:bg-slate-800 text-slate-400 hover:text-white transition-colors cursor-pointer"
+          className="flex items-center space-x-1 px-2 py-0.5 rounded hover:bg-[#21262d] text-[#8b949e] hover:text-[#f0f6fc] transition-colors cursor-pointer"
           title="Copy code"
         >
           {copied ? (
@@ -70,7 +67,7 @@ const CodeBlock = ({ className, children, ...props }) => {
           )}
         </button>
       </div>
-      <div className="p-3.5 overflow-x-auto text-xs sm:text-sm font-mono text-slate-200">
+      <div className="p-3.5 overflow-x-auto text-xs sm:text-sm font-mono text-[#e6edf3]">
         <pre className="!bg-transparent !p-0 !m-0">
           <code>{children}</code>
         </pre>
@@ -91,19 +88,19 @@ const RawCodeViewer = ({ content, fileName, language }) => {
   };
 
   return (
-    <div className="rounded-xl border border-slate-800 bg-[#060a12] overflow-hidden my-2 shadow-xl">
-      <div className="flex items-center justify-between px-4 py-2.5 bg-[#0a0f1d] border-b border-slate-800 text-xs font-mono text-slate-400">
+    <div className="rounded-xl border border-[#30363d] bg-[#010409] overflow-hidden my-2 shadow-xl">
+      <div className="flex items-center justify-between px-4 py-2.5 bg-[#161b22] border-b border-[#30363d] text-xs font-mono text-[#8b949e]">
         <div className="flex items-center space-x-2">
-          <FileCode className="w-4 h-4 text-cyan-400" />
+          <FileCode className="w-4 h-4 text-[#58a6ff]" />
           <span className="text-white font-bold">{fileName}</span>
-          <span className="text-[10px] px-2 py-0.5 rounded bg-blue-500/10 text-blue-300 border border-blue-500/20 uppercase font-sans">
+          <span className="text-[10px] px-2 py-0.5 rounded bg-[#21262d] text-[#c9d1d9] border border-[#30363d] uppercase font-sans">
             {language || 'code'}
           </span>
-          <span className="text-slate-500 text-[11px]">{lines.length} lines</span>
+          <span className="text-[#8b949e] text-[11px]">{lines.length} lines</span>
         </div>
         <button
           onClick={handleCopy}
-          className="flex items-center space-x-1.5 px-2.5 py-1 rounded bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors cursor-pointer"
+          className="flex items-center space-x-1.5 px-2.5 py-1 rounded bg-[#21262d] hover:bg-[#30363d] text-[#c9d1d9] hover:text-white transition-colors cursor-pointer"
         >
           {copied ? (
             <>
@@ -119,15 +116,15 @@ const RawCodeViewer = ({ content, fileName, language }) => {
         </button>
       </div>
 
-      <div className="overflow-x-auto p-4 font-mono text-xs sm:text-sm text-slate-200 bg-[#060a12] max-h-[70vh]">
+      <div className="overflow-x-auto p-4 font-mono text-xs sm:text-sm text-[#e6edf3] bg-[#010409] max-h-[70vh]">
         <table className="w-full border-collapse">
           <tbody>
             {lines.map((line, idx) => (
-              <tr key={idx} className="hover:bg-slate-900/60 transition-colors">
-                <td className="w-10 pr-4 select-none text-right text-slate-600 text-xs font-mono align-top py-0.5">
+              <tr key={idx} className="hover:bg-[#161b22]/70 transition-colors">
+                <td className="w-10 pr-4 select-none text-right text-[#484f58] text-xs font-mono align-top py-0.5">
                   {idx + 1}
                 </td>
-                <td className="whitespace-pre font-mono py-0.5 pl-2 border-l border-slate-800/60 text-slate-300">
+                <td className="whitespace-pre font-mono py-0.5 pl-2 border-l border-[#21262d] text-[#c9d1d9]">
                   {line || ' '}
                 </td>
               </tr>
@@ -193,18 +190,13 @@ export const GitHubPreviewModal = ({
   // Session files state
   const [sessionFiles, setSessionFiles] = useState([]);
   const [selectedFile, setSelectedFile] = useState(null);
-  const [filesLoading, setFilesLoading] = useState(false);
+  const [filesLoading, setFilesLoading] = useState(true);
 
   // Content state
   const [content, setContent] = useState('');
   const [loading, setLoading] = useState(true);
   const [fontSize, setFontSize] = useState('text-sm'); // 'text-xs' | 'text-sm' | 'text-base'
   const [errorMsg, setErrorMsg] = useState('');
-
-  // Custom URL preview modal inside reader
-  const [customUrlModalOpen, setCustomUrlModalOpen] = useState(false);
-  const [customInputUrl, setCustomInputUrl] = useState('');
-  const [customFetching, setCustomFetching] = useState(false);
 
   const sessionNumber = session?.sessionNumber;
   const folderSafe = session?.folder || `Session-${String(session?.sessionNumber || 0).padStart(2, '0')}`;
@@ -217,6 +209,26 @@ export const GitHubPreviewModal = ({
   const prevSession = currentIndex > 0 ? allSessions[currentIndex - 1] : null;
   const nextSession = currentIndex >= 0 && currentIndex < allSessions.length - 1 ? allSessions[currentIndex + 1] : null;
 
+  // Track active session for smooth restoration
+  useEffect(() => {
+    if (sessionNumber !== undefined) {
+      try {
+        localStorage.setItem('lastActiveSession', String(sessionNumber));
+      } catch {}
+    }
+  }, [sessionNumber]);
+
+  // Reset loading states immediately when session changes so README doesn't flash
+  useEffect(() => {
+    if (!session) return;
+    setLoading(true);
+    setFilesLoading(true);
+    setContent('');
+    setErrorMsg('');
+    setSelectedFile(null);
+    setSessionFiles([]);
+  }, [sessionNumber]);
+
   // Load session files (README + custom uploaded GitHub files from backend)
   useEffect(() => {
     if (!session) return;
@@ -226,11 +238,23 @@ export const GitHubPreviewModal = ({
       setFilesLoading(true);
       try {
         const res = await api.getSessionFiles(session.sessionNumber);
-        if (isMounted && res && res.success && res.files) {
+        if (isMounted && res && res.success && res.files && res.files.length > 0) {
           setSessionFiles(res.files);
-          // Default to the first file (usually README.md)
-          const defaultF = res.files.find((f) => f.isDefault) || res.files[0];
-          setSelectedFile(defaultF);
+          // Prioritize the file marked as isDefault / primary (e.g. uploaded markdown file)
+          const primaryFile = res.files.find((f) => f.isDefault) || res.files[0];
+          setSelectedFile(primaryFile);
+        } else if (isMounted) {
+          // If no custom files attached in DB, build standard default README
+          const fallbackDefault = {
+            _id: 'default_readme',
+            name: 'README.md',
+            fileType: 'markdown',
+            githubUrl: session.githubUrl,
+            rawUrl: `https://raw.githubusercontent.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/main/${encodeURIComponent(folderSafe)}/README.md`,
+            isDefault: true,
+          };
+          setSessionFiles([fallbackDefault]);
+          setSelectedFile(fallbackDefault);
         }
       } catch (err) {
         console.warn('Failed to load session files, fallback to default README:', err);
@@ -247,7 +271,9 @@ export const GitHubPreviewModal = ({
           setSelectedFile(fallbackDefault);
         }
       } finally {
-        if (isMounted) setFilesLoading(false);
+        if (isMounted) {
+          setFilesLoading(false);
+        }
       }
     };
 
@@ -255,7 +281,7 @@ export const GitHubPreviewModal = ({
     return () => {
       isMounted = false;
     };
-  }, [session, folderSafe]);
+  }, [sessionNumber, session?.githubUrl, folderSafe]);
 
   // Load content whenever selectedFile or session changes
   const loadContent = useCallback(async () => {
@@ -268,13 +294,15 @@ export const GitHubPreviewModal = ({
       return;
     }
 
-    // Active file to load
-    const file = selectedFile;
-    if (!file) {
-      setContent(generateFallbackNotes(session));
-      setLoading(false);
+    // Do NOT load or display fallback notes while files are still fetching or before selectedFile is set
+    if (filesLoading || !selectedFile) {
       return;
     }
+
+    setLoading(true);
+    setErrorMsg('');
+
+    const file = selectedFile;
 
     // Case 1: Image file
     if (file.fileType === 'image' || file.name?.match(/\.(png|jpg|jpeg|gif|svg|webp)$/i)) {
@@ -283,15 +311,16 @@ export const GitHubPreviewModal = ({
       return;
     }
 
-    // Case 2: Pre-loaded content (e.g. temporary in-memory live preview)
+    // Case 2: Pre-loaded content
     if (file.content) {
       setContent(file.content);
       setLoading(false);
       return;
     }
 
-    // Case 3: Official Session default README (when file is the auto-generated fallback readme)
-    const isDefaultSessionReadme = file._id === `default_readme_${session.sessionNumber}` || 
+    // Case 3: Official Session default README
+    const isDefaultSessionReadme = file._id === 'default_readme' || 
+      file._id === `default_readme_${session.sessionNumber}` || 
       (!file.githubUrl?.includes('/blob/') && file.name?.toLowerCase() === 'readme.md' && !file.rawUrl?.includes('Session-'));
 
     if (isDefaultSessionReadme) {
@@ -309,7 +338,7 @@ export const GitHubPreviewModal = ({
       // Client direct fetch fallback
       try {
         const rawUrl1 = file.rawUrl || `https://raw.githubusercontent.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/main/${encodeURIComponent(folderSafe)}/README.md`;
-        const res = await fetch(rawUrl1, { signal: AbortSignal.timeout ? AbortSignal.timeout(4000) : undefined });
+        const res = await fetch(rawUrl1, { signal: AbortSignal.timeout ? AbortSignal.timeout(5000) : undefined });
         if (res.ok) {
           const text = await res.text();
           setContent(text);
@@ -336,7 +365,7 @@ export const GitHubPreviewModal = ({
           // If server preview fails, try direct fetch from rawUrl if available
           if (file.rawUrl) {
             try {
-              const directRes = await fetch(file.rawUrl, { signal: AbortSignal.timeout ? AbortSignal.timeout(4000) : undefined });
+              const directRes = await fetch(file.rawUrl, { signal: AbortSignal.timeout ? AbortSignal.timeout(5000) : undefined });
               if (directRes.ok) {
                 const text = await directRes.text();
                 setContent(text);
@@ -345,7 +374,7 @@ export const GitHubPreviewModal = ({
               }
             } catch {}
           }
-          setErrorMsg(res?.message || 'Failed to load GitHub file content');
+          setErrorMsg(res?.message || 'Failed to load GitHub file content. Please check branch and path.');
         }
       } catch (err) {
         console.warn('Failed to fetch GitHub file:', err);
@@ -358,53 +387,11 @@ export const GitHubPreviewModal = ({
     // Ultimate fallback
     setContent(generateFallbackNotes(session));
     setLoading(false);
-  }, [session, isLocked, folderSafe, selectedFile]);
+  }, [session, isLocked, folderSafe, selectedFile, filesLoading]);
 
   useEffect(() => {
     loadContent();
   }, [loadContent]);
-
-  // Handle custom URL preview from the modal
-  const handlePreviewCustomUrl = async (e) => {
-    e.preventDefault();
-    if (!customInputUrl.trim()) return;
-
-    setCustomFetching(true);
-    try {
-      const res = await api.previewGitHubUrl(customInputUrl.trim());
-      if (res && res.success) {
-        const customObj = {
-          _id: `temp_${Date.now()}`,
-          name: res.fileName,
-          fileType: res.fileType,
-          githubUrl: res.githubUrl,
-          rawUrl: res.rawUrl,
-          isDefault: false,
-          description: 'Live Preview File',
-        };
-        // Add to active tab list and select it
-        setSessionFiles((prev) => [customObj, ...prev.filter((f) => f._id !== customObj._id)]);
-        setSelectedFile(customObj);
-        setContent(res.content || res.rawUrl);
-        setCustomUrlModalOpen(false);
-        setCustomInputUrl('');
-      } else {
-        alert(res?.message || 'Could not fetch file from GitHub. Check URL.');
-      }
-    } catch (err) {
-      alert(`Error fetching URL: ${err.message}`);
-    } finally {
-      setCustomFetching(false);
-    }
-  };
-
-  // Reading time estimate (200 words/min)
-  const readingTime = useMemo(() => {
-    if (!content || typeof content !== 'string') return '4 min read';
-    const words = content.trim().split(/\s+/).length;
-    const minutes = Math.max(1, Math.round(words / 200));
-    return `~${minutes} min read`;
-  }, [content]);
 
   // Determine current viewing mode
   const currentFileType = selectedFile?.fileType || 'markdown';
@@ -414,7 +401,7 @@ export const GitHubPreviewModal = ({
   // File type icon helper
   const getFileIcon = (file) => {
     const ext = file.name?.toLowerCase().split('.').pop();
-    if (ext === 'md') return <FileText className="w-3.5 h-3.5 text-blue-400" />;
+    if (ext === 'md') return <FileText className="w-3.5 h-3.5 text-[#58a6ff]" />;
     if (ext === 'sh' || ext === 'bash') return <Terminal className="w-3.5 h-3.5 text-emerald-400" />;
     if (['png', 'jpg', 'jpeg', 'svg', 'webp'].includes(ext)) return <ImageIcon className="w-3.5 h-3.5 text-purple-400" />;
     return <FileCode className="w-3.5 h-3.5 text-amber-400" />;
@@ -423,27 +410,27 @@ export const GitHubPreviewModal = ({
   if (!session) return null;
 
   return (
-    <div className="fixed inset-0 z-[55] bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-2 sm:p-4 overflow-y-auto animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-[55] bg-black/85 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4 overflow-y-auto animate-in fade-in duration-150">
       <div 
-        className="relative bg-[#0d1322] border border-slate-800 w-full max-w-5xl h-[92vh] rounded-2xl shadow-2xl flex flex-col overflow-hidden text-slate-100"
+        className="relative bg-[#0d1117] border border-[#30363d] w-full max-w-5xl h-[92vh] rounded-2xl shadow-2xl flex flex-col overflow-hidden text-[#f0f6fc]"
         onClick={(e) => e.stopPropagation()}
       >
         
         {/* Top Header Bar */}
-        <div className="px-4 sm:px-6 py-3 border-b border-slate-800 bg-[#0a0f1d] flex items-center justify-between gap-3 flex-shrink-0">
+        <div className="px-4 sm:px-6 py-3 border-b border-[#30363d] bg-[#161b22] flex items-center justify-between gap-3 flex-shrink-0">
           
           {/* Breadcrumb & Repo Info */}
           <div className="flex items-center space-x-2.5 min-w-0">
-            <div className="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 flex-shrink-0">
+            <div className="w-8 h-8 rounded-lg bg-[#21262d] border border-[#30363d] flex items-center justify-center text-[#58a6ff] flex-shrink-0">
               <FolderGit2 className="w-4 h-4" />
             </div>
 
             <div className="min-w-0">
-              <div className="flex items-center space-x-2 text-xs font-mono text-slate-400">
-                <span className="text-blue-400 font-bold truncate">CloudDevOpsHub</span>
+              <div className="flex items-center space-x-2 text-xs font-mono text-[#8b949e]">
+                <span className="text-[#58a6ff] font-bold truncate">CloudDevOpsHub</span>
                 <span>/</span>
-                <span className="text-slate-300 font-medium truncate">MultiCloud-DevOps-AI</span>
-                <span className="hidden md:inline px-1.5 py-0.2 rounded bg-slate-800 text-[10px] text-slate-400 border border-slate-700">
+                <span className="text-[#c9d1d9] font-medium truncate">MultiCloud-DevOps-AI</span>
+                <span className="hidden md:inline px-1.5 py-0.2 rounded bg-[#21262d] text-[10px] text-[#8b949e] border border-[#30363d]">
                   main
                 </span>
               </div>
@@ -456,20 +443,10 @@ export const GitHubPreviewModal = ({
           {/* Action Tools Header */}
           <div className="flex items-center space-x-2 flex-shrink-0">
             
-            {/* Quick Preview GitHub URL button */}
-            <button
-              onClick={() => setCustomUrlModalOpen(true)}
-              className="px-2.5 py-1.5 rounded-lg border border-slate-700/80 bg-[#080d19] hover:bg-slate-800 text-slate-300 hover:text-white text-xs font-semibold flex items-center space-x-1.5 transition-colors cursor-pointer"
-              title="Preview any GitHub file or repository URL"
-            >
-              <Link2 className="w-3.5 h-3.5 text-cyan-400" />
-              <span className="hidden md:inline">Preview URL</span>
-            </button>
-
             {/* Take Quick Quiz CTA Button */}
             <button
               onClick={() => onOpenQuiz(session)}
-              className="px-3 py-1.5 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-xs font-semibold shadow-xs flex items-center space-x-1.5 transition-all cursor-pointer"
+              className="px-3 py-1.5 rounded-lg bg-[#238636] hover:bg-[#2ea043] text-white text-xs font-semibold shadow-xs flex items-center space-x-1.5 transition-all cursor-pointer"
               title="Test your understanding with a quick quiz"
             >
               <Sparkles className="w-3.5 h-3.5 text-amber-300" />
@@ -482,17 +459,17 @@ export const GitHubPreviewModal = ({
               href={selectedFile?.githubUrl || session.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 sm:px-2.5 sm:py-1.5 rounded-lg border border-slate-700/80 bg-[#080d19] hover:bg-slate-800 text-slate-300 hover:text-white text-xs font-semibold transition-colors flex items-center space-x-1.5 cursor-pointer"
+              className="p-2 sm:px-2.5 sm:py-1.5 rounded-lg border border-[#30363d] bg-[#21262d] hover:bg-[#30363d] text-[#c9d1d9] hover:text-white text-xs font-semibold transition-colors flex items-center space-x-1.5 cursor-pointer"
               title="Open file or repository on GitHub"
             >
               <Github className="w-3.5 h-3.5 text-white" />
-              <ExternalLink className="w-3 h-3 text-slate-400 hidden sm:inline" />
+              <ExternalLink className="w-3 h-3 text-[#8b949e] hidden sm:inline" />
             </a>
 
             {/* Close Modal */}
             <button
               onClick={onClose}
-              className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer"
+              className="p-1.5 rounded-lg text-[#8b949e] hover:text-white hover:bg-[#21262d] transition-colors cursor-pointer"
               title="Close reader"
             >
               <X className="w-5 h-5" />
@@ -502,73 +479,70 @@ export const GitHubPreviewModal = ({
         </div>
 
         {/* File Tabs Switcher Bar */}
-        <div className="px-4 sm:px-6 py-2 border-b border-slate-800 bg-[#090e1c] flex items-center justify-between gap-3 flex-shrink-0 overflow-x-auto custom-scrollbar">
+        <div className="px-4 sm:px-6 py-2 border-b border-[#30363d] bg-[#0d1117] flex items-center justify-between gap-3 flex-shrink-0 overflow-x-auto custom-scrollbar">
           <div className="flex items-center space-x-1.5 min-w-0 flex-shrink-0">
-            <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider mr-1 hidden sm:inline">
+            <span className="text-[11px] font-semibold text-[#8b949e] uppercase tracking-wider mr-1 hidden sm:inline">
               Session Files:
             </span>
 
-            {sessionFiles.map((file) => {
-              const isCurrent = selectedFile?._id === file._id;
-              let displayName = file.name || 'file';
-              try {
-                displayName = decodeURIComponent(file.name);
-              } catch {}
+            {filesLoading && sessionFiles.length === 0 ? (
+              <div className="flex items-center space-x-2 py-1 px-2 text-xs text-[#8b949e]">
+                <RotateCw className="w-3 h-3 animate-spin text-[#58a6ff]" />
+                <span>Loading files...</span>
+              </div>
+            ) : (
+              sessionFiles.map((file) => {
+                const isCurrent = selectedFile?._id === file._id;
+                let displayName = file.name || 'file';
+                try {
+                  displayName = decodeURIComponent(file.name);
+                } catch {}
 
-              return (
-                <button
-                  key={file._id}
-                  onClick={() => setSelectedFile(file)}
-                  className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${
-                    isCurrent
-                      ? 'bg-blue-600/20 text-blue-300 border border-blue-500/40 shadow-xs'
-                      : 'bg-slate-900/60 hover:bg-slate-800/80 text-slate-400 hover:text-slate-200 border border-slate-800/80'
-                  }`}
-                  title={file.description || displayName}
-                >
-                  {getFileIcon(file)}
-                  <span className="font-mono text-[11px] sm:text-xs truncate max-w-[150px]">{displayName}</span>
-                  {file.isDefault && (
-                    <span className="text-[9px] px-1 py-0.2 rounded bg-amber-500/20 text-amber-300 font-sans ml-1 border border-amber-500/30">
-                      primary
-                    </span>
-                  )}
-                </button>
-              );
-            })}
-
-            {/* Add Custom File Tab CTA */}
-            <button
-              onClick={() => setCustomUrlModalOpen(true)}
-              className="flex items-center space-x-1 px-2.5 py-1.5 rounded-lg text-xs font-medium bg-slate-900/40 hover:bg-slate-800/60 text-slate-400 hover:text-cyan-300 border border-dashed border-slate-700 transition-all cursor-pointer"
-              title="Add or inspect another GitHub file"
-            >
-              <Plus className="w-3 h-3 text-cyan-400" />
-              <span className="text-[11px]">+ Add File</span>
-            </button>
+                return (
+                  <button
+                    key={file._id}
+                    onClick={() => setSelectedFile(file)}
+                    className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${
+                      isCurrent
+                        ? 'bg-[#21262d] text-white border border-[#30363d] shadow-xs'
+                        : 'bg-[#161b22] hover:bg-[#21262d] text-[#8b949e] hover:text-[#f0f6fc] border border-[#21262d]'
+                    }`}
+                    title={file.description || displayName}
+                  >
+                    {getFileIcon(file)}
+                    <span className="font-mono text-[11px] sm:text-xs truncate max-w-[170px]">{displayName}</span>
+                    {file.isDefault && (
+                      <span className="text-[9px] px-1 py-0.2 rounded bg-amber-500/20 text-amber-300 font-sans ml-1 border border-amber-500/30">
+                        primary
+                      </span>
+                    )}
+                  </button>
+                );
+              })
+            )}
           </div>
 
           {/* Reading Controls */}
           <div className="flex items-center space-x-2 flex-shrink-0">
             {isMarkdown && (
-              <div className="hidden sm:flex items-center bg-[#0d1322] border border-slate-800 rounded-md p-0.5">
+              <div className="hidden sm:flex items-center bg-[#161b22] border border-[#30363d] rounded-md p-0.5">
                 <button
                   onClick={() => setFontSize('text-xs')}
-                  className={`px-1.5 py-0.5 rounded text-[11px] font-bold ${fontSize === 'text-xs' ? 'bg-blue-600 text-white' : 'text-slate-400 hover:text-white'}`}
+                  className={`px-1.5 py-0.5 rounded text-[11px] font-bold ${fontSize === 'text-xs' ? 'bg-[#21262d] text-white' : 'text-[#8b949e] hover:text-white'}`}
                   title="Small text"
                 >
                   A-
                 </button>
                 <button
                   onClick={() => setFontSize('text-sm')}
-                  className={`px-1.5 py-0.5 rounded text-[11px] font-bold ${fontSize === 'text-sm' ? 'bg-blue-600 text-white' : 'text-slate-400 hover:text-white'}`}
+                  className={`px-1.5 py-0.5 rounded text-[11px] font-bold ${fontSize === 'text-sm' ? 'bg-[#21262d] text-white' : 'text-[#8b949e] hover:text-white'}`}
                   title="Standard text"
                 >
                   A
                 </button>
                 <button
                   onClick={() => setFontSize('text-base')}
-                  className={`px-1.5 py-0.5 rounded text-[11px] font-bold ${fontSize === 'text-base' ? 'bg-blue-600 text-white' : 'text-slate-400 hover:text-white'}`}
+                  className={`px-1.5 py-0.5 rounded text-[11px] font-bold ${fontSize === 'text-base' ? 'bg-[#21262d] text-white' : 'text-[#8b949e] hover:text-white'}`}
                   title="Larger text"
                 >
                   A+
@@ -578,8 +552,11 @@ export const GitHubPreviewModal = ({
 
             {/* Reload button */}
             <button
-              onClick={loadContent}
-              className="p-1 rounded text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer"
+              onClick={() => {
+                setErrorMsg('');
+                loadContent();
+              }}
+              className="p-1 rounded text-[#8b949e] hover:text-white hover:bg-[#21262d] transition-colors cursor-pointer"
               title="Reload file from GitHub"
             >
               <RotateCw className="w-3.5 h-3.5" />
@@ -588,41 +565,56 @@ export const GitHubPreviewModal = ({
         </div>
 
         {/* Reader Body Content */}
-        <div className="flex-1 overflow-y-auto px-4 sm:px-8 py-6 custom-scrollbar bg-[#0a0f1d]/60">
+        <div className="flex-1 overflow-y-auto px-4 sm:px-8 py-6 custom-scrollbar bg-[#010409]">
           
-          {loading ? (
+          {(loading || filesLoading) ? (
             <div className="flex flex-col items-center justify-center h-64 space-y-3">
-              <div className="w-8 h-8 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
-              <p className="text-xs text-slate-400 font-mono">
-                Fetching {selectedFile?.name || 'file'} from GitHub...
+              <div className="w-8 h-8 border-2 border-[#58a6ff] border-t-transparent rounded-full animate-spin" />
+              <p className="text-xs text-[#8b949e] font-mono">
+                Loading {selectedFile?.name || 'session content'} from GitHub...
               </p>
             </div>
           ) : errorMsg ? (
-            <div className="max-w-md mx-auto my-12 p-6 rounded-2xl bg-rose-950/20 border border-rose-900/50 text-center space-y-3">
+            <div className="max-w-md mx-auto my-12 p-6 rounded-2xl bg-[#161b22] border border-[#30363d] text-center space-y-4 shadow-xl">
               <AlertCircle className="w-10 h-10 text-rose-400 mx-auto" />
               <h3 className="text-base font-bold text-white">Unable to Load File</h3>
-              <p className="text-xs text-rose-300">{errorMsg}</p>
-              <button
-                onClick={loadContent}
-                className="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-semibold cursor-pointer"
-              >
-                Retry
-              </button>
+              <p className="text-xs text-[#8b949e] leading-relaxed break-words">{errorMsg}</p>
+              
+              <div className="flex items-center justify-center space-x-2 pt-2">
+                <button
+                  onClick={() => {
+                    setErrorMsg('');
+                    loadContent();
+                  }}
+                  className="px-4 py-2 rounded-xl bg-[#21262d] hover:bg-[#30363d] text-white border border-[#30363d] text-xs font-semibold cursor-pointer transition-colors"
+                >
+                  Retry Loading
+                </button>
+                <button
+                  onClick={() => {
+                    setErrorMsg('');
+                    setContent(generateFallbackNotes(session));
+                  }}
+                  className="px-4 py-2 rounded-xl bg-[#238636] hover:bg-[#2ea043] text-white text-xs font-semibold cursor-pointer transition-colors"
+                >
+                  View Session Summary Notes
+                </button>
+              </div>
             </div>
           ) : isLocked ? (
             /* Locked Session Gate */
-            <div className="max-w-md mx-auto my-12 p-6 rounded-2xl bg-[#0d1322] border border-amber-800/50 text-center space-y-4">
-              <div className="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-400 flex items-center justify-center mx-auto">
+            <div className="max-w-md mx-auto my-12 p-6 rounded-2xl bg-[#161b22] border border-[#30363d] text-center space-y-4 shadow-xl">
+              <div className="w-12 h-12 rounded-xl bg-[#21262d] border border-[#30363d] text-amber-400 flex items-center justify-center mx-auto">
                 <Lock className="w-6 h-6" />
               </div>
               <h3 className="text-lg font-bold text-white">Sign In Required to Read Session {session.sessionNumber}</h3>
-              <p className="text-xs text-slate-400 leading-relaxed">
+              <p className="text-xs text-[#8b949e] leading-relaxed">
                 Sessions 00–04 are free for everyone. To access Sessions 05–54, read full GitHub notes, and take quizzes, please sign in with your Google account or email.
               </p>
               <div className="space-y-2 pt-2">
                 <button
                   onClick={() => openAuthModal(`Sign in to unlock Session ${session.sessionNumber} GitHub notes and quizzes.`)}
-                  className="w-full py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-xs sm:text-sm font-semibold transition-all shadow-md cursor-pointer"
+                  className="w-full py-2.5 rounded-xl bg-[#238636] hover:bg-[#2ea043] text-white text-xs sm:text-sm font-semibold transition-all shadow-md cursor-pointer"
                 >
                   Sign In with Google / Account
                 </button>
@@ -630,7 +622,7 @@ export const GitHubPreviewModal = ({
                   onClick={async () => {
                     await loginDemo();
                   }}
-                  className="w-full py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-semibold border border-slate-700 transition-colors cursor-pointer"
+                  className="w-full py-2 rounded-xl bg-[#21262d] hover:bg-[#30363d] text-[#c9d1d9] hover:text-white text-xs font-semibold border border-[#30363d] transition-colors cursor-pointer"
                 >
                   ⚡ Instant Unlock with Demo Account
                 </button>
@@ -639,16 +631,16 @@ export const GitHubPreviewModal = ({
           ) : isImageFile ? (
             /* Image Preview */
             <div className="max-w-3xl mx-auto my-6 text-center space-y-4">
-              <div className="p-4 rounded-2xl bg-[#070b14] border border-slate-800 inline-block shadow-2xl">
+              <div className="p-4 rounded-2xl bg-[#0d1117] border border-[#30363d] inline-block shadow-2xl">
                 <img
                   src={content}
                   alt={selectedFile?.name || 'Session diagram'}
                   className="max-h-[65vh] w-auto rounded-lg mx-auto object-contain"
                 />
               </div>
-              <div className="text-xs text-slate-400 font-mono">
+              <div className="text-xs text-[#8b949e] font-mono">
                 <span>{selectedFile?.name}</span>
-                {selectedFile?.description && <p className="text-slate-300 mt-1">{selectedFile.description}</p>}
+                {selectedFile?.description && <p className="text-[#c9d1d9] mt-1">{selectedFile.description}</p>}
               </div>
             </div>
           ) : !isMarkdown ? (
@@ -662,57 +654,57 @@ export const GitHubPreviewModal = ({
             </div>
           ) : (
             /* Markdown Rendered Content */
-            <div className={`max-w-4xl mx-auto ${fontSize} leading-relaxed text-slate-200 markdown-content`}>
+            <div className={`max-w-4xl mx-auto ${fontSize} leading-relaxed text-[#c9d1d9] markdown-content`}>
               <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
                 components={{
                   code: CodeBlock,
                   h1: ({ children }) => (
-                    <h1 className="text-xl sm:text-2xl font-extrabold text-white mt-6 mb-3 pb-2 border-b border-slate-800 flex items-center space-x-2">
+                    <h1 className="text-xl sm:text-2xl font-extrabold text-white mt-6 mb-3 pb-2 border-b border-[#30363d] flex items-center space-x-2">
                       <span>{children}</span>
                     </h1>
                   ),
                   h2: ({ children }) => (
-                    <h2 className="text-lg sm:text-xl font-bold text-slate-100 mt-6 mb-2.5 pb-1 border-b border-slate-800/60">
+                    <h2 className="text-lg sm:text-xl font-bold text-white mt-6 mb-2.5 pb-1 border-b border-[#21262d]">
                       {children}
                     </h2>
                   ),
                   h3: ({ children }) => (
-                    <h3 className="text-sm sm:text-base font-bold text-blue-400 mt-4 mb-2">
+                    <h3 className="text-sm sm:text-base font-bold text-[#58a6ff] mt-4 mb-2">
                       {children}
                     </h3>
                   ),
                   p: ({ children }) => (
-                    <p className="mb-3 text-slate-300 leading-relaxed">{children}</p>
+                    <p className="mb-3 text-[#c9d1d9] leading-relaxed">{children}</p>
                   ),
                   ul: ({ children }) => (
-                    <ul className="list-disc list-inside space-y-1 mb-3 text-slate-300">{children}</ul>
+                    <ul className="list-disc list-inside space-y-1 mb-3 text-[#c9d1d9]">{children}</ul>
                   ),
                   ol: ({ children }) => (
-                    <ol className="list-decimal list-inside space-y-1 mb-3 text-slate-300">{children}</ol>
+                    <ol className="list-decimal list-inside space-y-1 mb-3 text-[#c9d1d9]">{children}</ol>
                   ),
                   li: ({ children }) => (
-                    <li className="text-slate-300">{children}</li>
+                    <li className="text-[#c9d1d9]">{children}</li>
                   ),
                   blockquote: ({ children }) => (
-                    <blockquote className="border-l-4 border-blue-500/80 bg-blue-950/20 px-4 py-2.5 rounded-r-xl my-3 text-slate-300 italic text-xs sm:text-sm">
+                    <blockquote className="border-l-4 border-[#58a6ff] bg-[#161b22] px-4 py-2.5 rounded-r-xl my-3 text-[#c9d1d9] italic text-xs sm:text-sm">
                       {children}
                     </blockquote>
                   ),
                   table: ({ children }) => (
-                    <div className="overflow-x-auto my-4 border border-slate-800 rounded-xl">
+                    <div className="overflow-x-auto my-4 border border-[#30363d] rounded-xl">
                       <table className="w-full text-left text-xs border-collapse">
                         {children}
                       </table>
                     </div>
                   ),
                   th: ({ children }) => (
-                    <th className="bg-[#0a0f1d] px-3.5 py-2.5 font-bold text-slate-300 border-b border-slate-800">
+                    <th className="bg-[#161b22] px-3.5 py-2.5 font-bold text-white border-b border-[#30363d]">
                       {children}
                     </th>
                   ),
                   td: ({ children }) => (
-                    <td className="px-3.5 py-2 border-b border-slate-800/60 text-slate-300">
+                    <td className="px-3.5 py-2 border-b border-[#21262d] text-[#c9d1d9]">
                       {children}
                     </td>
                   ),
@@ -721,7 +713,7 @@ export const GitHubPreviewModal = ({
                       href={href} 
                       target="_blank" 
                       rel="noopener noreferrer" 
-                      className="text-blue-400 hover:text-blue-300 underline decoration-blue-500/40 hover:decoration-blue-400 transition-colors"
+                      className="text-[#58a6ff] hover:underline transition-colors"
                     >
                       {children}
                     </a>
@@ -732,21 +724,21 @@ export const GitHubPreviewModal = ({
               </ReactMarkdown>
 
               {/* End of Session Banner: Quick Quiz Callout */}
-              <div className="mt-10 p-5 rounded-2xl bg-gradient-to-r from-blue-950/40 via-indigo-950/30 to-purple-950/40 border border-blue-500/30 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div className="mt-10 p-5 rounded-2xl bg-[#161b22] border border-[#30363d] flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div className="space-y-1 text-center sm:text-left">
                   <span className="text-xs font-bold text-amber-400 uppercase tracking-wider flex items-center justify-center sm:justify-start space-x-1">
                     <Sparkles className="w-3.5 h-3.5" />
                     <span>Finished Reading?</span>
                   </span>
                   <h4 className="text-base font-bold text-white">Test your understanding with a Quick Quiz</h4>
-                  <p className="text-xs text-slate-400">
+                  <p className="text-xs text-[#8b949e]">
                     Verify key concepts from Session #{session.sessionNumber.toString().padStart(2, '0')} and earn completion credit.
                   </p>
                 </div>
 
                 <button
                   onClick={() => onOpenQuiz(session)}
-                  className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold text-xs sm:text-sm shadow-md transition-all flex items-center space-x-2 flex-shrink-0 cursor-pointer"
+                  className="px-5 py-2.5 rounded-xl bg-[#238636] hover:bg-[#2ea043] text-white font-semibold text-xs sm:text-sm shadow-md transition-all flex items-center space-x-2 flex-shrink-0 cursor-pointer"
                 >
                   <Sparkles className="w-4 h-4 text-amber-300" />
                   <span>Start Session Quiz</span>
@@ -759,13 +751,13 @@ export const GitHubPreviewModal = ({
         </div>
 
         {/* Modal Footer: Session Navigation & Completion Status */}
-        <div className="px-4 sm:px-6 py-3.5 border-t border-slate-800 bg-[#0a0f1d] flex items-center justify-between gap-3 flex-shrink-0">
+        <div className="px-4 sm:px-6 py-3.5 border-t border-[#30363d] bg-[#161b22] flex items-center justify-between gap-3 flex-shrink-0">
           
           {/* Previous Session Button */}
           {prevSession ? (
             <button
               onClick={() => onSelectSession(prevSession)}
-              className="px-3 py-1.5 rounded-xl border border-slate-700/80 bg-[#080d19] hover:bg-slate-800 text-slate-300 hover:text-white text-xs font-semibold flex items-center space-x-1 transition-colors cursor-pointer"
+              className="px-3 py-1.5 rounded-xl border border-[#30363d] bg-[#21262d] hover:bg-[#30363d] text-[#c9d1d9] hover:text-white text-xs font-semibold flex items-center space-x-1 transition-colors cursor-pointer"
             >
               <ChevronLeft className="w-4 h-4" />
               <span className="hidden sm:inline">Session #{prevSession.sessionNumber.toString().padStart(2, '0')}</span>
@@ -781,10 +773,10 @@ export const GitHubPreviewModal = ({
             className={`px-4 py-2 rounded-xl text-xs font-semibold border transition-all flex items-center space-x-2 cursor-pointer ${
               completed
                 ? 'bg-emerald-950/40 border-emerald-800/80 text-emerald-400'
-                : 'bg-[#080d19] border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white'
+                : 'bg-[#21262d] border-[#30363d] text-[#c9d1d9] hover:text-white hover:bg-[#30363d]'
             }`}
           >
-            <CheckCircle2 className={`w-4 h-4 ${completed ? 'fill-emerald-400 text-slate-900' : 'text-slate-500'}`} />
+            <CheckCircle2 className={`w-4 h-4 ${completed ? 'fill-emerald-400 text-slate-900' : 'text-[#8b949e]'}`} />
             <span>{completed ? 'Marked as Done ✓' : 'Mark as Done'}</span>
           </button>
 
@@ -792,7 +784,7 @@ export const GitHubPreviewModal = ({
           {nextSession ? (
             <button
               onClick={() => onSelectSession(nextSession)}
-              className="px-3 py-1.5 rounded-xl border border-slate-700/80 bg-[#080d19] hover:bg-slate-800 text-slate-300 hover:text-white text-xs font-semibold flex items-center space-x-1 transition-colors cursor-pointer"
+              className="px-3 py-1.5 rounded-xl border border-[#30363d] bg-[#21262d] hover:bg-[#30363d] text-[#c9d1d9] hover:text-white text-xs font-semibold flex items-center space-x-1 transition-colors cursor-pointer"
             >
               <span className="hidden sm:inline">Session #{nextSession.sessionNumber.toString().padStart(2, '0')}</span>
               <span className="sm:hidden">Next</span>
@@ -805,80 +797,6 @@ export const GitHubPreviewModal = ({
         </div>
 
       </div>
-
-      {/* Quick Custom GitHub URL Preview Modal Dialog */}
-      {customUrlModalOpen && (
-        <div 
-          className="fixed inset-0 z-[60] bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in"
-          onClick={() => setCustomUrlModalOpen(false)}
-        >
-          <div 
-            className="bg-[#0f172a] border border-slate-700 w-full max-w-lg rounded-2xl p-6 shadow-2xl space-y-4"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="flex items-center justify-between pb-3 border-b border-slate-800">
-              <div className="flex items-center space-x-2">
-                <Link2 className="w-5 h-5 text-cyan-400" />
-                <h3 className="text-base font-bold text-white">Preview Any GitHub URL</h3>
-              </div>
-              <button
-                onClick={() => setCustomUrlModalOpen(false)}
-                className="p-1 rounded text-slate-400 hover:text-white"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            <p className="text-xs text-slate-400">
-              Paste any GitHub file link (e.g. Terraform <code className="text-cyan-300">main.tf</code>, Dockerfile, Python script, or notes) to preview it live.
-            </p>
-
-            <form onSubmit={handlePreviewCustomUrl} className="space-y-4">
-              <div>
-                <label className="block text-xs font-medium text-slate-300 mb-1">
-                  GitHub File or Raw URL
-                </label>
-                <input
-                  type="url"
-                  required
-                  placeholder="https://github.com/owner/repo/blob/main/folder/file.ext"
-                  value={customInputUrl}
-                  onChange={(e) => setCustomInputUrl(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-[#090d16] border border-slate-700 text-slate-100 placeholder-slate-500 text-xs font-mono focus:outline-none focus:border-blue-500"
-                />
-              </div>
-
-              <div className="flex justify-end space-x-2 pt-2">
-                <button
-                  type="button"
-                  onClick={() => setCustomUrlModalOpen(false)}
-                  className="px-4 py-2 rounded-xl bg-slate-800 text-slate-300 hover:text-white text-xs font-medium"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  disabled={customFetching || !customInputUrl.trim()}
-                  className="px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white text-xs font-bold transition-all flex items-center space-x-1.5 cursor-pointer disabled:opacity-50"
-                >
-                  {customFetching ? (
-                    <>
-                      <RotateCw className="w-3.5 h-3.5 animate-spin" />
-                      <span>Fetching...</span>
-                    </>
-                  ) : (
-                    <>
-                      <Eye className="w-3.5 h-3.5" />
-                      <span>Fetch & Preview</span>
-                    </>
-                  )}
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
-
     </div>
   );
 };

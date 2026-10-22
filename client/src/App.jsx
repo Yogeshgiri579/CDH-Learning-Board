@@ -23,7 +23,6 @@ import {
   CheckCircle2,
   Clock,
   Sparkles,
-  Terminal,
   BookOpen
 } from 'lucide-react';
 
@@ -68,6 +67,22 @@ export function App() {
     fetchSessions();
   }, [isAuthenticated]);
 
+  // When user becomes authenticated, restore their active session if needed
+  useEffect(() => {
+    if (isAuthenticated) {
+      try {
+        const lastSession = localStorage.getItem('lastActiveSession');
+        if (lastSession !== null && !previewGithubSession) {
+          const num = parseInt(lastSession, 10);
+          const found = sessions.find((s) => s.sessionNumber === num);
+          if (found) {
+            setPreviewGithubSession(found);
+          }
+        }
+      } catch {}
+    }
+  }, [isAuthenticated, sessions]);
+
   // Keyboard shortcut ⌘K or Ctrl+K for search
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -97,9 +112,11 @@ export function App() {
 
   // Action handlers
   const handleOpenGitHub = (session) => {
-    // In-App GitHub Preview Reader modal
     setPreviewModalSession(null);
     setPreviewGithubSession(session);
+    try {
+      localStorage.setItem('lastActiveSession', String(session.sessionNumber));
+    } catch {}
   };
 
   const handleOpenQuiz = async (session) => {
@@ -155,7 +172,7 @@ export function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#070b14] text-slate-100 flex flex-col selection:bg-blue-600/30 selection:text-blue-200">
+    <div className="min-h-screen bg-[#010409] text-[#f0f6fc] flex flex-col font-sans">
       
       {/* Top Navbar */}
       <Navbar 
@@ -177,40 +194,40 @@ export function App() {
         />
       )}
 
-          {/* Progress & Milestone Banner */}
-          <ProgressBanner totalSessions={55} />
+      {/* Progress & Milestone Banner */}
+      <ProgressBanner totalSessions={55} />
 
-          {/* Main Content Area */}
-          <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6" ref={prepHubRef}>
+      {/* Main Content Area */}
+      <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6" ref={prepHubRef}>
         
         {/* VIEW 1: PREP HUB EXPLORE VIEW */}
         {activeTab === 'explore' && (
           <div className="space-y-5">
             
-            {/* Filter and Search Bar Section (Dark Theme) */}
-            <div className="bg-[#0d1322] p-3.5 sm:p-4 rounded-xl border border-slate-800 shadow-sm space-y-3">
+            {/* Filter and Search Bar Section */}
+            <div className="bg-[#0d1117] p-3.5 sm:p-4 rounded-xl border border-[#30363d] shadow-sm space-y-3">
               
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5">
                 {/* Search Input */}
                 <div className="relative flex-1">
-                  <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-2.5" />
+                  <Search className="w-4 h-4 text-[#8b949e] absolute left-3.5 top-2.5" />
                   <input
                     ref={searchInputRef}
                     type="text"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Search sessions (e.g. Docker, Linux, K8s, AWS, Terraform, CI/CD)..."
-                    className="w-full pl-9 pr-12 py-2 text-xs sm:text-sm rounded-lg border border-slate-700/80 bg-[#080d19] text-white focus:bg-[#070b14] focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all placeholder:text-slate-500"
+                    className="w-full pl-9 pr-12 py-2 text-xs sm:text-sm rounded-lg border border-[#30363d] bg-[#010409] text-[#f0f6fc] focus:border-[#58a6ff] outline-none transition-all placeholder:text-[#8b949e]"
                   />
                   {searchQuery ? (
                     <button
                       onClick={() => setSearchQuery('')}
-                      className="absolute right-3 top-2.5 text-xs font-semibold text-slate-400 hover:text-slate-200"
+                      className="absolute right-3 top-2.5 text-xs font-semibold text-[#8b949e] hover:text-white"
                     >
                       Clear
                     </button>
                   ) : (
-                    <span className="hidden sm:inline absolute right-3 top-2.5 text-[10px] text-slate-500 font-mono">
+                    <span className="hidden sm:inline absolute right-3 top-2.5 text-[10px] text-[#8b949e] font-mono">
                       ⌘K
                     </span>
                   )}
@@ -221,7 +238,7 @@ export function App() {
                   <select
                     value={selectedDifficulty}
                     onChange={(e) => setSelectedDifficulty(e.target.value)}
-                    className="px-2.5 py-2 text-xs font-medium rounded-lg border border-slate-700/80 bg-[#080d19] text-slate-200 outline-none hover:border-slate-600 cursor-pointer"
+                    className="px-2.5 py-2 text-xs font-medium rounded-lg border border-[#30363d] bg-[#161b22] text-[#c9d1d9] outline-none hover:border-[#8b949e] cursor-pointer"
                   >
                     <option value="all">All Difficulties</option>
                     <option value="beginner">Beginner</option>
@@ -230,14 +247,14 @@ export function App() {
                   </select>
 
                   {/* View Mode Toggle: Sheet (List) vs Grid */}
-                  <div className="flex items-center rounded-lg border border-slate-700/80 bg-[#080d19] p-0.5">
+                  <div className="flex items-center rounded-lg border border-[#30363d] bg-[#161b22] p-0.5">
                     <button
                       onClick={() => setViewMode('sheet')}
                       title="Curriculum Sheet View"
                       className={`px-2 py-1.5 rounded-md text-xs font-semibold flex items-center space-x-1 transition-colors cursor-pointer ${
                         viewMode === 'sheet'
-                          ? 'bg-blue-600 text-white shadow-2xs'
-                          : 'text-slate-400 hover:text-slate-200'
+                          ? 'bg-[#21262d] text-white shadow-2xs'
+                          : 'text-[#8b949e] hover:text-[#f0f6fc]'
                       }`}
                     >
                       <List className="w-3.5 h-3.5" />
@@ -248,8 +265,8 @@ export function App() {
                       title="Cards Grid View"
                       className={`px-2 py-1.5 rounded-md text-xs font-semibold flex items-center space-x-1 transition-colors cursor-pointer ${
                         viewMode === 'grid'
-                          ? 'bg-blue-600 text-white shadow-2xs'
-                          : 'text-slate-400 hover:text-slate-200'
+                          ? 'bg-[#21262d] text-white shadow-2xs'
+                          : 'text-[#8b949e] hover:text-[#f0f6fc]'
                       }`}
                     >
                       <LayoutGrid className="w-3.5 h-3.5" />
@@ -260,9 +277,9 @@ export function App() {
                   {/* TakeUForward Tree View switch button */}
                   <button
                     onClick={() => setActiveTab('roadmap')}
-                    className="px-3 py-2 text-xs font-semibold rounded-lg border border-blue-500/30 bg-blue-600/15 text-blue-400 hover:bg-blue-600/25 transition-colors flex items-center space-x-1.5 whitespace-nowrap cursor-pointer"
+                    className="px-3 py-2 text-xs font-semibold rounded-lg border border-[#30363d] bg-[#161b22] text-[#c9d1d9] hover:text-white hover:bg-[#21262d] transition-colors flex items-center space-x-1.5 whitespace-nowrap cursor-pointer"
                   >
-                    <Layers className="w-3.5 h-3.5" />
+                    <Layers className="w-3.5 h-3.5 text-[#58a6ff]" />
                     <span className="hidden sm:inline">Tree View</span>
                   </button>
                 </div>
@@ -278,13 +295,13 @@ export function App() {
                       onClick={() => setSelectedModule(m.id)}
                       className={`px-3 py-1.5 rounded-xl text-xs sm:text-sm font-semibold transition-all whitespace-nowrap flex items-center space-x-2 cursor-pointer ${
                         isActive
-                          ? 'bg-blue-600 text-white shadow-xs'
-                          : 'bg-[#080d19] border border-slate-800 text-slate-300 hover:bg-slate-800/80 hover:text-white'
+                          ? 'bg-[#238636] text-white border border-[#238636]'
+                          : 'bg-[#161b22] border border-[#30363d] text-[#c9d1d9] hover:bg-[#21262d] hover:text-white'
                       }`}
                     >
                       <span>{m.name.split(':')[1] ? m.name.split(':')[0] : m.name}</span>
                       <span className={`text-[11px] px-1.5 py-0.5 rounded-full font-bold ${
-                        isActive ? 'bg-blue-700 text-white' : 'bg-slate-800 text-slate-400'
+                        isActive ? 'bg-[#1b6b2b] text-white' : 'bg-[#21262d] text-[#8b949e]'
                       }`}>
                         {m.count}
                       </span>
@@ -296,23 +313,22 @@ export function App() {
             </div>
 
             {/* Results count & Free Trial Notice */}
-            <div className="flex items-center justify-between px-1 text-xs text-slate-400">
+            <div className="flex items-center justify-between px-1 text-xs text-[#8b949e]">
               <p>
                 Showing <span className="text-white font-bold">{filteredSessions.length}</span> of 55 sessions
               </p>
               <div className="flex items-center space-x-2">
-                <span className="inline-flex items-center space-x-1 text-emerald-400 font-semibold bg-emerald-950/50 px-2 py-0.5 rounded border border-emerald-800/60">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                <span className="inline-flex items-center space-x-1 text-[#3fb950] font-semibold bg-[#238636]/15 px-2 py-0.5 rounded border border-[#238636]/40">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#3fb950]"></span>
                   <span>Sessions 00–04 Free</span>
                 </span>
-                <span className="text-slate-600 hidden sm:inline">|</span>
-                <span className="hidden sm:inline text-slate-400">Sessions 05–54 unlocked on sign-in</span>
+                <span className="text-[#30363d] hidden sm:inline">|</span>
+                <span className="hidden sm:inline text-[#8b949e]">Sessions 05–54 unlocked on sign-in</span>
               </div>
             </div>
 
             {/* MAIN CONTENT REPRESENTATION */}
             {viewMode === 'sheet' ? (
-              /* Style 1: Lightweight Structured Curriculum Sheet by Phases */
               <CurriculumSheet
                 sessions={filteredSessions}
                 onPreview={handlePreviewSession}
@@ -323,7 +339,6 @@ export function App() {
                 selectedModule={selectedModule}
               />
             ) : (
-              /* Style 2: Compact Minimalist Cards Grid */
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {filteredSessions.map((session) => (
                   <SessionCard
@@ -338,10 +353,10 @@ export function App() {
             )}
 
             {filteredSessions.length === 0 && (
-              <div className="bg-[#0d1322] rounded-xl border border-slate-800 p-10 text-center max-w-md mx-auto">
-                <Search className="w-8 h-8 text-slate-500 mx-auto mb-2" />
-                <h3 className="text-sm font-bold text-slate-200">No sessions match your search</h3>
-                <p className="text-xs text-slate-400 mt-1">
+              <div className="bg-[#0d1117] rounded-xl border border-[#30363d] p-10 text-center max-w-md mx-auto">
+                <Search className="w-8 h-8 text-[#8b949e] mx-auto mb-2" />
+                <h3 className="text-sm font-bold text-[#f0f6fc]">No sessions match your search</h3>
+                <p className="text-xs text-[#8b949e] mt-1">
                   Try checking for keywords like "Linux", "Docker", "AWS", or clear your search query.
                 </p>
                 <button
@@ -350,7 +365,7 @@ export function App() {
                     setSelectedModule('all');
                     setSelectedDifficulty('all');
                   }}
-                  className="mt-3.5 px-3 py-1.5 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-semibold cursor-pointer"
+                  className="mt-3.5 px-3 py-1.5 bg-[#238636] hover:bg-[#2ea043] text-white rounded-lg text-xs font-semibold cursor-pointer"
                 >
                   Clear Filters
                 </button>
@@ -362,7 +377,7 @@ export function App() {
 
         {/* VIEW 2: TAKEUFORWARD ROADMAP TREE VIEW */}
         {activeTab === 'roadmap' && (
-          <div className="bg-[#0a0f1d] rounded-xl border border-slate-800 shadow-xs overflow-hidden flex flex-col lg:flex-row min-h-[650px] text-slate-100">
+          <div className="bg-[#0d1117] rounded-xl border border-[#30363d] shadow-xs overflow-hidden flex flex-col lg:flex-row min-h-[650px] text-[#f0f6fc]">
             
             {/* Left: TakeUForward Style Collapsible Tree Sidebar */}
             <TakeUForwardSidebar
@@ -381,13 +396,13 @@ export function App() {
                 <div className="max-w-2xl space-y-5">
                   
                   {/* Top breadcrumb & Status */}
-                  <div className="flex flex-wrap items-center justify-between gap-2.5 pb-3 border-b border-slate-800">
+                  <div className="flex flex-wrap items-center justify-between gap-2.5 pb-3 border-b border-[#30363d]">
                     <div className="flex items-center space-x-2">
-                      <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-blue-500/20 text-blue-400 border border-blue-500/30">
+                      <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-[#21262d] text-[#58a6ff] border border-[#30363d]">
                         Session #{selectedSession.sessionNumber.toString().padStart(2, '0')}
                       </span>
                       {selectedSession.isFree ? (
-                        <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-emerald-950/60 text-emerald-400 border border-emerald-800/60">
+                        <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-[#238636]/20 text-[#3fb950] border border-[#238636]/40">
                           🟢 Free Access
                         </span>
                       ) : !isAuthenticated ? (
@@ -396,7 +411,7 @@ export function App() {
                           <span>Requires Sign In</span>
                         </span>
                       ) : (
-                        <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-blue-950/60 text-blue-300 border border-blue-800/60">
+                        <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-[#21262d] text-emerald-400 border border-[#30363d]">
                           ✓ Unlocked
                         </span>
                       )}
@@ -407,39 +422,39 @@ export function App() {
                       className={`px-2.5 py-1 rounded-lg text-xs font-semibold border flex items-center space-x-1.5 transition-colors cursor-pointer ${
                         isCompleted(selectedSession.sessionNumber)
                           ? 'bg-emerald-950/40 border-emerald-800/80 text-emerald-400'
-                          : 'bg-[#080d19] border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white'
+                          : 'bg-[#21262d] border-[#30363d] text-[#c9d1d9] hover:bg-[#30363d] hover:text-white'
                       }`}
                     >
-                      <CheckCircle2 className={`w-3.5 h-3.5 ${isCompleted(selectedSession.sessionNumber) ? 'fill-emerald-400 text-slate-900' : 'text-slate-400'}`} />
+                      <CheckCircle2 className={`w-3.5 h-3.5 ${isCompleted(selectedSession.sessionNumber) ? 'fill-emerald-400 text-slate-900' : 'text-[#8b949e]'}`} />
                       <span>{isCompleted(selectedSession.sessionNumber) ? 'Completed' : 'Mark Done'}</span>
                     </button>
                   </div>
 
                   {/* Title & Module */}
                   <div>
-                    <p className="text-[11px] font-bold uppercase tracking-wider text-blue-400">
+                    <p className="text-[11px] font-bold uppercase tracking-wider text-[#58a6ff]">
                       {selectedSession.module}
                     </p>
                     <h2 className="text-xl sm:text-2xl font-extrabold text-white mt-0.5">
                       {selectedSession.title}
                     </h2>
-                    <div className="flex items-center space-x-3 text-xs text-slate-400 mt-1.5">
+                    <div className="flex items-center space-x-3 text-xs text-[#8b949e] mt-1.5">
                       <span className="flex items-center space-x-1">
-                        <Clock className="w-3.5 h-3.5 text-slate-400" />
+                        <Clock className="w-3.5 h-3.5 text-[#8b949e]" />
                         <span>{selectedSession.duration}</span>
                       </span>
                       <span>•</span>
-                      <span className="font-semibold text-slate-300">Difficulty: {selectedSession.difficulty}</span>
+                      <span className="font-semibold text-[#c9d1d9]">Difficulty: {selectedSession.difficulty}</span>
                     </div>
                   </div>
 
                   {/* Preview Overview Box */}
-                  <div className="p-4 rounded-xl bg-[#080d19] border border-slate-800/80">
-                    <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5 flex items-center space-x-1.5">
-                      <Layers className="w-4 h-4 text-blue-400" />
+                  <div className="p-4 rounded-xl bg-[#161b22] border border-[#30363d]">
+                    <h4 className="text-xs font-bold uppercase tracking-wider text-[#8b949e] mb-1.5 flex items-center space-x-1.5">
+                      <Layers className="w-4 h-4 text-[#58a6ff]" />
                       <span>Session Overview</span>
                     </h4>
-                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                    <p className="text-xs sm:text-sm text-[#c9d1d9] leading-relaxed">
                       {selectedSession.preview}
                     </p>
                   </div>
@@ -447,14 +462,14 @@ export function App() {
                   {/* Learning Topics */}
                   {selectedSession.topics && (
                     <div>
-                      <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2 flex items-center space-x-1.5">
+                      <h4 className="text-xs font-bold uppercase tracking-wider text-[#8b949e] mb-2 flex items-center space-x-1.5">
                         <Sparkles className="w-3.5 h-3.5 text-amber-400" />
                         <span>Core Topics</span>
                       </h4>
                       <div className="space-y-1.5">
                         {selectedSession.topics.map((topic, i) => (
-                          <div key={i} className="flex items-start space-x-2.5 p-2.5 rounded-lg bg-[#080d19] border border-slate-800 text-xs text-slate-300">
-                            <span className="w-4 h-4 rounded bg-blue-500/20 text-blue-400 border border-blue-500/30 flex items-center justify-center font-bold text-[10px] flex-shrink-0 mt-0.5">
+                          <div key={i} className="flex items-start space-x-2.5 p-2.5 rounded-lg bg-[#161b22] border border-[#30363d] text-xs text-[#c9d1d9]">
+                            <span className="w-4 h-4 rounded bg-[#21262d] text-[#58a6ff] border border-[#30363d] flex items-center justify-center font-bold text-[10px] flex-shrink-0 mt-0.5">
                               {i + 1}
                             </span>
                             <span>{topic}</span>
@@ -467,13 +482,13 @@ export function App() {
                   {/* Hands-on Labs */}
                   {selectedSession.labs && (
                     <div>
-                      <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2 flex items-center space-x-1.5">
+                      <h4 className="text-xs font-bold uppercase tracking-wider text-[#8b949e] mb-2 flex items-center space-x-1.5">
                         <Terminal className="w-3.5 h-3.5 text-emerald-400" />
                         <span>Practical Hands-on Labs</span>
                       </h4>
                       <div className="space-y-1.5">
                         {selectedSession.labs.map((lab, i) => (
-                          <div key={i} className="flex items-center space-x-2.5 p-2.5 rounded-lg bg-emerald-950/20 border border-emerald-900/40 text-xs text-emerald-300 font-medium">
+                          <div key={i} className="flex items-center space-x-2.5 p-2.5 rounded-lg bg-[#161b22] border border-[#30363d] text-xs text-[#c9d1d9] font-medium">
                             <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
                             <span>{lab}</span>
                           </div>
@@ -483,15 +498,15 @@ export function App() {
                   )}
 
                   {/* Direct GitHub Redirect CTA Box */}
-                  <div className="p-4 sm:p-5 rounded-xl bg-[#080d19] border border-slate-800 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-sm">
+                  <div className="p-4 sm:p-5 rounded-xl bg-[#161b22] border border-[#30363d] text-white flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-sm">
                     <div>
-                      <p className="text-[10px] font-bold uppercase tracking-wider text-blue-400">
+                      <p className="text-[10px] font-bold uppercase tracking-wider text-[#58a6ff]">
                         Practice on GitHub
                       </p>
                       <h3 className="text-base font-bold text-white mt-0.5">
                         Open {selectedSession.folder}
                       </h3>
-                      <p className="text-xs text-slate-400 mt-0.5 max-w-sm">
+                      <p className="text-xs text-[#8b949e] mt-0.5 max-w-sm">
                         Get step-by-step README instructions, code, Dockerfiles, and submission templates.
                       </p>
                     </div>
@@ -508,7 +523,7 @@ export function App() {
 
                       <button
                         onClick={() => handleOpenGitHub(selectedSession)}
-                        className="px-4 py-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold text-xs sm:text-sm transition-all flex items-center justify-center space-x-2 shadow-xs cursor-pointer flex-shrink-0"
+                        className="px-4 py-2 rounded-xl bg-[#238636] hover:bg-[#2ea043] text-white font-semibold text-xs sm:text-sm transition-all flex items-center justify-center space-x-2 shadow-xs cursor-pointer flex-shrink-0"
                       >
                         {!selectedSession.isFree && !isAuthenticated ? (
                           <>
@@ -527,7 +542,7 @@ export function App() {
 
                 </div>
               ) : (
-                <div className="text-center py-20 text-slate-400 text-sm">
+                <div className="text-center py-20 text-[#8b949e] text-sm">
                   Select a session from the roadmap tree on the left.
                 </div>
               )}
@@ -562,7 +577,7 @@ export function App() {
         />
       )}
 
-      {/* Quick Quiz Modal (Session & Module Assessments) */}
+      {/* Quick Quiz Modal */}
       {quizModalState.isOpen && (
         <QuickQuizModal
           isOpen={quizModalState.isOpen}
@@ -574,7 +589,7 @@ export function App() {
         />
       )}
 
-      {/* Auth Modal (Login / Sign Up / Google Auth) */}
+      {/* Auth Modal (z-[100] renders on top of everything) */}
       <AuthModal />
 
       {/* Footer */}

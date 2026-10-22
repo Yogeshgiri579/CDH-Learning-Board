@@ -1,50 +1,52 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { 
   X, 
-  Lock, 
   Mail, 
+  Lock, 
   User, 
   ArrowRight, 
+  CheckCircle2, 
   Eye, 
   EyeOff, 
-  Loader2, 
-  Terminal, 
+  Terminal,
   Zap,
-  CheckCircle2
+  Loader2
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 export const AuthModal = () => {
   const { 
     authModalOpen, 
-    authModalTab,
-    setAuthModalTab,
+    authModalTab, 
+    setAuthModalTab, 
     closeAuthModal, 
     login, 
     register, 
-    loginWithGoogle,
-    loginDemo
+    loginDemo,
+    loginWithGoogle 
   } = useAuth();
-  
+
   const [overrideTab, setOverrideTab] = useState(null);
   const tab = overrideTab ?? authModalTab ?? 'signin';
-  
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [submitting, setSubmitting] = useState(false);
-  const [activeSocial, setActiveSocial] = useState(false);
+  const [activeSocial, setActiveSocial] = useState(null);
 
   const handleClose = useCallback(() => {
-    setOverrideTab(null);
     setError('');
-    setShowPassword(false);
+    setName('');
+    setEmail('');
+    setPassword('');
+    setOverrideTab(null);
     closeAuthModal();
   }, [closeAuthModal]);
 
-  // Handle ESC key to close
+  // Handle ESC key to dismiss modal
   useEffect(() => {
     if (!authModalOpen) return;
     const handleKeyDown = (e) => {
@@ -60,7 +62,7 @@ export const AuthModal = () => {
 
   // Password strength calculation
   const getPasswordStrength = () => {
-    if (!password) return { score: 0, label: '', color: 'bg-slate-200' };
+    if (!password) return { score: 0, label: '', color: 'bg-[#21262d]' };
     let score = 0;
     if (password.length >= 6) score++;
     if (password.length >= 8) score++;
@@ -73,7 +75,7 @@ export const AuthModal = () => {
       case 2:
         return { score: 2, label: 'Fair', color: 'bg-amber-500' };
       case 3:
-        return { score: 3, label: 'Good', color: 'bg-blue-500' };
+        return { score: 3, label: 'Good', color: 'bg-[#58a6ff]' };
       case 4:
         return { score: 4, label: 'Strong', color: 'bg-emerald-500' };
       default:
@@ -118,7 +120,7 @@ export const AuthModal = () => {
         }
       }
     } catch {
-      setError('Connection failed. Please ensure the backend server is active.');
+      setError('Connection error. Please try again or use 1-Click Demo Login.');
     } finally {
       setSubmitting(false);
     }
@@ -126,16 +128,18 @@ export const AuthModal = () => {
 
   const handleGoogleLogin = async () => {
     setError('');
-    setActiveSocial(true);
+    setActiveSocial('google');
     setSubmitting(true);
     try {
       const res = await loginWithGoogle();
-      if (!res.success) setError(res.message);
+      if (!res.success) {
+        setError(res.message || 'Google authentication failed.');
+      }
     } catch {
-      setError('Google authentication failed. Please try again.');
+      setError('Could not connect to Google sign-in. Please use Demo login.');
     } finally {
       setSubmitting(false);
-      setActiveSocial(false);
+      setActiveSocial(null);
     }
   };
 
@@ -143,10 +147,9 @@ export const AuthModal = () => {
     setError('');
     setSubmitting(true);
     try {
-      const res = await loginDemo();
-      if (!res.success) setError(res.message);
+      await loginDemo();
     } catch {
-      setError('Demo login failed. Please try again.');
+      setError('Failed to log into demo account.');
     } finally {
       setSubmitting(false);
     }
@@ -166,32 +169,32 @@ export const AuthModal = () => {
 
   return (
     <div 
-      className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 animate-in fade-in duration-200"
+      className="fixed inset-0 z-[100] overflow-y-auto bg-black/85 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 animate-in fade-in duration-150"
       onClick={handleClose}
     >
       <div 
-        className="relative bg-[#0d1322] w-full max-w-[375px] max-h-[92vh] overflow-y-auto rounded-2xl shadow-2xl border border-slate-800 transition-all transform animate-in zoom-in-95 duration-150 custom-scrollbar text-slate-200"
+        className="relative bg-[#0d1117] w-full max-w-[380px] max-h-[92vh] overflow-y-auto rounded-2xl shadow-2xl border border-[#30363d] transition-all transform animate-in zoom-in-95 duration-150 custom-scrollbar text-[#f0f6fc]"
         onClick={(e) => e.stopPropagation()}
       >
         
-        {/* Top Accent Gradient Line */}
-        <div className="h-1 w-full bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-400" />
+        {/* Top Accent Line */}
+        <div className="h-1 w-full bg-[#238636]" />
 
         {/* Compact Header */}
         <div className="px-5 pt-4 pb-1">
           <div className="flex items-start justify-between">
             <div>
               <div className="flex items-center space-x-1.5 mb-1.5">
-                <div className="w-6 h-6 rounded-lg bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white shadow-xs">
+                <div className="w-6 h-6 rounded-lg bg-[#21262d] border border-[#30363d] flex items-center justify-center text-[#58a6ff] shadow-xs">
                   <Terminal className="w-3.5 h-3.5" />
                 </div>
                 <span className="font-bold text-white text-xs tracking-tight">CloudDevOpsHub</span>
-                <span className="px-1 py-0.2 rounded text-[9px] font-bold bg-blue-500/20 text-blue-400 border border-blue-500/30">LMS</span>
+                <span className="px-1.5 py-0.2 rounded text-[9px] font-bold bg-[#21262d] text-[#58a6ff] border border-[#30363d]">LMS</span>
               </div>
               <h2 className="text-base font-bold text-white tracking-tight">
                 {tab === 'signin' ? 'Sign in to account' : 'Create free account'}
               </h2>
-              <p className="text-[11px] text-slate-400 leading-snug">
+              <p className="text-[11px] text-[#8b949e] leading-snug">
                 {tab === 'signin' 
                   ? 'Access your 55 DevOps labs, repos, and progress.' 
                   : 'Start your 55-day MultiCloud & DevOps track for free.'}
@@ -200,7 +203,7 @@ export const AuthModal = () => {
 
             <button
               onClick={handleClose}
-              className="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors focus:outline-none -mr-1 -mt-0.5 cursor-pointer"
+              className="p-1 rounded-lg text-[#8b949e] hover:text-white hover:bg-[#21262d] transition-colors focus:outline-none -mr-1 -mt-0.5 cursor-pointer"
               aria-label="Close modal"
             >
               <X className="w-4 h-4" />
@@ -211,15 +214,15 @@ export const AuthModal = () => {
         {/* Modal Body */}
         <div className="p-5 pt-3 space-y-3">
           
-          {/* Single Google One-Click Button (Clean & Compact) */}
+          {/* Single Google One-Click Button */}
           <button
             type="button"
             onClick={handleGoogleLogin}
             disabled={submitting}
-            className="w-full py-2 px-3 bg-[#080d19] hover:bg-[#11192e] border border-slate-700/80 hover:border-slate-600 rounded-xl text-xs font-semibold text-slate-200 shadow-2xs transition-all flex items-center justify-center space-x-2 focus:ring-2 focus:ring-blue-500/20 disabled:opacity-60 cursor-pointer"
+            className="w-full py-2 px-3 bg-[#161b22] hover:bg-[#21262d] border border-[#30363d] rounded-xl text-xs font-semibold text-[#f0f6fc] shadow-xs transition-all flex items-center justify-center space-x-2 focus:ring-2 focus:ring-[#58a6ff]/20 disabled:opacity-60 cursor-pointer"
           >
             {activeSocial ? (
-              <Loader2 className="w-3.5 h-3.5 animate-spin text-blue-400" />
+              <Loader2 className="w-3.5 h-3.5 animate-spin text-[#58a6ff]" />
             ) : (
               <svg className="w-3.5 h-3.5 flex-shrink-0" viewBox="0 0 24 24">
                 <path
@@ -245,8 +248,8 @@ export const AuthModal = () => {
 
           {/* Divider */}
           <div className="relative flex items-center justify-center my-1">
-            <div className="border-t border-slate-800 w-full" />
-            <span className="bg-[#0d1322] px-2 text-[10px] uppercase tracking-wider text-slate-500 font-semibold absolute">
+            <div className="border-t border-[#30363d] w-full" />
+            <span className="bg-[#0d1117] px-2 text-[10px] uppercase tracking-wider text-[#8b949e] font-semibold absolute">
               or continue with email
             </span>
           </div>
@@ -262,9 +265,9 @@ export const AuthModal = () => {
 
             {tab === 'signup' && (
               <div>
-                <label className="block text-[11px] font-semibold text-slate-300 mb-0.5">Full Name</label>
+                <label className="block text-[11px] font-semibold text-[#c9d1d9] mb-0.5">Full Name</label>
                 <div className="relative">
-                  <User className="w-3.5 h-3.5 text-slate-500 absolute left-3 top-2.5 pointer-events-none" />
+                  <User className="w-3.5 h-3.5 text-[#8b949e] absolute left-3 top-2.5 pointer-events-none" />
                   <input
                     type="text"
                     required
@@ -272,16 +275,16 @@ export const AuthModal = () => {
                     onChange={(e) => setName(e.target.value)}
                     placeholder="e.g. Alex Johnson"
                     autoComplete="name"
-                    className="w-full pl-8 pr-3 py-1.5 text-xs rounded-xl border border-slate-700 bg-[#080d19] focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20 outline-none transition-all placeholder:text-slate-500 text-white"
+                    className="w-full pl-8 pr-3 py-1.5 text-xs rounded-xl border border-[#30363d] bg-[#010409] focus:border-[#58a6ff] focus:ring-1 focus:ring-[#58a6ff]/20 outline-none transition-all placeholder:text-[#8b949e] text-white"
                   />
                 </div>
               </div>
             )}
 
             <div>
-              <label className="block text-[11px] font-semibold text-slate-300 mb-0.5">Email Address</label>
+              <label className="block text-[11px] font-semibold text-[#c9d1d9] mb-0.5">Email Address</label>
               <div className="relative">
-                <Mail className="w-3.5 h-3.5 text-slate-500 absolute left-3 top-2.5 pointer-events-none" />
+                <Mail className="w-3.5 h-3.5 text-[#8b949e] absolute left-3 top-2.5 pointer-events-none" />
                 <input
                   type="email"
                   required
@@ -289,26 +292,26 @@ export const AuthModal = () => {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="you@domain.com"
                   autoComplete="email"
-                  className="w-full pl-8 pr-3 py-1.5 text-xs rounded-xl border border-slate-700 bg-[#080d19] focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20 outline-none transition-all placeholder:text-slate-500 text-white"
+                  className="w-full pl-8 pr-3 py-1.5 text-xs rounded-xl border border-[#30363d] bg-[#010409] focus:border-[#58a6ff] focus:ring-1 focus:ring-[#58a6ff]/20 outline-none transition-all placeholder:text-[#8b949e] text-white"
                 />
               </div>
             </div>
 
             <div>
               <div className="flex items-center justify-between mb-0.5">
-                <label className="block text-[11px] font-semibold text-slate-300">Password</label>
+                <label className="block text-[11px] font-semibold text-[#c9d1d9]">Password</label>
                 {tab === 'signin' && (
                   <button
                     type="button"
                     onClick={fillDemoCredentials}
-                    className="text-[10px] text-blue-400 hover:text-blue-300 hover:underline font-medium cursor-pointer"
+                    className="text-[10px] text-[#58a6ff] hover:underline font-medium cursor-pointer"
                   >
                     Auto-fill Demo
                   </button>
                 )}
               </div>
               <div className="relative">
-                <Lock className="w-3.5 h-3.5 text-slate-500 absolute left-3 top-2.5 pointer-events-none" />
+                <Lock className="w-3.5 h-3.5 text-[#8b949e] absolute left-3 top-2.5 pointer-events-none" />
                 <input
                   type={showPassword ? 'text' : 'password'}
                   required
@@ -316,12 +319,12 @@ export const AuthModal = () => {
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
                   autoComplete={tab === 'signin' ? 'current-password' : 'new-password'}
-                  className="w-full pl-8 pr-8 py-1.5 text-xs rounded-xl border border-slate-700 bg-[#080d19] focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20 outline-none transition-all placeholder:text-slate-500 text-white"
+                  className="w-full pl-8 pr-8 py-1.5 text-xs rounded-xl border border-[#30363d] bg-[#010409] focus:border-[#58a6ff] focus:ring-1 focus:ring-[#58a6ff]/20 outline-none transition-all placeholder:text-[#8b949e] text-white"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-2.5 top-2 text-slate-400 hover:text-slate-200 p-0.5 rounded transition-colors cursor-pointer"
+                  className="absolute right-2.5 top-2 text-[#8b949e] hover:text-white p-0.5 rounded transition-colors cursor-pointer"
                   aria-label={showPassword ? 'Hide password' : 'Show password'}
                 >
                   {showPassword ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
@@ -332,15 +335,15 @@ export const AuthModal = () => {
               {tab === 'signup' && password.length > 0 && (
                 <div className="mt-1 space-y-0.5 animate-in fade-in duration-150">
                   <div className="flex items-center justify-between text-[10px]">
-                    <span className="text-slate-500">Strength:</span>
-                    <span className="font-semibold text-slate-300">{strength.label}</span>
+                    <span className="text-[#8b949e]">Strength:</span>
+                    <span className="font-semibold text-[#c9d1d9]">{strength.label}</span>
                   </div>
                   <div className="grid grid-cols-4 gap-1 h-1 w-full">
                     {[1, 2, 3, 4].map((step) => (
                       <div
                         key={step}
                         className={`rounded-full transition-all duration-300 ${
-                          strength.score >= step ? strength.color : 'bg-slate-800'
+                          strength.score >= step ? strength.color : 'bg-[#21262d]'
                         }`}
                       />
                     ))}
@@ -353,7 +356,7 @@ export const AuthModal = () => {
             <button
               type="submit"
               disabled={submitting}
-              className="w-full py-2 px-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white rounded-xl text-xs font-semibold shadow-sm transition-all flex items-center justify-center space-x-1.5 disabled:opacity-70 disabled:cursor-not-allowed group mt-1 cursor-pointer"
+              className="w-full py-2 px-3 bg-[#238636] hover:bg-[#2ea043] text-white rounded-xl text-xs font-semibold shadow-sm transition-all flex items-center justify-center space-x-1.5 disabled:opacity-70 disabled:cursor-not-allowed group mt-1 cursor-pointer"
             >
               {submitting && !activeSocial ? (
                 <>
@@ -369,26 +372,26 @@ export const AuthModal = () => {
             </button>
           </form>
 
-          {/* Clean Switch Prompt (Vertical, Compact) */}
-          <div className="pt-2 text-center border-t border-slate-800 text-xs">
+          {/* Clean Switch Prompt */}
+          <div className="pt-2 text-center border-t border-[#30363d] text-xs">
             {tab === 'signin' ? (
-              <p className="text-slate-400 text-[11px]">
+              <p className="text-[#8b949e] text-[11px]">
                 Don't have an account?{' '}
                 <button
                   type="button"
                   onClick={() => switchTab('signup')}
-                  className="font-semibold text-blue-400 hover:text-blue-300 hover:underline cursor-pointer"
+                  className="font-semibold text-[#58a6ff] hover:underline cursor-pointer"
                 >
                   Create one for free →
                 </button>
               </p>
             ) : (
-              <p className="text-slate-400 text-[11px]">
+              <p className="text-[#8b949e] text-[11px]">
                 Already have an account?{' '}
                 <button
                   type="button"
                   onClick={() => switchTab('signin')}
-                  className="font-semibold text-blue-400 hover:text-blue-300 hover:underline cursor-pointer"
+                  className="font-semibold text-[#58a6ff] hover:underline cursor-pointer"
                 >
                   Sign in here →
                 </button>
@@ -396,14 +399,14 @@ export const AuthModal = () => {
             )}
           </div>
 
-          {/* 1-Click Instant Demo Evaluation (Super Slim) */}
-          <div className="pt-2 border-t border-slate-800 flex items-center justify-between">
-            <span className="text-[10px] text-slate-500 font-medium">Test Account:</span>
+          {/* 1-Click Instant Demo Evaluation */}
+          <div className="pt-2 border-t border-[#30363d] flex items-center justify-between">
+            <span className="text-[10px] text-[#8b949e] font-medium">Test Account:</span>
             <button
               onClick={handleDemoLogin}
               disabled={submitting}
               type="button"
-              className="py-1 px-2.5 bg-blue-600/20 hover:bg-blue-600/30 text-blue-300 rounded-lg text-[10px] font-semibold transition-colors flex items-center space-x-1.5 border border-blue-500/30 cursor-pointer"
+              className="py-1 px-2.5 bg-[#21262d] hover:bg-[#30363d] text-[#c9d1d9] hover:text-white rounded-lg text-[10px] font-semibold transition-colors flex items-center space-x-1.5 border border-[#30363d] cursor-pointer"
             >
               <Zap className="w-3 h-3 text-amber-400 fill-amber-400" />
               <span>1-Click Demo Login</span>
@@ -411,7 +414,7 @@ export const AuthModal = () => {
           </div>
 
           {/* Micro Value Footer */}
-          <div className="pt-1 flex items-center justify-center space-x-2 text-[10px] text-slate-500">
+          <div className="pt-1 flex items-center justify-center space-x-2 text-[10px] text-[#8b949e]">
             <div className="flex items-center space-x-0.5">
               <CheckCircle2 className="w-2.5 h-2.5 text-emerald-400" />
               <span>55 Labs</span>

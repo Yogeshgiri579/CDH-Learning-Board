@@ -14,7 +14,7 @@ const MODULE_METADATA = [
     title: 'DevOps Foundations & Kickoff',
     description: 'Program setup, Git basics, mindset & cloud virtualization fundamentals',
     badge: 'Free Access 🟢',
-    badgeClass: 'bg-emerald-950/60 text-emerald-400 border-emerald-800/60',
+    badgeClass: 'bg-[#238636]/20 text-[#3fb950] border border-[#238636]/40',
   },
   {
     id: 'm2',
@@ -22,7 +22,7 @@ const MODULE_METADATA = [
     title: 'Linux Administration & Shell Automation',
     description: 'Bash scripting, user permissions, networking, process management & systemd',
     badge: '8 Sessions',
-    badgeClass: 'bg-slate-800 text-slate-300 border-slate-700',
+    badgeClass: 'bg-[#21262d] text-[#c9d1d9] border border-[#30363d]',
   },
   {
     id: 'm3',
@@ -30,7 +30,7 @@ const MODULE_METADATA = [
     title: 'Git & Version Control Workflows',
     description: 'Branching strategies, interactive rebase, pull request workflows & CI triggers',
     badge: '6 Sessions',
-    badgeClass: 'bg-slate-800 text-slate-300 border-slate-700',
+    badgeClass: 'bg-[#21262d] text-[#c9d1d9] border border-[#30363d]',
   },
   {
     id: 'm4',
@@ -38,7 +38,7 @@ const MODULE_METADATA = [
     title: 'Multi-Cloud Architecture (AWS, GCP, Azure)',
     description: 'IAM, VPC networking, compute, storage, security & multi-cloud design',
     badge: '10 Sessions',
-    badgeClass: 'bg-slate-800 text-slate-300 border-slate-700',
+    badgeClass: 'bg-[#21262d] text-[#c9d1d9] border border-[#30363d]',
   },
   {
     id: 'm5',
@@ -46,7 +46,7 @@ const MODULE_METADATA = [
     title: 'Containers & Docker Mastery',
     description: 'Images, multi-stage Dockerfiles, Docker Compose, volumes & container networking',
     badge: '8 Sessions',
-    badgeClass: 'bg-slate-800 text-slate-300 border-slate-700',
+    badgeClass: 'bg-[#21262d] text-[#c9d1d9] border border-[#30363d]',
   },
   {
     id: 'm6',
@@ -54,59 +54,78 @@ const MODULE_METADATA = [
     title: 'Kubernetes (K8s) Production Orchestration',
     description: 'Pods, Deployments, Services, Ingress, ConfigMaps, Helm charts & RBAC',
     badge: '9 Sessions',
-    badgeClass: 'bg-slate-800 text-slate-300 border-slate-700',
+    badgeClass: 'bg-[#21262d] text-[#c9d1d9] border border-[#30363d]',
   },
   {
     id: 'm7',
     moduleNum: 'Module 7',
-    title: 'Infrastructure as Code (Terraform) & GitOps',
-    description: 'Declarative infra, state management, modules, CI/CD pipelines & ArgoCD GitOps',
-    badge: '5 Sessions',
-    badgeClass: 'bg-slate-800 text-slate-300 border-slate-700',
+    title: 'Infrastructure as Code with Terraform',
+    description: 'HCL syntax, state management, modules, remote backends & multi-env IaC',
+    badge: '7 Sessions',
+    badgeClass: 'bg-[#21262d] text-[#c9d1d9] border border-[#30363d]',
   },
   {
     id: 'm8',
     moduleNum: 'Module 8',
-    title: 'Observability, SRE & AI in DevOps',
-    description: 'Prometheus metrics, Grafana dashboards, Loki logging & AI-assisted root cause analysis',
-    badge: '4 Sessions',
-    badgeClass: 'bg-slate-800 text-slate-300 border-slate-700',
+    title: 'CI/CD Pipelines & DevSecOps',
+    description: 'GitHub Actions, Jenkins, automated testing, SAST/DAST security & SonarQube',
+    badge: '6 Sessions',
+    badgeClass: 'bg-[#21262d] text-[#c9d1d9] border border-[#30363d]',
+  },
+  {
+    id: 'm9',
+    moduleNum: 'Module 9',
+    title: 'Monitoring, Observability & SRE',
+    description: 'Prometheus metrics, Grafana dashboards, ELK log aggregation & SLO/SLAs',
+    badge: '5 Sessions',
+    badgeClass: 'bg-[#21262d] text-[#c9d1d9] border border-[#30363d]',
+  },
+  {
+    id: 'm10',
+    moduleNum: 'Module 10',
+    title: 'AIOps, Capstone & Enterprise Projects',
+    description: 'AI-assisted DevOps workflows, end-to-end microservices deployment & capstone',
+    badge: '6 Sessions',
+    badgeClass: 'bg-[#21262d] text-[#c9d1d9] border border-[#30363d]',
   },
 ];
 
-export const CurriculumSheet = ({ 
-  sessions, 
-  onPreview, 
+export const CurriculumSheet = ({
+  sessions = [],
+  onPreview,
   onOpenGitHub,
   onOpenQuiz,
   onOpenModuleQuiz,
-  searchQuery = ''
+  searchQuery = '',
+  selectedModule = 'all',
 }) => {
   const { isCompleted } = useAuth();
 
-  // Group filtered sessions into modules
+  // State to track accordion open/close per module (defaults to all expanded)
+  const [collapsedModules, setCollapsedModules] = useState({});
+
+  // Group filtered sessions by their moduleId
   const groupedModules = useMemo(() => {
     return MODULE_METADATA.map((meta) => {
       const moduleSessions = sessions.filter((s) => s.moduleId === meta.id);
+      const total = moduleSessions.length;
       const completedCount = moduleSessions.filter((s) => isCompleted(s.sessionNumber)).length;
+      const percent = total > 0 ? Math.round((completedCount / total) * 100) : 0;
+
       return {
         ...meta,
         sessions: moduleSessions,
-        total: moduleSessions.length,
+        total,
         completedCount,
-        percent: moduleSessions.length > 0 ? Math.round((completedCount / moduleSessions.length) * 100) : 0,
+        percent,
       };
-    }).filter(mod => mod.sessions.length > 0);
-  }, [sessions, isCompleted]);
-
-  // Collapsed state: ALL MODULES COLLAPSED BY DEFAULT ON INITIAL LOAD
-  const [collapsedModules, setCollapsedModules] = useState(() => {
-    const allCollapsed = {};
-    MODULE_METADATA.forEach((m) => {
-      allCollapsed[m.id] = true;
+    }).filter((m) => {
+      // If a specific module pill was clicked at top level
+      if (selectedModule !== 'all' && m.id !== selectedModule) return false;
+      // Hide modules that have 0 sessions matching current search filter
+      return m.sessions.length > 0;
     });
-    return allCollapsed;
-  });
+  }, [sessions, selectedModule, isCompleted]);
 
   const toggleModule = (moduleId) => {
     setCollapsedModules((prev) => ({
@@ -132,24 +151,24 @@ export const CurriculumSheet = ({
   return (
     <div className="space-y-4">
       {/* Top Module summary & Expand/Collapse actions */}
-      <div className="flex items-center justify-between text-xs sm:text-sm text-slate-400 px-1 font-medium">
+      <div className="flex items-center justify-between text-xs sm:text-sm text-[#8b949e] px-1 font-medium">
         <div className="flex items-center space-x-2">
-          <span className="font-bold text-slate-200">Curriculum Modules</span>
-          <span className="text-slate-600">•</span>
+          <span className="font-bold text-[#f0f6fc]">Curriculum Modules</span>
+          <span className="text-[#30363d]">•</span>
           <span>{groupedModules.length} Modules</span>
         </div>
 
         <div className="flex items-center space-x-2 text-xs sm:text-sm">
           <button
             onClick={expandAll}
-            className="hover:text-blue-400 text-slate-400 font-semibold transition-colors cursor-pointer"
+            className="hover:text-[#58a6ff] text-[#8b949e] font-semibold transition-colors cursor-pointer"
           >
             Expand All
           </button>
-          <span className="text-slate-600">/</span>
+          <span className="text-[#30363d]">/</span>
           <button
             onClick={collapseAll}
-            className="hover:text-blue-400 text-slate-400 font-semibold transition-colors cursor-pointer"
+            className="hover:text-[#58a6ff] text-[#8b949e] font-semibold transition-colors cursor-pointer"
           >
             Collapse All
           </button>
@@ -165,24 +184,22 @@ export const CurriculumSheet = ({
           return (
             <div 
               key={mod.id}
-              className={`group bg-[#0a0f1d] rounded-2xl border transition-all duration-300 overflow-hidden shadow-sm ${
-                !isCollapsed ? 'border-blue-500/40 ring-1 ring-blue-500/20' : 'border-slate-800 hover:border-slate-700'
-              }`}
+              className="group bg-[#0d1117] rounded-2xl border border-[#30363d] transition-all duration-200 overflow-hidden shadow-sm"
             >
-              {/* Module Header Bar (Clickable with Active Animation) */}
+              {/* Module Header Bar */}
               <div 
                 onClick={() => toggleModule(mod.id)}
-                className="px-5 sm:px-6 py-4 bg-[#0d1322] hover:bg-[#111a30] border-b border-slate-800/80 cursor-pointer flex items-center justify-between gap-4 select-none transition-colors active:scale-[0.998]"
+                className="px-5 sm:px-6 py-4 bg-[#161b22] hover:bg-[#21262d] border-b border-[#30363d] cursor-pointer flex items-center justify-between gap-4 select-none transition-colors"
               >
-                {/* Left: Module Tag & Bigger Info */}
+                {/* Left: Module Tag & Info */}
                 <div className="flex items-center space-x-3.5 sm:space-x-4 min-w-0 flex-1">
-                  <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-blue-500/10 border border-blue-400/30 text-blue-400 flex items-center justify-center font-extrabold text-sm sm:text-base flex-shrink-0 shadow-xs">
+                  <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-[#21262d] border border-[#30363d] text-[#58a6ff] flex items-center justify-center font-extrabold text-sm sm:text-base flex-shrink-0 shadow-xs">
                     {mod.moduleNum.replace('Module ', 'M')}
                   </div>
 
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center space-x-2.5 flex-wrap">
-                      <h3 className="text-base sm:text-lg font-bold text-white group-hover:text-blue-400 transition-colors">
+                      <h3 className="text-base sm:text-lg font-bold text-white group-hover:text-[#58a6ff] transition-colors">
                         {mod.moduleNum}: {mod.title}
                       </h3>
                       
@@ -191,7 +208,7 @@ export const CurriculumSheet = ({
                       </span>
                     </div>
 
-                    <p className="text-xs sm:text-sm text-slate-400 truncate mt-0.5">
+                    <p className="text-xs sm:text-sm text-[#8b949e] truncate mt-0.5">
                       {mod.description}
                     </p>
                   </div>
@@ -215,10 +232,10 @@ export const CurriculumSheet = ({
 
                   {/* Progress Pill */}
                   <div className="flex items-center space-x-2">
-                    <span className="text-xs sm:text-sm font-semibold text-slate-300">
+                    <span className="text-xs sm:text-sm font-semibold text-[#c9d1d9]">
                       {mod.completedCount}/{mod.total} Done
                     </span>
-                    <div className="w-16 sm:w-20 bg-slate-800 h-2 rounded-full overflow-hidden hidden sm:block">
+                    <div className="w-16 sm:w-20 bg-[#21262d] h-2 rounded-full overflow-hidden hidden sm:block border border-[#30363d]">
                       <div 
                         className="bg-emerald-500 h-full rounded-full transition-all duration-500 ease-out"
                         style={{ width: `${mod.percent}%` }}
@@ -226,22 +243,22 @@ export const CurriculumSheet = ({
                     </div>
                   </div>
 
-                  {/* Toggle Arrow with smooth 180° rotation */}
-                  <div className="p-1 rounded-lg text-slate-400 group-hover:text-slate-200 transition-colors">
+                  {/* Toggle Arrow with smooth rotation */}
+                  <div className="p-1 rounded-lg text-[#8b949e] group-hover:text-white transition-colors">
                     <ChevronDown 
-                      className={`w-5 h-5 transition-transform duration-300 ease-in-out ${
-                        isCollapsed ? 'rotate-0' : 'rotate-180 text-blue-400'
+                      className={`w-5 h-5 transition-transform duration-200 ease-in-out ${
+                        isCollapsed ? 'rotate-0' : 'rotate-180 text-[#58a6ff]'
                       }`} 
                     />
                   </div>
                 </div>
               </div>
 
-              {/* Sessions Table / List (Hidden when collapsed, animated entrance) */}
+              {/* Sessions Table */}
               {!isCollapsed && (
-                <div className="animate-in fade-in slide-in-from-top-2 duration-300 ease-out bg-[#0a0f1d]">
+                <div className="animate-in fade-in duration-200 bg-[#0d1117]">
                   {/* Table Column Labels for Desktop */}
-                  <div className="hidden md:flex items-center justify-between px-5 py-2.5 bg-[#080d19] border-b border-slate-800 text-xs font-bold uppercase tracking-wider text-slate-400">
+                  <div className="hidden md:flex items-center justify-between px-5 py-2.5 bg-[#161b22] border-b border-[#30363d] text-xs font-bold uppercase tracking-wider text-[#8b949e]">
                     <div className="flex items-center space-x-4 flex-1">
                       <span className="w-6 text-center">Done</span>
                       <span className="w-9">#</span>
@@ -255,7 +272,7 @@ export const CurriculumSheet = ({
                   </div>
 
                   {/* Sessions Rows */}
-                  <div className="divide-y divide-slate-800/60">
+                  <div className="divide-y divide-[#21262d]">
                     {mod.sessions.map((session) => (
                       <SessionRow
                         key={session.id}
