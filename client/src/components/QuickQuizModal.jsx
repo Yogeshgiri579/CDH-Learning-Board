@@ -21,7 +21,7 @@ export const QuickQuizModal = ({
   moduleTitle = null, 
   onOpenReader 
 }) => {
-  const { toggleComplete, isCompleted } = useAuth();
+  const { toggleComplete, isCompleted, recordQuizProgress } = useAuth();
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState({}); // { [qIndex]: optionIndex }
@@ -59,6 +59,16 @@ export const QuickQuizModal = ({
       setCurrentIndex((prev) => prev + 1);
     } else {
       setIsFinished(true);
+      if (session?.sessionNumber !== undefined && recordQuizProgress) {
+        let correct = 0;
+        questions.forEach((q, idx) => {
+          if (selectedAnswers[idx] === q.correctIndex) {
+            correct++;
+          }
+        });
+        const percent = Math.round((correct / totalQuestions) * 100);
+        recordQuizProgress(session.sessionNumber, correct, totalQuestions, percent >= 60);
+      }
     }
   };
 

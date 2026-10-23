@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import rehypeRaw from 'rehype-raw';
 import { 
   X, 
   ExternalLink, 
@@ -67,9 +68,9 @@ const CodeBlock = ({ className, children, ...props }) => {
           )}
         </button>
       </div>
-      <div className="p-3.5 overflow-x-auto text-xs sm:text-sm font-mono text-[#e6edf3]">
-        <pre className="!bg-transparent !p-0 !m-0">
-          <code>{children}</code>
+      <div className="p-3.5 overflow-x-auto text-xs sm:text-sm font-mono text-[#1f2328] dark:text-[#e6edf3]">
+        <pre className="!bg-transparent !p-0 !m-0 font-mono text-[#1f2328] dark:text-[#e6edf3]">
+          <code className="text-[#1f2328] dark:text-[#e6edf3] font-mono">{children}</code>
         </pre>
       </div>
     </div>
@@ -116,15 +117,15 @@ const RawCodeViewer = ({ content, fileName, language }) => {
         </button>
       </div>
 
-      <div className="overflow-x-auto p-4 font-mono text-xs sm:text-sm text-[#e6edf3] bg-[#010409] max-h-[70vh]">
+      <div className="overflow-x-auto p-4 font-mono text-xs sm:text-sm text-[#1f2328] dark:text-[#e6edf3] bg-[#f6f8fa] dark:bg-[#010409] max-h-[70vh]">
         <table className="w-full border-collapse">
           <tbody>
             {lines.map((line, idx) => (
-              <tr key={idx} className="hover:bg-[#161b22]/70 transition-colors">
-                <td className="w-10 pr-4 select-none text-right text-[#484f58] text-xs font-mono align-top py-0.5">
+              <tr key={idx} className="hover:bg-[#eaeef2] dark:hover:bg-[#161b22]/70 transition-colors">
+                <td className="w-10 pr-4 select-none text-right text-[#8c959f] dark:text-[#484f58] text-xs font-mono align-top py-0.5">
                   {idx + 1}
                 </td>
-                <td className="whitespace-pre font-mono py-0.5 pl-2 border-l border-[#21262d] text-[#c9d1d9]">
+                <td className="whitespace-pre font-mono py-0.5 pl-2 border-l border-[#d0d7de] dark:border-[#21262d] text-[#1f2328] dark:text-[#c9d1d9]">
                   {line || ' '}
                 </td>
               </tr>
@@ -185,7 +186,7 @@ export const GitHubPreviewModal = ({
   onSelectSession, 
   onOpenQuiz 
 }) => {
-  const { isCompleted, toggleComplete, isAuthenticated, openAuthModal, loginDemo } = useAuth();
+  const { isCompleted, toggleComplete, isAuthenticated, openAuthModal } = useAuth();
 
   // Session files state
   const [sessionFiles, setSessionFiles] = useState([]);
@@ -609,22 +610,14 @@ export const GitHubPreviewModal = ({
               </div>
               <h3 className="text-lg font-bold text-white">Sign In Required to Read Session {session.sessionNumber}</h3>
               <p className="text-xs text-[#8b949e] leading-relaxed">
-                Sessions 00–04 are free for everyone. To access Sessions 05–54, read full GitHub notes, and take quizzes, please sign in with your Google account or email.
+                Sessions 00–04 are free for everyone. To access Sessions 05–54, read full GitHub notes, and take quizzes, please sign in or create a free account.
               </p>
               <div className="space-y-2 pt-2">
                 <button
                   onClick={() => openAuthModal(`Sign in to unlock Session ${session.sessionNumber} GitHub notes and quizzes.`)}
                   className="w-full py-2.5 rounded-xl bg-[#238636] hover:bg-[#2ea043] text-white text-xs sm:text-sm font-semibold transition-all shadow-md cursor-pointer"
                 >
-                  Sign In with Google / Account
-                </button>
-                <button
-                  onClick={async () => {
-                    await loginDemo();
-                  }}
-                  className="w-full py-2 rounded-xl bg-[#21262d] hover:bg-[#30363d] text-[#c9d1d9] hover:text-white text-xs font-semibold border border-[#30363d] transition-colors cursor-pointer"
-                >
-                  ⚡ Instant Unlock with Demo Account
+                  Sign In / Create Free Account
                 </button>
               </div>
             </div>
@@ -657,6 +650,7 @@ export const GitHubPreviewModal = ({
             <div className={`max-w-4xl mx-auto ${fontSize} leading-relaxed text-[#c9d1d9] markdown-content`}>
               <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
+                rehypePlugins={[rehypeRaw]}
                 components={{
                   code: CodeBlock,
                   h1: ({ children }) => (
@@ -691,29 +685,30 @@ export const GitHubPreviewModal = ({
                       {children}
                     </blockquote>
                   ),
-                  table: ({ children }) => (
+                  table: ({ children, node, ...props }) => (
                     <div className="overflow-x-auto my-4 border border-[#30363d] rounded-xl">
-                      <table className="w-full text-left text-xs border-collapse">
+                      <table className="w-full text-left text-xs border-collapse" {...props}>
                         {children}
                       </table>
                     </div>
                   ),
-                  th: ({ children }) => (
-                    <th className="bg-[#161b22] px-3.5 py-2.5 font-bold text-white border-b border-[#30363d]">
+                  th: ({ children, node, ...props }) => (
+                    <th className="bg-[#161b22] px-3.5 py-2.5 font-bold text-white border-b border-[#30363d]" {...props}>
                       {children}
                     </th>
                   ),
-                  td: ({ children }) => (
-                    <td className="px-3.5 py-2 border-b border-[#21262d] text-[#c9d1d9]">
+                  td: ({ children, node, ...props }) => (
+                    <td className="px-3.5 py-2 border border-[#30363d] text-[#c9d1d9] align-top" {...props}>
                       {children}
                     </td>
                   ),
-                  a: ({ href, children }) => (
+                  a: ({ href, children, node, ...props }) => (
                     <a 
                       href={href} 
                       target="_blank" 
                       rel="noopener noreferrer" 
                       className="text-[#58a6ff] hover:underline transition-colors"
+                      {...props}
                     >
                       {children}
                     </a>
@@ -723,26 +718,44 @@ export const GitHubPreviewModal = ({
                 {content}
               </ReactMarkdown>
 
-              {/* End of Session Banner: Quick Quiz Callout */}
-              <div className="mt-10 p-5 rounded-2xl bg-[#161b22] border border-[#30363d] flex flex-col sm:flex-row items-center justify-between gap-4">
-                <div className="space-y-1 text-center sm:text-left">
-                  <span className="text-xs font-bold text-amber-400 uppercase tracking-wider flex items-center justify-center sm:justify-start space-x-1">
+              {/* End of Session Reading Card: Mark as Done & Quick Quiz Callout */}
+              <div className="mt-10 p-5 rounded-2xl bg-[#161b22] border border-[#30363d] flex flex-col md:flex-row items-center justify-between gap-4">
+                <div className="space-y-1 text-center md:text-left">
+                  <span className="text-xs font-bold text-amber-400 uppercase tracking-wider flex items-center justify-center md:justify-start space-x-1">
                     <Sparkles className="w-3.5 h-3.5" />
                     <span>Finished Reading?</span>
                   </span>
-                  <h4 className="text-base font-bold text-white">Test your understanding with a Quick Quiz</h4>
+                  <h4 className="text-base font-bold text-white">Complete this Session & Test Understanding</h4>
                   <p className="text-xs text-[#8b949e]">
-                    Verify key concepts from Session #{session.sessionNumber.toString().padStart(2, '0')} and earn completion credit.
+                    Verify key concepts from Session #{session.sessionNumber.toString().padStart(2, '0')} and mark as done to earn badge credit.
                   </p>
                 </div>
 
-                <button
-                  onClick={() => onOpenQuiz(session)}
-                  className="px-5 py-2.5 rounded-xl bg-[#238636] hover:bg-[#2ea043] text-white font-semibold text-xs sm:text-sm shadow-md transition-all flex items-center space-x-2 flex-shrink-0 cursor-pointer"
-                >
-                  <Sparkles className="w-4 h-4 text-amber-300" />
-                  <span>Start Session Quiz</span>
-                </button>
+                <div className="flex items-center space-x-2.5 flex-wrap justify-center gap-y-2 flex-shrink-0">
+                  {/* Mark as Done Button moved directly inside the reading content */}
+                  <button
+                    onClick={() => toggleComplete(session.sessionNumber)}
+                    className={`px-4 py-2.5 rounded-xl text-xs font-bold border transition-all flex items-center space-x-2 cursor-pointer shadow-xs ${
+                      completed
+                        ? 'bg-emerald-950/60 border-emerald-600/80 text-emerald-400'
+                        : 'bg-[#21262d] border-[#30363d] text-[#c9d1d9] hover:text-white hover:bg-[#30363d] hover:border-emerald-500/50'
+                    }`}
+                    title="Mark this session as done after reading"
+                  >
+                    <CheckCircle2 className={`w-4 h-4 ${completed ? 'fill-emerald-400 text-slate-900' : 'text-[#8b949e]'}`} />
+                    <span>{completed ? 'Marked as Done ✓' : 'Mark as Done'}</span>
+                  </button>
+
+                  {/* Start Session Quiz */}
+                  <button
+                    onClick={() => onOpenQuiz(session)}
+                    className="px-4 py-2.5 rounded-xl bg-[#238636] hover:bg-[#2ea043] text-white font-bold text-xs shadow-md transition-all flex items-center space-x-2 cursor-pointer"
+                    title="Start session interactive quiz"
+                  >
+                    <Sparkles className="w-4 h-4 text-amber-300" />
+                    <span>Start Session Quiz</span>
+                  </button>
+                </div>
               </div>
 
             </div>
@@ -750,7 +763,7 @@ export const GitHubPreviewModal = ({
 
         </div>
 
-        {/* Modal Footer: Session Navigation & Completion Status */}
+        {/* Modal Footer: Session Navigation */}
         <div className="px-4 sm:px-6 py-3.5 border-t border-[#30363d] bg-[#161b22] flex items-center justify-between gap-3 flex-shrink-0">
           
           {/* Previous Session Button */}
@@ -767,18 +780,10 @@ export const GitHubPreviewModal = ({
             <div className="w-16" />
           )}
 
-          {/* Mark Complete Button */}
-          <button
-            onClick={() => toggleComplete(session.sessionNumber)}
-            className={`px-4 py-2 rounded-xl text-xs font-semibold border transition-all flex items-center space-x-2 cursor-pointer ${
-              completed
-                ? 'bg-emerald-950/40 border-emerald-800/80 text-emerald-400'
-                : 'bg-[#21262d] border-[#30363d] text-[#c9d1d9] hover:text-white hover:bg-[#30363d]'
-            }`}
-          >
-            <CheckCircle2 className={`w-4 h-4 ${completed ? 'fill-emerald-400 text-slate-900' : 'text-[#8b949e]'}`} />
-            <span>{completed ? 'Marked as Done ✓' : 'Mark as Done'}</span>
-          </button>
+          {/* Session Indicator in Center */}
+          <div className="text-xs text-[#8b949e] font-mono hidden sm:block">
+            Session #{session.sessionNumber.toString().padStart(2, '0')} / 55
+          </div>
 
           {/* Next Session Button */}
           {nextSession ? (

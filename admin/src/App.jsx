@@ -1,8 +1,13 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import rehypeRaw from 'rehype-raw';
 import { api } from './services/api';
 import { modulesList } from './data/modules';
+import { AdminLoginPanel } from './components/AdminLoginPanel';
+import { StudentManagementPanel } from './components/StudentManagementPanel';
+import { LeaderboardManagementPanel } from './components/LeaderboardManagementPanel';
+import { ThemeToggle } from './components/ThemeToggle';
 import { 
   FolderGit2, 
   Plus, 
@@ -28,7 +33,11 @@ import {
   Sparkles,
   Star,
   Activity,
-  Code
+  Code,
+  Users,
+  Trophy,
+  LogOut,
+  Award
 } from 'lucide-react';
 import { Github } from './components/GithubIcon';
 
@@ -76,9 +85,9 @@ const AdminCodeBlock = ({ className, children, ...props }) => {
           )}
         </button>
       </div>
-      <div className="p-3.5 overflow-x-auto text-xs sm:text-sm font-mono text-[#e6edf3]">
-        <pre className="!bg-transparent !p-0 !m-0">
-          <code>{children}</code>
+      <div className="p-3.5 overflow-x-auto text-xs sm:text-sm font-mono text-[#1f2328] dark:text-[#e6edf3]">
+        <pre className="!bg-transparent !p-0 !m-0 font-mono text-[#1f2328] dark:text-[#e6edf3]">
+          <code className="text-[#1f2328] dark:text-[#e6edf3] font-mono">{children}</code>
         </pre>
       </div>
     </div>
@@ -86,6 +95,23 @@ const AdminCodeBlock = ({ className, children, ...props }) => {
 };
 
 export function App() {
+  // Admin Authentication & Navigation Tabs
+  const [currentAdmin, setCurrentAdmin] = useState(() => {
+    try {
+      const stored = localStorage.getItem('cdh_admin_user');
+      return stored ? JSON.parse(stored) : null;
+    } catch {
+      return null;
+    }
+  });
+  const [activeDashboardTab, setActiveDashboardTab] = useState('sessions'); // 'sessions' | 'students' | 'leaderboard'
+
+  const handleLogout = () => {
+    localStorage.removeItem('cdh_admin_user');
+    setCurrentAdmin(null);
+    showToast('Signed out of Admin CMS', 'info');
+  };
+
   // Sessions state
   const [sessions, setSessions] = useState([]);
   const [selectedSessionNum, setSelectedSessionNum] = useState(0);
@@ -533,6 +559,17 @@ export function App() {
     return <FileCode className="w-4 h-4 text-amber-400" />;
   };
 
+  if (!currentAdmin) {
+    return (
+      <AdminLoginPanel
+        onLoginSuccess={(admin) => {
+          setCurrentAdmin(admin);
+          showToast(`Welcome back, ${admin.name}!`);
+        }}
+      />
+    );
+  }
+
   return (
     <div className="min-h-screen bg-[#010409] text-[#f0f6fc] font-sans antialiased flex flex-col">
       
@@ -566,12 +603,12 @@ export function App() {
             <div>
               <div className="flex items-center space-x-2">
                 <h1 className="text-sm font-extrabold text-white tracking-tight">
-                  CloudDevOpsHub <span className="text-[#8b949e] font-normal">Admin CMS</span>
+                  CloudDevOpsHub <span className="text-[#8b949e] font-normal hidden sm:inline">Admin CMS</span>
                 </h1>
                 <span className="text-[10px] px-1.5 py-0.2 rounded font-mono font-bold bg-[#21262d] text-[#58a6ff] border border-[#30363d]">
                   PRO
                 </span>
-                <span className={`text-[10px] px-1.5 py-0.2 rounded font-mono flex items-center space-x-1 border ${
+                <span className={`hidden sm:inline-flex text-[10px] px-1.5 py-0.2 rounded font-mono items-center space-x-1 border ${
                   backendStatus === 'online'
                     ? 'bg-emerald-950/40 text-emerald-400 border-emerald-800/60'
                     : 'bg-rose-950/40 text-rose-400 border-rose-800/60'
@@ -580,33 +617,97 @@ export function App() {
                   <span>{backendStatus === 'online' ? 'API Online' : 'API Offline'}</span>
                 </span>
               </div>
-              <p className="text-[11px] text-[#8b949e]">
-                Direct Session Content & Interactive Quiz Management
+              <p className="text-[11px] text-[#8b949e] hidden sm:block">
+                Direct Session Content, Student Management & Leaderboard Control
               </p>
             </div>
           </div>
 
+          {/* Center: Dashboard Navigation Tabs */}
+          <div className="hidden md:flex items-center space-x-1 bg-[#0d1117] p-1 rounded-xl border border-[#30363d]">
+            <button
+              onClick={() => setActiveDashboardTab('sessions')}
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center space-x-1.5 transition-all cursor-pointer ${
+                activeDashboardTab === 'sessions'
+                  ? 'bg-[#21262d] text-white shadow-2xs border border-[#30363d]'
+                  : 'text-[#8b949e] hover:text-[#f0f6fc]'
+              }`}
+            >
+              <FolderGit2 className="w-3.5 h-3.5 text-[#58a6ff]" />
+              <span>Sessions & Files</span>
+            </button>
+
+            <button
+              onClick={() => setActiveDashboardTab('students')}
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center space-x-1.5 transition-all cursor-pointer ${
+                activeDashboardTab === 'students'
+                  ? 'bg-[#21262d] text-white shadow-2xs border border-[#30363d]'
+                  : 'text-[#8b949e] hover:text-[#f0f6fc]'
+              }`}
+            >
+              <Users className="w-3.5 h-3.5 text-emerald-400" />
+              <span>Manage Users</span>
+            </button>
+
+            <button
+              onClick={() => setActiveDashboardTab('leaderboard')}
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center space-x-1.5 transition-all cursor-pointer ${
+                activeDashboardTab === 'leaderboard'
+                  ? 'bg-[#21262d] text-white shadow-2xs border border-[#30363d]'
+                  : 'text-[#8b949e] hover:text-[#f0f6fc]'
+              }`}
+            >
+              <Trophy className="w-3.5 h-3.5 text-amber-400" />
+              <span>Leaderboard CRUD</span>
+            </button>
+          </div>
+
           {/* Header Actions */}
-          <div className="flex items-center space-x-2.5">
+          <div className="flex items-center space-x-2">
+            {/* Theme Toggle (Light / Dark mode) */}
+            <ThemeToggle />
+
             <button
               onClick={() => setTesterOpen(true)}
-              className="px-3 py-1.5 rounded-xl border border-[#30363d] bg-[#21262d] hover:bg-[#30363d] text-[#c9d1d9] hover:text-white text-xs font-semibold flex items-center space-x-1.5 transition-colors cursor-pointer"
+              className="hidden sm:flex px-2.5 sm:px-3 py-1.5 rounded-xl border border-[#30363d] bg-[#21262d] hover:bg-[#30363d] text-[#c9d1d9] hover:text-white text-xs font-semibold items-center space-x-1.5 transition-colors cursor-pointer"
               title="Test any GitHub URL live"
             >
               <Link2 className="w-3.5 h-3.5 text-[#58a6ff]" />
-              <span className="hidden sm:inline">URL Tester</span>
+              <span className="hidden lg:inline">URL Tester</span>
             </button>
 
             <a
               href="http://localhost:5173"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-[#238636] hover:bg-[#2ea043] text-white shadow-xs flex items-center space-x-1.5 transition-colors cursor-pointer"
+              className="px-2.5 sm:px-3.5 py-1.5 rounded-xl text-xs font-bold bg-[#238636] hover:bg-[#2ea043] text-white shadow-xs flex items-center space-x-1.5 transition-colors cursor-pointer"
               title="Open Student LMS at http://localhost:5173"
             >
-              <span>Open Student LMS</span>
+              <span className="hidden sm:inline">Student LMS</span>
+              <span className="sm:hidden">LMS</span>
               <ExternalLink className="w-3.5 h-3.5" />
             </a>
+
+            {/* Admin Profile & Logout */}
+            <div className="flex items-center space-x-2 pl-2 border-l border-[#30363d]">
+              <div className="hidden xl:flex items-center space-x-1.5 px-2.5 py-1 rounded-lg bg-[#0d1117] border border-[#30363d] text-xs">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                <span className="text-[#c9d1d9] font-medium truncate max-w-[120px]">
+                  {currentAdmin.name || 'Admin'}
+                </span>
+                <span className="text-[10px] px-1 rounded bg-amber-500/20 text-amber-300 font-bold">
+                  ADMIN
+                </span>
+              </div>
+
+              <button
+                onClick={handleLogout}
+                className="p-1.5 rounded-lg text-[#8b949e] hover:text-rose-400 hover:bg-rose-500/10 border border-transparent hover:border-rose-500/30 transition-colors cursor-pointer"
+                title="Sign out of Admin CMS"
+              >
+                <LogOut className="w-4 h-4" />
+              </button>
+            </div>
           </div>
 
         </div>
@@ -614,7 +715,46 @@ export function App() {
 
       {/* Main Consolidated Workspace: Master-Detail Layout */}
       <main className="max-w-7xl mx-auto w-full px-4 sm:px-6 py-6 flex-1 flex flex-col">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 flex-1">
+        {/* Mobile Navigation Tabs */}
+        <div className="md:hidden flex items-center space-x-2 pb-4 overflow-x-auto text-xs">
+          <button
+            onClick={() => setActiveDashboardTab('sessions')}
+            className={`px-3 py-1.5 rounded-xl font-semibold flex items-center space-x-1.5 whitespace-nowrap cursor-pointer ${
+              activeDashboardTab === 'sessions'
+                ? 'bg-[#238636] text-white'
+                : 'bg-[#161b22] text-[#8b949e] border border-[#30363d]'
+            }`}
+          >
+            <FolderGit2 className="w-3.5 h-3.5" />
+            <span>Sessions</span>
+          </button>
+          <button
+            onClick={() => setActiveDashboardTab('students')}
+            className={`px-3 py-1.5 rounded-xl font-semibold flex items-center space-x-1.5 whitespace-nowrap cursor-pointer ${
+              activeDashboardTab === 'students'
+                ? 'bg-[#238636] text-white'
+                : 'bg-[#161b22] text-[#8b949e] border border-[#30363d]'
+            }`}
+          >
+            <Users className="w-3.5 h-3.5" />
+            <span>Manage Users</span>
+          </button>
+          <button
+            onClick={() => setActiveDashboardTab('leaderboard')}
+            className={`px-3 py-1.5 rounded-xl font-semibold flex items-center space-x-1.5 whitespace-nowrap cursor-pointer ${
+              activeDashboardTab === 'leaderboard'
+                ? 'bg-[#238636] text-white'
+                : 'bg-[#161b22] text-[#8b949e] border border-[#30363d]'
+            }`}
+          >
+            <Trophy className="w-3.5 h-3.5" />
+            <span>Leaderboard CRUD</span>
+          </button>
+        </div>
+
+        {/* Tab 1: Sessions & Files Manager */}
+        {activeDashboardTab === 'sessions' && (
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 flex-1">
           
           {/* Left Column: Sessions List (00-54) */}
           <div className="lg:col-span-4 flex flex-col space-y-3">
@@ -1075,8 +1215,18 @@ export function App() {
             </div>
 
           </div>
-
         </div>
+        )}
+
+        {/* Tab 2: Student Management Panel */}
+        {activeDashboardTab === 'students' && (
+          <StudentManagementPanel showToast={showToast} />
+        )}
+
+        {/* Tab 3: Leaderboard & Badges Management Panel */}
+        {activeDashboardTab === 'leaderboard' && (
+          <LeaderboardManagementPanel showToast={showToast} />
+        )}
       </main>
 
       {/* QUIZ ADD / EDIT MODAL */}
@@ -1279,7 +1429,7 @@ export function App() {
                 </pre>
               ) : (
                 <div className="markdown-content text-sm text-[#c9d1d9] leading-relaxed max-w-3xl mx-auto">
-                  <ReactMarkdown remarkPlugins={[remarkGfm]} components={{ code: AdminCodeBlock }}>
+                  <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]} components={{ code: AdminCodeBlock }}>
                     {inspectContent}
                   </ReactMarkdown>
                 </div>

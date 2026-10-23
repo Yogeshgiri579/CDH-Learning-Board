@@ -1,18 +1,22 @@
 import React, { useState, useMemo } from 'react';
 import { 
   ChevronDown,
-  Sparkles
+  Sparkles,
+  Search,
+  X,
+  Layers,
+  CheckCircle2
 } from 'lucide-react';
 import { SessionRow } from './SessionRow';
 import { useAuth } from '../context/AuthContext';
 
-// Module Definitions matching CloudDevOpsHub 55 Sessions
-const MODULE_METADATA = [
+// Exact 8 Module Definitions matching CloudDevOpsHub 55 Sessions
+export const MODULE_METADATA = [
   {
     id: 'm1',
     moduleNum: 'Module 1',
-    title: 'DevOps Foundations & Kickoff',
-    description: 'Program setup, Git basics, mindset & cloud virtualization fundamentals',
+    title: 'DevOps Foundations & Mindset Kickoff',
+    description: 'Program setup, Git basics, mindset & cloud virtualization fundamentals (Sessions 00 - 04)',
     badge: 'Free Access 🟢',
     badgeClass: 'bg-[#238636]/20 text-[#3fb950] border border-[#238636]/40',
   },
@@ -20,7 +24,7 @@ const MODULE_METADATA = [
     id: 'm2',
     moduleNum: 'Module 2',
     title: 'Linux Administration & Shell Automation',
-    description: 'Bash scripting, user permissions, networking, process management & systemd',
+    description: 'Bash scripting, user permissions, networking, process management & systemd (Sessions 05 - 12)',
     badge: '8 Sessions',
     badgeClass: 'bg-[#21262d] text-[#c9d1d9] border border-[#30363d]',
   },
@@ -28,7 +32,7 @@ const MODULE_METADATA = [
     id: 'm3',
     moduleNum: 'Module 3',
     title: 'Git & Version Control Workflows',
-    description: 'Branching strategies, interactive rebase, pull request workflows & CI triggers',
+    description: 'Branching strategies, interactive rebase, pull request workflows & CI triggers (Sessions 13 - 18)',
     badge: '6 Sessions',
     badgeClass: 'bg-[#21262d] text-[#c9d1d9] border border-[#30363d]',
   },
@@ -36,7 +40,7 @@ const MODULE_METADATA = [
     id: 'm4',
     moduleNum: 'Module 4',
     title: 'Multi-Cloud Architecture (AWS, GCP, Azure)',
-    description: 'IAM, VPC networking, compute, storage, security & multi-cloud design',
+    description: 'IAM, VPC networking, compute, storage, security & multi-cloud design (Sessions 19 - 28)',
     badge: '10 Sessions',
     badgeClass: 'bg-[#21262d] text-[#c9d1d9] border border-[#30363d]',
   },
@@ -44,7 +48,7 @@ const MODULE_METADATA = [
     id: 'm5',
     moduleNum: 'Module 5',
     title: 'Containers & Docker Mastery',
-    description: 'Images, multi-stage Dockerfiles, Docker Compose, volumes & container networking',
+    description: 'Images, multi-stage Dockerfiles, Docker Compose, volumes & container networking (Sessions 29 - 36)',
     badge: '8 Sessions',
     badgeClass: 'bg-[#21262d] text-[#c9d1d9] border border-[#30363d]',
   },
@@ -52,40 +56,24 @@ const MODULE_METADATA = [
     id: 'm6',
     moduleNum: 'Module 6',
     title: 'Kubernetes (K8s) Production Orchestration',
-    description: 'Pods, Deployments, Services, Ingress, ConfigMaps, Helm charts & RBAC',
+    description: 'Pods, Deployments, Services, Ingress, ConfigMaps, Helm charts & RBAC (Sessions 37 - 45)',
     badge: '9 Sessions',
     badgeClass: 'bg-[#21262d] text-[#c9d1d9] border border-[#30363d]',
   },
   {
     id: 'm7',
     moduleNum: 'Module 7',
-    title: 'Infrastructure as Code with Terraform',
-    description: 'HCL syntax, state management, modules, remote backends & multi-env IaC',
-    badge: '7 Sessions',
+    title: 'Infrastructure as Code with Terraform & GitOps',
+    description: 'HCL syntax, state management, modules, remote backends & multi-env IaC (Sessions 46 - 50)',
+    badge: '5 Sessions',
     badgeClass: 'bg-[#21262d] text-[#c9d1d9] border border-[#30363d]',
   },
   {
     id: 'm8',
     moduleNum: 'Module 8',
-    title: 'CI/CD Pipelines & DevSecOps',
-    description: 'GitHub Actions, Jenkins, automated testing, SAST/DAST security & SonarQube',
-    badge: '6 Sessions',
-    badgeClass: 'bg-[#21262d] text-[#c9d1d9] border border-[#30363d]',
-  },
-  {
-    id: 'm9',
-    moduleNum: 'Module 9',
-    title: 'Monitoring, Observability & SRE',
-    description: 'Prometheus metrics, Grafana dashboards, ELK log aggregation & SLO/SLAs',
-    badge: '5 Sessions',
-    badgeClass: 'bg-[#21262d] text-[#c9d1d9] border border-[#30363d]',
-  },
-  {
-    id: 'm10',
-    moduleNum: 'Module 10',
-    title: 'AIOps, Capstone & Enterprise Projects',
-    description: 'AI-assisted DevOps workflows, end-to-end microservices deployment & capstone',
-    badge: '6 Sessions',
+    title: 'Observability, SRE & AI in DevOps',
+    description: 'Prometheus, Grafana, Loki logs, alert triage & AI Root Cause Analysis (Sessions 51 - 54)',
+    badge: '4 Sessions',
     badgeClass: 'bg-[#21262d] text-[#c9d1d9] border border-[#30363d]',
   },
 ];
@@ -98,11 +86,20 @@ export const CurriculumSheet = ({
   onOpenModuleQuiz,
   searchQuery = '',
   selectedModule = 'all',
+  onClearSearch
 }) => {
   const { isCompleted } = useAuth();
 
-  // State to track accordion open/close per module (defaults to all expanded)
-  const [collapsedModules, setCollapsedModules] = useState({});
+  // On initial load: Collapse all modules except Module 1 (m1 is expanded)
+  const [collapsedModules, setCollapsedModules] = useState({
+    m2: true,
+    m3: true,
+    m4: true,
+    m5: true,
+    m6: true,
+    m7: true,
+    m8: true,
+  });
 
   // Group filtered sessions by their moduleId
   const groupedModules = useMemo(() => {
@@ -150,6 +147,40 @@ export const CurriculumSheet = ({
 
   return (
     <div className="space-y-4">
+      {/* Dynamic Search Filter Status Banner */}
+      {hasSearch && (
+        <div className="flex flex-wrap items-center justify-between gap-3 p-3.5 sm:p-4 rounded-2xl bg-gradient-to-r from-[#161b22] via-[#0d1117] to-[#161b22] border border-[#58a6ff]/50 shadow-lg shadow-[#58a6ff]/5 animate-in fade-in slide-in-from-top-2 duration-200">
+          <div className="flex items-center space-x-3 min-w-0">
+            <div className="w-8 h-8 rounded-xl bg-[#58a6ff]/15 text-[#58a6ff] border border-[#58a6ff]/30 flex items-center justify-center flex-shrink-0">
+              <Search className="w-4 h-4 animate-pulse" />
+            </div>
+            <div className="min-w-0">
+              <div className="flex items-center space-x-2 flex-wrap">
+                <span className="text-xs sm:text-sm font-extrabold text-white">
+                  Filtered Results:
+                </span>
+                <span className="px-2 py-0.5 rounded-lg bg-[#58a6ff]/20 text-[#58a6ff] border border-[#58a6ff]/40 font-mono text-xs font-bold">
+                  "{searchQuery}"
+                </span>
+              </div>
+              <p className="text-[11px] sm:text-xs text-[#8b949e] mt-0.5">
+                Found <span className="font-bold text-white">{sessions.length}</span> matching sessions across <span className="font-bold text-white">{groupedModules.length}</span> modules • All matching modules expanded
+              </p>
+            </div>
+          </div>
+
+          {onClearSearch && (
+            <button
+              onClick={onClearSearch}
+              className="px-3 py-1.5 rounded-xl text-xs font-semibold bg-[#21262d] hover:bg-rose-500/20 text-[#c9d1d9] hover:text-rose-300 border border-[#30363d] hover:border-rose-500/40 transition-all flex items-center space-x-1.5 cursor-pointer shadow-xs"
+            >
+              <X className="w-3.5 h-3.5" />
+              <span>Clear Filter</span>
+            </button>
+          )}
+        </div>
+      )}
+
       {/* Top Module summary & Expand/Collapse actions */}
       <div className="flex items-center justify-between text-xs sm:text-sm text-[#8b949e] px-1 font-medium">
         <div className="flex items-center space-x-2">
@@ -178,7 +209,7 @@ export const CurriculumSheet = ({
       {/* Structured Module Sections */}
       <div className="space-y-4">
         {groupedModules.map((mod) => {
-          // If searching, auto-expand; otherwise obey collapsedModules
+          // If searching, auto-expand so user can immediately see the match; otherwise obey collapsedModules
           const isCollapsed = !hasSearch && !!collapsedModules[mod.id];
 
           return (
@@ -280,6 +311,7 @@ export const CurriculumSheet = ({
                         onPreview={onPreview}
                         onOpenGitHub={onOpenGitHub}
                         onOpenQuiz={onOpenQuiz}
+                        searchQuery={searchQuery}
                       />
                     ))}
                   </div>

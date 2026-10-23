@@ -13,22 +13,39 @@ import {
 import { Github } from './GithubIcon';
 import { useAuth } from '../context/AuthContext';
 
-export const SessionRow = ({ session, onPreview, onOpenGitHub, onOpenQuiz }) => {
-  const { isCompleted, toggleComplete, isAuthenticated } = useAuth();
+const HighlightMatch = ({ text = '', query = '' }) => {
+  if (!query || !text) return <>{text}</>;
+  const trimmed = query.trim();
+  if (!trimmed) return <>{text}</>;
+  const escaped = trimmed.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const parts = text.split(new RegExp(`(${escaped})`, 'gi'));
+  return (
+    <>
+      {parts.map((part, i) =>
+        part.toLowerCase() === trimmed.toLowerCase() ? (
+          <mark key={i} className="bg-amber-400/25 text-amber-200 px-1 py-0.2 rounded font-bold">
+            {part}
+          </mark>
+        ) : (
+          part
+        )
+      )}
+    </>
+  );
+};
+
+export const SessionRow = ({ session, onPreview, onOpenGitHub, onOpenQuiz, searchQuery = '' }) => {
+  const { isCompleted, isAuthenticated, getQuizResult } = useAuth();
   const [expanded, setExpanded] = useState(false);
   
   const completed = isCompleted(session.sessionNumber);
+  const quizResult = getQuizResult ? getQuizResult(session.sessionNumber) : null;
   const isFree = session.sessionNumber < 5;
   const isLocked = !isFree && !isAuthenticated;
 
   const handleStartClick = (e) => {
     e.stopPropagation();
     onOpenGitHub(session);
-  };
-
-  const handleToggleComplete = (e) => {
-    e.stopPropagation();
-    toggleComplete(session.sessionNumber);
   };
 
   const handlePreviewClick = (e) => {
@@ -71,18 +88,17 @@ export const SessionRow = ({ session, onPreview, onOpenGitHub, onOpenQuiz }) => 
         
         {/* Left: Checkbox + Number + Title + Topics */}
         <div className="flex items-center space-x-3 sm:space-x-4 min-w-0 flex-1">
-          {/* Complete Status Checkbox */}
-          <button
-            onClick={handleToggleComplete}
-            title={completed ? 'Completed' : 'Mark as done'}
-            className="flex-shrink-0 text-[#8b949e] hover:text-emerald-400 transition-colors focus:outline-none p-0.5 cursor-pointer"
+          {/* Read-only Completion Status (Must read markdown inside to mark as done) */}
+          <div 
+            className="flex-shrink-0 p-0.5 select-none"
+            title={completed ? 'Session Completed' : 'Read session to mark as done'}
           >
-            <CheckCircle2 
-              className={`w-5 h-5 sm:w-5.5 sm:h-5.5 ${
-                completed ? 'fill-emerald-400 text-slate-900' : 'text-[#484f58] group-hover:text-[#8b949e]'
-              }`} 
-            />
-          </button>
+            {completed ? (
+              <CheckCircle2 className="w-5 h-5 sm:w-5.5 sm:h-5.5 fill-emerald-400 text-slate-900" />
+            ) : (
+              <div className="w-5 h-5 sm:w-5.5 sm:h-5.5 rounded-full border border-[#30363d] flex items-center justify-center text-[10px] text-[#484f58] group-hover:border-[#484f58]" />
+            )}
+          </div>
 
           {/* Session Number */}
           <span className="font-mono text-xs sm:text-sm font-bold text-[#8b949e] group-hover:text-[#c9d1d9] flex-shrink-0 w-8 sm:w-9">
@@ -97,7 +113,7 @@ export const SessionRow = ({ session, onPreview, onOpenGitHub, onOpenQuiz }) => 
                   completed ? 'text-[#8b949e] line-through decoration-[#484f58]' : 'text-[#f0f6fc] group-hover:text-[#58a6ff]'
                 }`}
               >
-                {session.title}
+                <HighlightMatch text={session.title} query={searchQuery} />
               </h4>
 
               {/* Free or Lock indicator */}
@@ -115,11 +131,15 @@ export const SessionRow = ({ session, onPreview, onOpenGitHub, onOpenQuiz }) => 
 
             {/* Sub-line: Topics Tags */}
             <div className="hidden md:flex items-center space-x-2 mt-1 text-xs text-[#8b949e]">
-              <span className="text-[#8b949e] truncate max-w-md">{session.preview}</span>
+              <span className="text-[#8b949e] truncate max-w-md">
+                <HighlightMatch text={session.preview} query={searchQuery} />
+              </span>
               {session.topics && session.topics.length > 0 && (
                 <>
                   <span className="text-[#484f58]">•</span>
-                  <span className="text-[#c9d1d9] font-medium truncate max-w-xs">{session.topics[0]}</span>
+                  <span className="text-[#c9d1d9] font-medium truncate max-w-xs">
+                    <HighlightMatch text={session.topics[0]} query={searchQuery} />
+                  </span>
                 </>
               )}
             </div>
@@ -151,18 +171,45 @@ export const SessionRow = ({ session, onPreview, onOpenGitHub, onOpenQuiz }) => 
             <span className="hidden xl:inline">Overview</span>
           </button>
 
-          {/* Quick Quiz button */}
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              onOpenQuiz && onOpenQuiz(session);
-            }}
-            className="p-1.5 sm:px-3 sm:py-1.5 rounded-lg text-amber-300 hover:text-amber-200 bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 transition-colors text-xs font-semibold flex items-center space-x-1 cursor-pointer"
-            title="Take interactive quick quiz for this session"
-          >
-            <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-            <span className="hidden md:inline">Quiz</span>
-          </button>
+          {/* Quick Quiz button / Realtime Quiz Result based on score */}
+          {quizResult ? (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onOpenQuiz && onOpenQuiz(session);
+              }}
+              className={`p-1.5 sm:px-2.5 sm:py-1 rounded-lg text-xs font-bold flex items-center space-x-1.5 cursor-pointer transition-all shadow-xs ${
+                quizResult.passed
+                  ? 'text-emerald-400 bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/35'
+                  : 'text-amber-300 bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/35'
+              }`}
+              title={`Quiz Score: ${quizResult.score}/${quizResult.totalQuestions} (${
+                quizResult.percent !== undefined ? quizResult.percent : Math.round((quizResult.score / quizResult.totalQuestions) * 100)
+              }%). ${quizResult.passed ? 'Passed!' : 'Needs 60% to pass.'} Click to retake.`}
+            >
+              {quizResult.passed ? (
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+              ) : (
+                <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+              )}
+              <span className="font-mono">{quizResult.score}/{quizResult.totalQuestions}</span>
+              <span className="hidden md:inline text-[11px] font-semibold opacity-90">
+                {quizResult.passed ? 'Passed' : 'Retake'}
+              </span>
+            </button>
+          ) : (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onOpenQuiz && onOpenQuiz(session);
+              }}
+              className="p-1.5 sm:px-3 sm:py-1.5 rounded-lg text-amber-300 hover:text-amber-200 bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 transition-colors text-xs font-semibold flex items-center space-x-1 cursor-pointer"
+              title="Take interactive quick quiz for this session"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+              <span className="hidden md:inline">Quiz</span>
+            </button>
+          )}
 
           {/* Read button with Github icon & GitHub green styling */}
           <button

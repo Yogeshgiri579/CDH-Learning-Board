@@ -11,12 +11,14 @@ import {
   ArrowRight,
   Layers,
   Star,
-  Shield
+  Shield,
+  Trophy
 } from 'lucide-react';
 import { Github } from './GithubIcon';
+import { ThemeToggle } from './ThemeToggle';
 
-export const Navbar = ({ onSearchClick, activeTab, setActiveTab }) => {
-  const { user, isAuthenticated, logout, openAuthModal, completedCount } = useAuth();
+export const Navbar = ({ onSearchClick, activeTab, setActiveTab, onLeaderboardClick }) => {
+  const { user, isAuthenticated, logout, openAuthModal, completedCount, quizPassedCount = 0 } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const dropdownTimeoutRef = useRef(null);
@@ -94,6 +96,14 @@ export const Navbar = ({ onSearchClick, activeTab, setActiveTab }) => {
               <span>Roadmap View</span>
             </button>
 
+            <button
+              onClick={() => onLeaderboardClick && onLeaderboardClick()}
+              className="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all flex items-center space-x-1.5 cursor-pointer text-[#c9d1d9] hover:text-white hover:bg-[#21262d]"
+            >
+              <Trophy className="w-4 h-4 text-amber-400" />
+              <span>Leaderboard</span>
+            </button>
+
             <a
               href="https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge"
               target="_blank"
@@ -124,6 +134,9 @@ export const Navbar = ({ onSearchClick, activeTab, setActiveTab }) => {
                 ⌘K
               </kbd>
             </button>
+
+            {/* Light / Dark Mode Toggle */}
+            <ThemeToggle />
 
             {/* Auth Controls */}
             {isAuthenticated ? (
@@ -162,8 +175,12 @@ export const Navbar = ({ onSearchClick, activeTab, setActiveTab }) => {
 
                     <div className="py-1">
                       <div className="px-3.5 py-1.5 text-xs text-[#8b949e] flex items-center justify-between">
-                        <span>Track Progress:</span>
-                        <span className="font-bold text-emerald-400">{completedCount} of 55 Done</span>
+                        <span>Sessions Done:</span>
+                        <span className="font-bold text-emerald-400">{completedCount} of 55</span>
+                      </div>
+                      <div className="px-3.5 py-1.5 text-xs text-[#8b949e] flex items-center justify-between border-b border-[#21262d] pb-2">
+                        <span>Quizzes Passed:</span>
+                        <span className="font-bold text-amber-400">{quizPassedCount} Mastered</span>
                       </div>
 
                       <button
@@ -199,11 +216,20 @@ export const Navbar = ({ onSearchClick, activeTab, setActiveTab }) => {
             )}
           </div>
 
-          {/* Mobile Menu Button */}
-          <div className="md:hidden flex items-center space-x-2">
+          {/* Mobile Right Controls: Search, Theme Toggle & Menu Hamburger */}
+          <div className="md:hidden flex items-center space-x-1.5">
+            <button
+              onClick={onSearchClick}
+              className="p-2 rounded-xl text-[#8b949e] hover:text-white hover:bg-[#21262d] transition-colors"
+              title="Search Sessions"
+            >
+              <Search className="w-4 h-4" />
+            </button>
+            <ThemeToggle />
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-lg text-[#8b949e] hover:text-white hover:bg-[#21262d]"
+              className="p-2 rounded-xl text-[#8b949e] hover:text-white hover:bg-[#21262d] transition-colors"
+              aria-label="Toggle mobile menu"
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
@@ -215,6 +241,11 @@ export const Navbar = ({ onSearchClick, activeTab, setActiveTab }) => {
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
         <div className="md:hidden border-t border-[#30363d] bg-[#161b22] px-4 pt-3 pb-5 space-y-3">
+          {/* Mobile Theme Toggle Row */}
+          <div className="flex items-center justify-between px-3 py-2 rounded-xl bg-[#0d1117] border border-[#30363d]">
+            <span className="text-xs font-semibold text-[#c9d1d9]">Theme Mode</span>
+            <ThemeToggle showLabel={true} />
+          </div>
           <div className="space-y-1">
             <button
               onClick={() => {
@@ -233,6 +264,16 @@ export const Navbar = ({ onSearchClick, activeTab, setActiveTab }) => {
               className="w-full text-left px-3 py-2 rounded-lg text-sm font-semibold text-[#c9d1d9] hover:bg-[#21262d]"
             >
               Roadmap View
+            </button>
+            <button
+              onClick={() => {
+                onLeaderboardClick && onLeaderboardClick();
+                setMobileMenuOpen(false);
+              }}
+              className="w-full text-left px-3 py-2 rounded-lg text-sm font-semibold text-[#c9d1d9] hover:bg-[#21262d] flex items-center space-x-2"
+            >
+              <Trophy className="w-4 h-4 text-amber-400" />
+              <span>Leaderboard & Badges</span>
             </button>
             <a
               href="https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge"

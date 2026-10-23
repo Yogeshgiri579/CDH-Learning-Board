@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:5000/api';
+const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
 
 async function request(path, options = {}) {
   const config = {
@@ -114,4 +114,73 @@ export const api = {
   async getHealth() {
     return request('/health');
   },
+
+  // Auth API
+  async login(email, password) {
+    return request('/auth/login', {
+      method: 'POST',
+      body: JSON.stringify({ email: email.trim(), password }),
+    });
+  },
+
+  // Users Management API
+  async getUsers() {
+    return request('/admin/users');
+  },
+
+  async createUser(userData) {
+    return request('/admin/users', {
+      method: 'POST',
+      body: JSON.stringify(userData),
+    });
+  },
+
+  async updateUser(id, userData) {
+    return request(`/admin/users/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(userData),
+    });
+  },
+
+  async deleteUser(id) {
+    return request(`/admin/users/${id}`, {
+      method: 'DELETE',
+    });
+  },
+
+  async getLeaderboard() {
+    return request('/leaderboard');
+  },
+
+  // Leaderboard Admin CRUD API
+  async getAdminLeaderboard() {
+    return request('/admin/leaderboard');
+  },
+
+  async createLeaderboardEntry(entryData) {
+    return request('/admin/leaderboard', {
+      method: 'POST',
+      body: JSON.stringify(entryData),
+    });
+  },
+
+  async updateLeaderboardEntry(id, entryData) {
+    return request(`/admin/leaderboard/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(entryData),
+    });
+  },
+
+  async resetLeaderboardEntry(id) {
+    return request(`/admin/leaderboard/${id}`, {
+      method: 'DELETE',
+    });
+  },
+
+  async recalculateLeaderboard() {
+    return request('/admin/leaderboard/recalculate', {
+      method: 'POST',
+    });
+  },
 };
+

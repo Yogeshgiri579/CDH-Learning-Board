@@ -19,6 +19,7 @@
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.2s ease, color 0.2s ease;
   }
 
   ::selection {
@@ -42,3 +43,271 @@
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: #30363d;
 }
+
+/* Markdown Content HTML Rendering Enhancements */
+.markdown-content table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1.25rem 0;
+  border: 1px solid #30363d;
+  background-color: #0d1117;
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+
+.markdown-content td,
+.markdown-content th {
+  border: 1px solid #30363d;
+  padding: 0.85rem;
+  vertical-align: top;
+}
+
+.markdown-content img {
+  max-width: 100%;
+  height: auto;
+  display: inline-block;
+}
+
+.markdown-content sub {
+  font-size: 0.75rem;
+  color: #8b949e;
+  line-height: 1.35;
+  display: inline-block;
+}
+
+.markdown-content b,
+.markdown-content strong {
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.markdown-content div[align="center"],
+.markdown-content td[align="center"],
+.markdown-content th[align="center"] {
+  text-align: center;
+}
+
+/* ==========================================================================
+   LIGHT MODE: GLOBAL COMPREHENSIVE TEXT, BUTTON & CARD FIXES
+   ========================================================================== */
+
+/* 1. Global Page Background & Base Text */
+html.light,
+html.light body {
+  background-color: #f6f8fa !important;
+  color: #1f2328 !important;
+  color-scheme: light;
+}
+
+/* 2. Container, Card, Modal, and Header Backgrounds */
+html.light header,
+html.light header.relative.bg-\[\#010409\] {
+  background-color: #ffffff !important;
+  color: #1f2328 !important;
+}
+
+html.light .bg-\[\#010409\] {
+  background-color: #f6f8fa !important;
+}
+
+html.light .bg-\[\#0d1117\] {
+  background-color: #ffffff !important;
+}
+
+html.light .bg-\[\#161b22\] {
+  background-color: #f6f8fa !important;
+}
+
+html.light .bg-\[\#161b22\]\/95 {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+}
+
+html.light .bg-\[\#21262d\] {
+  background-color: #eaeef2 !important;
+}
+
+html.light .bg-\[\#30363d\] {
+  background-color: #d8dee4 !important;
+}
+
+html.light .bg-\[\#0e2417\] {
+  background-color: #dafbe1 !important;
+}
+
+html.light .hover\:bg-\[\#21262d\]:hover {
+  background-color: #eaeef2 !important;
+}
+
+html.light .hover\:bg-\[\#30363d\]:hover {
+  background-color: #d8dee4 !important;
+}
+
+/* 3. Borders in Light Mode */
+html.light .border-\[\#30363d\] {
+  border-color: #d0d7de !important;
+}
+
+html.light .border-\[\#21262d\] {
+  border-color: #e1e4e8 !important;
+}
+
+/* 4. Text Colors on Light Surfaces */
+html.light .text-\[\#f0f6fc\] {
+  color: #1f2328 !important;
+}
+
+html.light .text-\[\#c9d1d9\] {
+  color: #24292f !important;
+}
+
+html.light .text-\[\#8b949e\] {
+  color: #57606a !important;
+}
+
+/* 5. FIX INVISIBLE/WHITE TEXT: Turn ALL .text-white into dark #1f2328 across cards, boxes, headings, spans, paragraphs, buttons, labels */
+html.light .text-white {
+  color: #1f2328 !important;
+}
+
+html.light h1,
+html.light h2,
+html.light h3,
+html.light h4,
+html.light h5,
+html.light h6 {
+  color: #1f2328;
+}
+
+/* 6. Form inputs, textareas, selects, and search bars */
+html.light input,
+html.light textarea,
+html.light select {
+  color: #1f2328 !important;
+  background-color: #ffffff !important;
+  border-color: #d0d7de !important;
+}
+
+html.light input::placeholder,
+html.light textarea::placeholder {
+  color: #656d76 !important;
+}
+
+/* 7. Hover States: NEVER turn text white on light background upon hover */
+html.light .hover\:text-white:hover,
+html.light .group:hover .group-hover\:text-white {
+  color: #0969da !important;
+}
+
+html.light .hover\:text-\[\#f0f6fc\]:hover {
+  color: #0969da !important;
+}
+
+/* 8. Light Mode Buttons: buttons that had light gray/white backgrounds must have dark text */
+html.light button.bg-\[\#21262d\],
+html.light button.bg-\[\#161b22\],
+html.light button.bg-\[\#0d1117\],
+html.light button.bg-\[\#30363d\],
+html.light button.bg-\[\#21262d\] span,
+html.light button.bg-\[\#161b22\] span,
+html.light button.bg-\[\#0d1117\] span,
+html.light button.bg-\[\#30363d\] span {
+  color: #1f2328 !important;
+}
+
+/* SVG icons that had text-white should become dark on light mode buttons/cards */
+html.light svg.text-white {
+  color: #1f2328 !important;
+}
+
+/* 9. EXCEPTIONS: KEEP CRISP WHITE TEXT ON COLORED BUTTONS & BADGES (High-Performance Targeted) */
+html.light .bg-\[\#238636\],
+html.light .bg-\[\#238636\] span,
+html.light .bg-\[\#2ea043\],
+html.light .bg-\[\#2ea043\] span,
+html.light .hover\:bg-\[\#2ea043\]:hover,
+html.light .bg-\[\#1b6b2b\],
+html.light .bg-\[\#25D366\],
+html.light .bg-\[\#25D366\] span,
+html.light .bg-\[\#1f6feb\],
+html.light .bg-\[\#1f6feb\] span,
+html.light .bg-blue-600,
+html.light .bg-blue-600 span,
+html.light .bg-blue-500,
+html.light .bg-emerald-600,
+html.light .bg-emerald-600 span,
+html.light .bg-rose-600,
+html.light .bg-rose-600 span,
+html.light .bg-purple-600,
+html.light .bg-purple-600 span,
+html.light .keep-white,
+html.light .keep-white span,
+html.light .keep-white p {
+  color: #ffffff !important;
+}
+
+/* Keep SVG icons white inside colored buttons */
+html.light .bg-\[\#238636\] svg,
+html.light .bg-\[\#2ea043\] svg,
+html.light .bg-\[\#25D366\] svg,
+html.light .bg-\[\#1f6feb\] svg,
+html.light .bg-blue-600 svg,
+html.light .bg-rose-600 svg,
+html.light .keep-white svg {
+  color: #ffffff !important;
+}
+
+/* 10. Custom Scrollbar for Light Mode */
+html.light .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #d0d7de;
+}
+html.light .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #afb8c1;
+}
+
+/* 11. Markdown Content in Light Mode */
+html.light .markdown-content table {
+  border-color: #d0d7de;
+  background-color: #ffffff;
+}
+
+html.light .markdown-content td,
+html.light .markdown-content th {
+  border-color: #d0d7de;
+  color: #1f2328;
+}
+
+html.light .markdown-content b,
+html.light .markdown-content strong {
+  color: #1f2328;
+}
+
+html.light .markdown-content sub {
+  color: #57606a;
+}
+
+/* 12. Code blocks, README files & Terminal Viewers in Light Mode */
+html.light .text-\[\#e6edf3\] {
+  color: #1f2328 !important;
+}
+
+html.light pre,
+html.light pre code {
+  color: #1f2328 !important;
+  background-color: transparent !important;
+}
+
+html.light code:not(pre code) {
+  color: #0969da !important;
+  background-color: #eaeef2 !important;
+  border-color: #d0d7de !important;
+}
+
+/* 13. Gradient box fixes for light mode */
+html.light .from-\[\#161b22\] {
+  --tw-gradient-from: #ffffff !important;
+  --tw-gradient-stops: var(--tw-gradient-from), #f0fdf4 !important;
+}
+html.light .to-\[\#0d1117\] {
+  --tw-gradient-to: #f0fdf4 !important;
+}
+

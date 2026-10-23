@@ -59,9 +59,9 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const register = async (name, email, password) => {
+  const register = async (name, email, password, phone = '', countryCode = '+91') => {
     try {
-      const res = await api.register(name, email, password);
+      const res = await api.register(name, email, password, phone, countryCode);
       if (res && res.success && res.token) {
         localStorage.setItem('cdh_token', res.token);
         setToken(res.token);
@@ -155,9 +155,38 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const recordQuizProgress = async (sessionNumber, score, totalQuestions, passed) => {
+    if (!user) return { success: false };
+    try {
+      const res = await api.recordQuizProgress(sessionNumber, score, totalQuestions, passed);
+      if (res && res.success) {
+        setUser((prev) => ({
+          ...prev,
+          quizProgress: res.quizProgress,
+          completedSessions: res.completedSessions || prev?.completedSessions || [],
+        }));
+        return { success: true, quizProgress: res.quizProgress };
+      }
+    } catch (err) {
+      console.error('Error saving quiz progress:', err);
+    }
+    return { success: false };
+  };
+
   const isCompleted = (sessionNumber) => {
     if (!user || !user.completedSessions) return false;
     return user.completedSessions.includes(Number(sessionNumber));
+  };
+
+  const isQuizPassed = (sessionNumber) => {
+    if (!user || !user.quizProgress) return false;
+    const entry = user.quizProgress.find((q) => Number(q.sessionNumber) === Number(sessionNumber));
+    return Boolean(entry && entry.passed);
+  };
+
+  const getQuizResult = (sessionNumber) => {
+    if (!user || !user.quizProgress) return null;
+    return user.quizProgress.find((q) => Number(q.sessionNumber) === Number(sessionNumber)) || null;
   };
 
   const openAuthModal = (customMsg = '', initialTab = 'signin') => {
@@ -172,6 +201,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const completedCount = user?.completedSessions?.length || 0;
+  const quizPassedCount = (user?.quizProgress || []).filter((q) => q.passed).length;
 
   return (
     <AuthContext.Provider
@@ -187,8 +217,12 @@ export const AuthProvider = ({ children }) => {
         loginDemo,
         logout,
         toggleComplete,
+        recordQuizProgress,
         isCompleted,
+        isQuizPassed,
+        getQuizResult,
         completedCount,
+        quizPassedCount,
         authModalOpen,
         authPromptMessage,
         authModalTab,

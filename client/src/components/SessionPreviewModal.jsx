@@ -156,7 +156,7 @@ export const SessionPreviewModal = ({ session, onClose, onOpenGitHub, onOpenQuiz
               <div>
                 <p className="font-bold text-amber-300">Sign in required to access this resource</p>
                 <p className="text-[#8b949e] mt-0.5">
-                  Sessions 0 to 4 are free. To unlock Sessions 5-54 and sync your progress, sign in with your Google account or email.
+                  Sessions 0 to 4 are free. To unlock Sessions 5-54 and sync your progress, sign in or create a free account.
                 </p>
               </div>
             </div>
@@ -167,17 +167,18 @@ export const SessionPreviewModal = ({ session, onClose, onOpenGitHub, onOpenQuiz
         {/* Modal Footer Controls */}
         <div className="px-6 py-4 border-t border-[#30363d] bg-[#161b22] flex flex-col sm:flex-row items-center justify-between gap-3">
           {/* Mark Complete Checkbox */}
-          <button
-            onClick={() => toggleComplete(session.sessionNumber)}
-            className={`w-full sm:w-auto px-4 py-2 rounded-xl text-xs font-semibold border transition-colors flex items-center justify-center space-x-2 cursor-pointer ${
-              completed
-                ? 'bg-emerald-950/40 border-emerald-800/80 text-emerald-400'
-                : 'bg-[#21262d] border-[#30363d] text-[#c9d1d9] hover:bg-[#30363d] hover:text-white'
-            }`}
-          >
-            <CheckCircle2 className={`w-4 h-4 ${completed ? 'fill-emerald-400 text-slate-900' : 'text-[#8b949e]'}`} />
-            <span>{completed ? 'Completed ✓' : 'Mark as Done'}</span>
-          </button>
+          {/* Status Indicator (Only reading markdown completes the session) */}
+          {completed ? (
+            <div className="w-full sm:w-auto px-4 py-2 rounded-xl text-xs font-semibold bg-emerald-950/40 border border-emerald-800/80 text-emerald-400 flex items-center justify-center space-x-2 select-none">
+              <CheckCircle2 className="w-4 h-4 fill-emerald-400 text-slate-900" />
+              <span>Completed ✓</span>
+            </div>
+          ) : (
+            <div className="w-full sm:w-auto px-3.5 py-2 rounded-xl text-xs font-semibold text-[#8b949e] flex items-center justify-center space-x-1.5 select-none">
+              <BookOpen className="w-3.5 h-3.5 text-[#8b949e]" />
+              <span>Read notes to complete</span>
+            </div>
+          )}
 
           {/* Action CTAs */}
           <div className="flex flex-col sm:flex-row items-center gap-2.5 w-full sm:w-auto">

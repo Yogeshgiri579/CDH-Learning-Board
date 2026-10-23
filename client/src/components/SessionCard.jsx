@@ -10,9 +10,10 @@ import { Github } from './GithubIcon';
 import { useAuth } from '../context/AuthContext';
 
 export const SessionCard = ({ session, onPreview, onOpenGitHub, onOpenQuiz }) => {
-  const { isCompleted, toggleComplete, isAuthenticated } = useAuth();
+  const { isCompleted, isAuthenticated, getQuizResult } = useAuth();
   
   const completed = isCompleted(session.sessionNumber);
+  const quizResult = getQuizResult ? getQuizResult(session.sessionNumber) : null;
   const isFree = session.sessionNumber < 5;
   const isLocked = !isFree && !isAuthenticated;
 
@@ -54,13 +55,15 @@ export const SessionCard = ({ session, onPreview, onOpenGitHub, onOpenQuiz }) =>
             ) : null}
           </div>
 
-          <button
-            onClick={() => toggleComplete(session.sessionNumber)}
-            title={completed ? 'Completed' : 'Mark as done'}
-            className="text-[#484f58] hover:text-emerald-400 transition-colors p-1 cursor-pointer"
-          >
-            <CheckCircle2 className={`w-5 h-5 ${completed ? 'fill-emerald-400 text-slate-900' : 'text-[#484f58]'}`} />
-          </button>
+          {/* Read-only completion status indicator (must read inside markdown to complete) */}
+          {completed && (
+            <div 
+              title="Session Completed"
+              className="p-1 select-none"
+            >
+              <CheckCircle2 className="w-5 h-5 fill-emerald-400 text-slate-900" />
+            </div>
+          )}
         </div>
 
         {/* Module Subtitle */}
@@ -112,17 +115,35 @@ export const SessionCard = ({ session, onPreview, onOpenGitHub, onOpenQuiz }) =>
         </div>
 
         <div className="flex items-center space-x-1.5">
-          {/* Quick Quiz Button */}
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              onOpenQuiz && onOpenQuiz(session);
-            }}
-            className="p-1.5 text-amber-400 hover:text-amber-300 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 cursor-pointer transition-colors"
-            title="Take session quiz"
-          >
-            <Sparkles className="w-4 h-4" />
-          </button>
+          {/* Quick Quiz Button / Realtime Result */}
+          {quizResult ? (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onOpenQuiz && onOpenQuiz(session);
+              }}
+              className={`px-2 py-1 rounded-lg text-xs font-bold flex items-center space-x-1 cursor-pointer transition-colors ${
+                quizResult.passed
+                  ? 'text-emerald-400 bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/35'
+                  : 'text-amber-300 bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/35'
+              }`}
+              title={`Quiz Result: ${quizResult.score}/${quizResult.totalQuestions} (${quizResult.passed ? 'Passed' : 'Needs 60%'}). Click to retake.`}
+            >
+              {quizResult.passed ? <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" /> : <Sparkles className="w-3.5 h-3.5 text-amber-400" />}
+              <span className="font-mono">{quizResult.score}/{quizResult.totalQuestions}</span>
+            </button>
+          ) : (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onOpenQuiz && onOpenQuiz(session);
+              }}
+              className="p-1.5 text-amber-400 hover:text-amber-300 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 cursor-pointer transition-colors"
+              title="Take session quiz"
+            >
+              <Sparkles className="w-4 h-4" />
+            </button>
+          )}
 
           <button
             onClick={handlePreviewClick}

@@ -28,22 +28,26 @@ async function request(path, options = {}) {
 
     // If non-JSON returned on proxy, try direct backend URL
     if (PRIMARY_URL !== DIRECT_URL) {
-      const fallbackRes = await fetch(`${DIRECT_URL}${path}`, config);
-      return await fallbackRes.json();
+      try {
+        const fallbackRes = await fetch(`${DIRECT_URL}${path}`, config);
+        if (fallbackRes.headers.get('content-type')?.includes('application/json')) {
+          return await fallbackRes.json();
+        }
+      } catch {}
     }
 
-    return { success: false, message: `Unexpected server response (${res.status})` };
+    return { success: false, message: 'Unable to complete request. Please try again.' };
   } catch (err) {
     // If PRIMARY_URL threw network error, try direct backend URL
     if (PRIMARY_URL !== DIRECT_URL) {
       try {
         const fallbackRes = await fetch(`${DIRECT_URL}${path}`, config);
-        return await fallbackRes.json();
-      } catch {
-        return { success: false, message: 'Unable to reach backend server. Please verify the server is running on port 5000.' };
-      }
+        if (fallbackRes.headers.get('content-type')?.includes('application/json')) {
+          return await fallbackRes.json();
+        }
+      } catch {}
     }
-    return { success: false, message: err.message || 'Network error occurred' };
+    return { success: false, message: 'Unable to connect to server. Please try again.' };
   }
 }
 
@@ -56,11 +60,15 @@ export const api = {
     });
   },
 
-  async register(name, email, password) {
+  async register(name, email, password, phone = '', countryCode = '+91') {
     return request('/auth/register', {
       method: 'POST',
-      body: JSON.stringify({ name: name.trim(), email: email.trim(), password }),
+      body: JSON.stringify({ name: name.trim(), email: email.trim(), password, phone, countryCode }),
     });
+  },
+
+  async getLeaderboard() {
+    return request('/leaderboard');
   },
 
   async googleAuth(profile) {
@@ -85,6 +93,13 @@ export const api = {
     return request('/auth/progress/toggle', {
       method: 'POST',
       body: JSON.stringify({ sessionNumber }),
+    });
+  },
+
+  async recordQuizProgress(sessionNumber, score, totalQuestions, passed) {
+    return request('/auth/progress/quiz', {
+      method: 'POST',
+      body: JSON.stringify({ sessionNumber, score, totalQuestions, passed }),
     });
   },
 

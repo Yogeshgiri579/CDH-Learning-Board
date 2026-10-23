@@ -6,6 +6,8 @@ import authRoutes from './routes/authRoutes.js';
 import sessionRoutes from './routes/sessionRoutes.js';
 import quizRoutes from './routes/quizRoutes.js';
 import githubRoutes from './routes/githubRoutes.js';
+import adminRoutes from './routes/adminRoutes.js';
+import { getLeaderboard } from './controllers/authController.js';
 
 dotenv.config();
 
@@ -29,6 +31,8 @@ app.use('/api/auth', authRoutes);
 app.use('/api/sessions', sessionRoutes);
 app.use('/api/quizzes', quizRoutes);
 app.use('/api/github', githubRoutes);
+app.use('/api/admin', adminRoutes);
+app.get('/api/leaderboard', getLeaderboard);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {

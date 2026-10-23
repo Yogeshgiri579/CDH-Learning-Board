@@ -3,7 +3,7 @@ import { CheckCircle2, Flame, Sparkles } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 export const ProgressBanner = ({ totalSessions = 55 }) => {
-  const { completedCount, isAuthenticated, openAuthModal } = useAuth();
+  const { completedCount, quizPassedCount = 0, isAuthenticated, openAuthModal } = useAuth();
 
   const percentage = Math.round((completedCount / totalSessions) * 100);
 
@@ -14,7 +14,7 @@ export const ProgressBanner = ({ totalSessions = 55 }) => {
         {/* Progress Bar & Counter */}
         <div className="flex items-center space-x-3 min-w-0 flex-1">
           <span className="font-semibold text-[#f0f6fc] whitespace-nowrap hidden sm:inline">
-            Your Progress:
+            Learning Progress:
           </span>
           
           <div className="flex-1 max-w-xs bg-[#21262d] h-2 rounded-full overflow-hidden border border-[#30363d]">
@@ -27,6 +27,13 @@ export const ProgressBanner = ({ totalSessions = 55 }) => {
           <span className="font-mono font-bold text-[#c9d1d9] whitespace-nowrap">
             {completedCount}/{totalSessions} ({percentage}%)
           </span>
+
+          {quizPassedCount > 0 && (
+            <span className="hidden md:inline-flex items-center space-x-1 px-2 py-0.5 rounded-md bg-[#21262d] border border-[#30363d] text-[11px] text-amber-300 font-medium">
+              <Sparkles className="w-3 h-3 text-amber-400" />
+              <span>{quizPassedCount} Quizzes Passed</span>
+            </span>
+          )}
         </div>
 
         {/* Status / Streak / Sync */}
@@ -38,7 +45,7 @@ export const ProgressBanner = ({ totalSessions = 55 }) => {
 
           {!isAuthenticated ? (
             <button
-              onClick={() => openAuthModal('Sign in with Google to sync your completed sessions across devices')}
+              onClick={() => openAuthModal('Sign in to save and sync your learning & quiz progress')}
               className="text-[#58a6ff] hover:underline font-semibold flex items-center space-x-1 transition-colors cursor-pointer"
             >
               <span>Sync Progress</span>
@@ -47,7 +54,7 @@ export const ProgressBanner = ({ totalSessions = 55 }) => {
           ) : (
             <span className="text-emerald-400 font-medium flex items-center space-x-1">
               <CheckCircle2 className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">Synced</span>
+              <span className="hidden sm:inline">Progress Synced</span>
             </span>
           )}
         </div>
