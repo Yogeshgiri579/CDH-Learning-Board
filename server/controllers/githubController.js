@@ -3,7 +3,13 @@ function sanitizePath(rawPath) {
   if (!rawPath) return { clean: '', safePath: '', decodedFileName: 'file' };
   const clean = rawPath.split('?')[0].split('#')[0];
   const segments = clean.split('/').filter(Boolean);
-  const safePath = segments.map((seg) => encodeURIComponent(decodeURIComponent(seg))).join('/');
+  const safePath = segments.map((seg) => {
+    try {
+      return encodeURIComponent(decodeURIComponent(seg));
+    } catch {
+      return encodeURIComponent(seg);
+    }
+  }).join('/');
   const rawFileName = segments[segments.length - 1] || 'file';
   let decodedFileName = rawFileName;
   try {

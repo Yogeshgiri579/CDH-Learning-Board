@@ -305,9 +305,20 @@ export const GitHubPreviewModal = ({
 
     const file = selectedFile;
 
+    // Helper to get raw URL
+    const getCleanRawUrl = (f) => {
+      if (!f) return '';
+      if (f.rawUrl) return f.rawUrl;
+      if (f.githubUrl && f.githubUrl.includes('github.com/') && f.githubUrl.includes('/blob/')) {
+        return f.githubUrl.replace('github.com/', 'raw.githubusercontent.com/').replace('/blob/', '/');
+      }
+      return f.githubUrl || '';
+    };
+
     // Case 1: Image file
     if (file.fileType === 'image' || file.name?.match(/\.(png|jpg|jpeg|gif|svg|webp)$/i)) {
-      setContent(file.rawUrl || file.githubUrl);
+      const imgUrl = getCleanRawUrl(file);
+      setContent(imgUrl);
       setLoading(false);
       return;
     }
@@ -319,14 +330,61 @@ export const GitHubPreviewModal = ({
       return;
     }
 
-    // Case 3: Official Session default README
-    const isDefaultSessionReadme = 
+    // Identify if this file is strictly the built-in synthetic session default README tab
+    const isSystemDefaultReadme = 
       file._id === 'default_readme' || 
-      file._id === `default_readme_${session.sessionNumber}` || 
-      file.isDefault ||
-      file.name?.toLowerCase() === 'readme.md';
+      file._id === `default_readme_${session.sessionNumber}`;
 
-    if (isDefaultSessionReadme) {
+    // Case 3: Any custom attached GitHub file (custom notes, scripts, markdown, primary file)
+    if (!isSystemDefaultReadme && (file.githubUrl || file.rawUrl)) {
+      const targetUrl = file.githubUrl || file.rawUrl;
+      try {
+        const res = await api.previewGitHubUrl(targetUrl);
+        if (res && res.success && res.content !== undefined) {
+          setContent(res.content);
+          setLoading(false);
+          return;
+        } else {
+          // If server preview fails, try direct fetch from raw URL
+          const rawUrlFallback = getCleanRawUrl(file);
+          if (rawUrlFallback) {
+            try {
+              const directRes = await fetch(rawUrlFallback, { signal: AbortSignal.timeout ? AbortSignal.timeout(6000) : undefined });
+              if (directRes.ok) {
+                const text = await directRes.text();
+                setContent(text);
+                setLoading(false);
+                return;
+              }
+            } catch {}
+          }
+          setErrorMsg(res?.message || 'Failed to load GitHub file content. Please check branch and path.');
+          setLoading(false);
+          return;
+        }
+      } catch (err) {
+        console.warn('Failed to fetch GitHub file via server preview:', err);
+        // Client direct fetch fallback
+        const rawUrlFallback = getCleanRawUrl(file);
+        if (rawUrlFallback) {
+          try {
+            const directRes = await fetch(rawUrlFallback, { signal: AbortSignal.timeout ? AbortSignal.timeout(6000) : undefined });
+            if (directRes.ok) {
+              const text = await directRes.text();
+              setContent(text);
+              setLoading(false);
+              return;
+            }
+          } catch {}
+        }
+        setErrorMsg(err.message || 'Error loading file from GitHub');
+        setLoading(false);
+        return;
+      }
+    }
+
+    // Case 4: Official Session default README
+    if (isSystemDefaultReadme) {
       try {
         const res = await api.getSessionReadme(session.sessionNumber);
         if (res && res.success && res.content) {
@@ -351,38 +409,6 @@ export const GitHubPreviewModal = ({
       } catch {}
 
       setContent(generateFallbackNotes(session));
-      setLoading(false);
-      return;
-    }
-
-    // Case 4: Any specific GitHub file attached to session (custom notes, scripts, yaml, primary file)
-    if (file.githubUrl || file.rawUrl) {
-      try {
-        const targetUrl = file.githubUrl || file.rawUrl;
-        const res = await api.previewGitHubUrl(targetUrl);
-        if (res && res.success) {
-          setContent(res.content || '');
-          setLoading(false);
-          return;
-        } else {
-          // If server preview fails, try direct fetch from rawUrl if available
-          if (file.rawUrl) {
-            try {
-              const directRes = await fetch(file.rawUrl, { signal: AbortSignal.timeout ? AbortSignal.timeout(5000) : undefined });
-              if (directRes.ok) {
-                const text = await directRes.text();
-                setContent(text);
-                setLoading(false);
-                return;
-              }
-            } catch {}
-          }
-          setErrorMsg(res?.message || 'Failed to load GitHub file content. Please check branch and path.');
-        }
-      } catch (err) {
-        console.warn('Failed to fetch GitHub file:', err);
-        setErrorMsg(err.message || 'Error loading file from GitHub');
-      }
       setLoading(false);
       return;
     }
