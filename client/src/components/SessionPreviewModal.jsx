@@ -6,7 +6,8 @@ import {
   Clock, 
   Sparkles, 
   Layers, 
-  Terminal
+  Terminal,
+  BookOpen
 } from 'lucide-react';
 import { Github } from './GithubIcon';
 import { useAuth } from '../context/AuthContext';
