@@ -95,7 +95,6 @@ export function App() {
     const handleKeyDown = (e) => {
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
         e.preventDefault();
-        setActiveTab('explore');
         setTimeout(() => searchInputRef.current?.focus(), 50);
       }
     };
@@ -184,11 +183,9 @@ export function App() {
       {/* Top Navbar */}
       <Navbar 
         onSearchClick={() => {
-          setActiveTab('explore');
           setTimeout(() => searchInputRef.current?.focus(), 50);
         }}
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
+        onCurriculumClick={handleStartNow}
         onLeaderboardClick={() => setLeaderboardOpen(true)}
       />
 

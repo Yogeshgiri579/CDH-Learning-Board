@@ -17,7 +17,7 @@ import {
 import { Github } from './GithubIcon';
 import { ThemeToggle } from './ThemeToggle';
 
-export const Navbar = ({ onSearchClick, activeTab, setActiveTab, onLeaderboardClick }) => {
+export const Navbar = ({ onSearchClick, onCurriculumClick, onLeaderboardClick }) => {
   const { user, token, loading, isAuthenticated, logout, openAuthModal, completedCount, quizPassedCount = 0 } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
@@ -73,7 +73,7 @@ export const Navbar = ({ onSearchClick, activeTab, setActiveTab, onLeaderboardCl
           {/* Center Navigation Links */}
           <div className="hidden md:flex items-center space-x-1 lg:space-x-2">
             <button
-              onClick={() => setActiveTab && setActiveTab('explore')}
+              onClick={() => onCurriculumClick ? onCurriculumClick() : window.scrollTo({ top: 0, behavior: 'smooth' })}
               className="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all flex items-center space-x-1.5 cursor-pointer bg-[#21262d] text-white border border-[#30363d] shadow-xs"
             >
               <Layers className="w-4 h-4 text-[#58a6ff]" />
@@ -237,7 +237,7 @@ export const Navbar = ({ onSearchClick, activeTab, setActiveTab, onLeaderboardCl
           <div className="space-y-1">
             <button
               onClick={() => {
-                setActiveTab && setActiveTab('explore');
+                if (onCurriculumClick) onCurriculumClick();
                 setMobileMenuOpen(false);
               }}
               className="w-full text-left px-3 py-2 rounded-lg text-sm font-semibold text-white bg-[#21262d]"
