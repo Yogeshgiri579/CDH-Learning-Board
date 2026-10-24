@@ -580,8 +580,9 @@ export const LeaderboardModal = ({ isOpen, onClose }) => {
                       </tr>
                     ) : filteredLeaderboard.length === 0 ? (
                       <tr>
-                        <td colSpan={7} className="py-12 text-center text-[#8b949e]">
-                          No students found matching "{searchQuery}"
+                        <td colSpan={7} className="py-12 px-4 text-center text-[#8b949e]">
+                          <Trophy className="w-8 h-8 text-[#484f58] mx-auto mb-2 opacity-50" />
+                          <span>No students found matching "{searchQuery || 'current filters'}"</span>
                         </td>
                       </tr>
                     ) : (

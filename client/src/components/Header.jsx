@@ -282,10 +282,10 @@ export const Header = ({ onStartNow, onPreviewSession0, firstSession, onSwitchTo
                   </div>
 
                   <button
-                    onClick={onSwitchToRoadmap}
+                    onClick={onStartNow}
                     className="w-full py-2.5 px-3 rounded-lg bg-[#21262d] hover:bg-[#30363d] text-[#c9d1d9] hover:text-white border border-[#30363d] text-xs font-semibold flex items-center justify-center space-x-1.5 transition-all cursor-pointer"
                   >
-                    <span>Open Roadmap Tree View</span>
+                    <span>Explore Curriculum</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </button>
                 </div>

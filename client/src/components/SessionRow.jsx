@@ -86,34 +86,34 @@ export const SessionRow = ({ session, onPreview, onOpenGitHub, onOpenQuiz, searc
     >
       {/* Main Row */}
       <div 
-        className="px-4 py-3.5 sm:py-4 flex items-center justify-between gap-3 sm:gap-5 cursor-pointer select-none"
+        className="px-2.5 sm:px-4 py-2.5 sm:py-4 flex items-center justify-between gap-2 sm:gap-5 cursor-pointer select-none"
         onClick={() => setExpanded(!expanded)}
       >
         
         {/* Left: Checkbox + Number + Title + Topics */}
-        <div className="flex items-center space-x-3 sm:space-x-4 min-w-0 flex-1">
+        <div className="flex items-center space-x-2 sm:space-x-4 min-w-0 flex-1">
           {/* Read-only Completion Status (Must read markdown inside to mark as done) */}
           <div 
             className="flex-shrink-0 p-0.5 select-none"
             title={completed ? 'Session Completed' : 'Read session to mark as done'}
           >
             {completed ? (
-              <CheckCircle2 className="w-5 h-5 sm:w-5.5 sm:h-5.5 fill-emerald-400 text-slate-900" />
+              <CheckCircle2 className="w-4 h-4 sm:w-5.5 sm:h-5.5 fill-emerald-400 text-slate-900" />
             ) : (
-              <div className="w-5 h-5 sm:w-5.5 sm:h-5.5 rounded-full border border-[#30363d] flex items-center justify-center text-[10px] text-[#484f58] group-hover:border-[#484f58]" />
+              <div className="w-4 h-4 sm:w-5.5 sm:h-5.5 rounded-full border border-[#30363d] flex items-center justify-center text-[10px] text-[#484f58] group-hover:border-[#484f58]" />
             )}
           </div>
 
           {/* Session Number */}
-          <span className="font-mono text-xs sm:text-sm font-bold text-[#8b949e] group-hover:text-[#c9d1d9] flex-shrink-0 w-8 sm:w-9">
+          <span className="font-mono text-xs sm:text-sm font-bold text-[#8b949e] group-hover:text-[#c9d1d9] flex-shrink-0 w-7 sm:w-9">
             #{session.sessionNumber.toString().padStart(2, '0')}
           </span>
 
           {/* Title & Preview info */}
           <div className="min-w-0 flex-1">
-            <div className="flex items-center space-x-2.5">
+            <div className="flex items-center space-x-2">
               <h4 
-                className={`text-sm sm:text-base font-bold truncate transition-colors ${
+                className={`text-xs sm:text-base font-bold truncate transition-colors ${
                   completed ? 'text-[#8b949e] line-through decoration-[#484f58]' : 'text-[#f0f6fc] group-hover:text-[#58a6ff]'
                 }`}
               >
@@ -151,7 +151,7 @@ export const SessionRow = ({ session, onPreview, onOpenGitHub, onOpenQuiz, searc
         </div>
 
         {/* Right side: Metadata + Quick Actions */}
-        <div className="flex items-center space-x-2.5 sm:space-x-4 flex-shrink-0">
+        <div className="flex items-center space-x-1.5 sm:space-x-3 flex-shrink-0">
           
           {/* Difficulty pill */}
           <div className="hidden lg:flex items-center space-x-1.5">
@@ -165,14 +165,14 @@ export const SessionRow = ({ session, onPreview, onOpenGitHub, onOpenQuiz, searc
             <span>{session.duration}</span>
           </div>
 
-          {/* Quick Preview button */}
+          {/* Quick Preview button - hidden on mobile to give room to title, available in drawer */}
           <button
             onClick={handlePreviewClick}
-            className="p-1.5 sm:px-3 sm:py-1.5 rounded-lg text-[#c9d1d9] hover:text-white hover:bg-[#30363d] border border-[#30363d] transition-colors text-xs font-semibold flex items-center space-x-1 cursor-pointer bg-[#21262d]"
+            className="hidden sm:flex p-1.5 sm:px-3 sm:py-1.5 rounded-lg text-[#c9d1d9] hover:text-white hover:bg-[#30363d] border border-[#30363d] transition-colors text-xs font-semibold items-center space-x-1 cursor-pointer bg-[#21262d]"
             title="Quick preview session breakdown"
           >
             <Eye className="w-3.5 h-3.5 text-[#8b949e]" />
-            <span className="hidden sm:inline">Overview</span>
+            <span>Overview</span>
           </button>
 
           {/* Quick Quiz button / Realtime Quiz Result based on score */}
@@ -182,7 +182,7 @@ export const SessionRow = ({ session, onPreview, onOpenGitHub, onOpenQuiz, searc
                 e.stopPropagation();
                 onOpenQuiz && onOpenQuiz(session);
               }}
-              className={`p-1.5 sm:px-2.5 sm:py-1 rounded-lg text-xs font-bold flex items-center space-x-1.5 cursor-pointer transition-all shadow-xs ${
+              className={`p-1 sm:px-2.5 sm:py-1 rounded-lg text-[11px] sm:text-xs font-bold flex items-center space-x-1 sm:space-x-1.5 cursor-pointer transition-all shadow-xs ${
                 quizResult.passed
                   ? 'text-emerald-400 bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/35'
                   : 'text-amber-300 bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/35'
@@ -192,11 +192,11 @@ export const SessionRow = ({ session, onPreview, onOpenGitHub, onOpenQuiz, searc
               }%). ${quizResult.passed ? 'Passed!' : 'Needs 60% to pass.'} Click to retake.`}
             >
               {quizResult.passed ? (
-                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                <CheckCircle2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-400" />
               ) : (
-                <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+                <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-amber-400" />
               )}
-              <span className="font-mono">{quizResult.score}/{quizResult.totalQuestions}</span>
+              <span className="font-mono text-[10px] sm:text-xs">{quizResult.score}/{quizResult.totalQuestions}</span>
               <span className="hidden md:inline text-[11px] font-semibold opacity-90">
                 {quizResult.passed ? 'Passed' : 'Retake'}
               </span>
@@ -207,7 +207,7 @@ export const SessionRow = ({ session, onPreview, onOpenGitHub, onOpenQuiz, searc
                 e.stopPropagation();
                 onOpenQuiz && onOpenQuiz(session);
               }}
-              className="p-1.5 sm:px-3 sm:py-1.5 rounded-lg text-amber-300 hover:text-amber-200 bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 transition-colors text-xs font-semibold flex items-center space-x-1 cursor-pointer"
+              className="p-1 sm:px-3 sm:py-1.5 rounded-lg text-amber-300 hover:text-amber-200 bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 transition-colors text-xs font-semibold flex items-center space-x-1 cursor-pointer"
               title="Take interactive quick quiz for this session"
             >
               <Sparkles className="w-3.5 h-3.5 text-amber-400" />
@@ -218,7 +218,7 @@ export const SessionRow = ({ session, onPreview, onOpenGitHub, onOpenQuiz, searc
           {/* Read button with Github icon & GitHub green styling */}
           <button
             onClick={handleStartClick}
-            className="px-3 py-1.5 sm:px-3.5 sm:py-1.5 rounded-lg text-xs font-semibold flex items-center space-x-1.5 transition-all shadow-xs cursor-pointer bg-[#238636] hover:bg-[#2ea043] text-white active:scale-95"
+            className="px-2.5 py-1 sm:px-3.5 sm:py-1.5 rounded-lg text-xs font-semibold flex items-center space-x-1 sm:space-x-1.5 transition-all shadow-xs cursor-pointer bg-[#238636] hover:bg-[#2ea043] text-white active:scale-95"
             title="Read session GitHub README in-app"
           >
             {isLocked ? (
@@ -236,13 +236,13 @@ export const SessionRow = ({ session, onPreview, onOpenGitHub, onOpenQuiz, searc
 
           {/* Row expansion arrow */}
           <div 
-            className="p-1 text-[#8b949e] hover:text-[#f0f6fc] transition-transform duration-200"
+            className="p-0.5 sm:p-1 text-[#8b949e] hover:text-[#f0f6fc] transition-transform duration-200"
             aria-label="Expand details"
           >
             {expanded ? (
-              <ChevronUp className="w-4 h-4 text-[#8b949e]" />
+              <ChevronUp className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#8b949e]" />
             ) : (
-              <ChevronDown className="w-4 h-4" />
+              <ChevronDown className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             )}
           </div>
 
@@ -251,7 +251,7 @@ export const SessionRow = ({ session, onPreview, onOpenGitHub, onOpenQuiz, searc
 
       {/* Expanded Drawer Details */}
       {expanded && (
-        <div className="px-5 sm:px-12 py-4 bg-[#010409] border-t border-[#21262d] text-xs sm:text-sm text-[#c9d1d9] animate-in fade-in duration-200">
+        <div className="px-4 sm:px-12 py-4 bg-[#010409] border-t border-[#21262d] text-xs sm:text-sm text-[#c9d1d9] animate-in fade-in duration-200">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-5xl">
             
             {/* Overview & Topics */}
@@ -298,7 +298,7 @@ export const SessionRow = ({ session, onPreview, onOpenGitHub, onOpenQuiz, searc
               )}
 
               {/* Direct Open CTA */}
-              <div className="mt-4 flex items-center space-x-3">
+              <div className="mt-4 flex flex-wrap items-center gap-2 sm:gap-3">
                 <button
                   onClick={handleStartClick}
                   className="px-3.5 py-1.5 rounded-lg bg-[#238636] hover:bg-[#2ea043] text-white text-xs font-semibold flex items-center space-x-1.5 cursor-pointer shadow-xs"
@@ -312,6 +312,13 @@ export const SessionRow = ({ session, onPreview, onOpenGitHub, onOpenQuiz, searc
                 >
                   <Sparkles className="w-3.5 h-3.5 text-amber-400" />
                   <span>Take Quiz</span>
+                </button>
+                <button
+                  onClick={handlePreviewClick}
+                  className="sm:hidden px-3.5 py-1.5 rounded-lg bg-[#21262d] hover:bg-[#30363d] text-[#c9d1d9] hover:text-white border border-[#30363d] text-xs font-semibold flex items-center space-x-1.5 cursor-pointer"
+                >
+                  <Eye className="w-3.5 h-3.5 text-[#8b949e]" />
+                  <span>Overview</span>
                 </button>
               </div>
             </div>

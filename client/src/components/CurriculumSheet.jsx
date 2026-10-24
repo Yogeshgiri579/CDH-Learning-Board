@@ -220,33 +220,51 @@ export const CurriculumSheet = ({
               {/* Module Header Bar */}
               <div 
                 onClick={() => toggleModule(mod.id)}
-                className="px-5 sm:px-6 py-4 bg-[#161b22] hover:bg-[#21262d] border-b border-[#30363d] cursor-pointer flex items-center justify-between gap-4 select-none transition-colors"
+                className="p-3.5 sm:px-6 sm:py-4 bg-[#161b22] hover:bg-[#21262d] border-b border-[#30363d] cursor-pointer flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 select-none transition-colors"
               >
-                {/* Left: Module Tag & Info */}
-                <div className="flex items-center space-x-3.5 sm:space-x-4 min-w-0 flex-1">
-                  <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-[#21262d] border border-[#30363d] text-[#58a6ff] flex items-center justify-center font-extrabold text-sm sm:text-base flex-shrink-0 shadow-xs">
+                {/* Left/Top: Module Tag & Info */}
+                <div className="flex items-start sm:items-center space-x-3 sm:space-x-4 min-w-0 flex-1">
+                  <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-[#21262d] border border-[#30363d] text-[#58a6ff] flex items-center justify-center font-extrabold text-xs sm:text-base flex-shrink-0 shadow-xs mt-0.5 sm:mt-0">
                     {mod.moduleNum.replace('Module ', 'M')}
                   </div>
 
                   <div className="min-w-0 flex-1">
-                    <div className="flex items-center space-x-2.5 flex-wrap">
-                      <h3 className="text-base sm:text-lg font-bold text-white group-hover:text-[#58a6ff] transition-colors">
-                        {mod.moduleNum}: {mod.title}
-                      </h3>
-                      
-                      <span className={`text-xs font-semibold px-2.5 py-0.5 rounded-full border ${mod.badgeClass}`}>
-                        {mod.badge}
-                      </span>
-                    </div>
+                    <div className="flex items-start justify-between gap-2 sm:block">
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center space-x-2 flex-wrap gap-y-1">
+                          <h3 className="text-sm sm:text-lg font-bold text-white group-hover:text-[#58a6ff] transition-colors leading-snug">
+                            {mod.moduleNum}: {mod.title}
+                          </h3>
+                          
+                          <span className={`text-[10px] sm:text-xs font-semibold px-2 py-0.5 rounded-full border ${mod.badgeClass}`}>
+                            {mod.badge}
+                          </span>
+                        </div>
 
-                    <p className="text-xs sm:text-sm text-[#8b949e] truncate mt-0.5">
-                      {mod.description}
-                    </p>
+                        <p className="text-[11px] sm:text-sm text-[#8b949e] line-clamp-1 sm:truncate mt-0.5">
+                          {mod.description}
+                        </p>
+                      </div>
+
+                      {/* Mobile-only right: Progress pill & Chevron at top */}
+                      <div className="flex items-center space-x-2 sm:hidden flex-shrink-0 mt-0.5">
+                        <span className="text-[11px] font-bold text-[#8b949e] font-mono bg-[#21262d] px-1.5 py-0.5 rounded border border-[#30363d]">
+                          {mod.completedCount}/{mod.total}
+                        </span>
+                        <div className="p-0.5 rounded text-[#8b949e]">
+                          <ChevronDown 
+                            className={`w-4 h-4 transition-transform duration-200 ${
+                              isCollapsed ? 'rotate-0' : 'rotate-180 text-[#58a6ff]'
+                            }`} 
+                          />
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
-                {/* Right: Module Quiz CTA, Progress indicator & Animated Chevron */}
-                <div className="flex items-center space-x-2.5 sm:space-x-3 flex-shrink-0">
+                {/* Right/Bottom: Module Quiz CTA, Progress indicator & Desktop Chevron */}
+                <div className="flex items-center justify-between sm:justify-end space-x-2.5 sm:space-x-3 flex-shrink-0 pt-2 sm:pt-0 border-t border-[#21262d] sm:border-t-0 pl-12 sm:pl-0">
                   {/* Module Quiz Button */}
                   <button
                     onClick={(e) => {
@@ -257,16 +275,15 @@ export const CurriculumSheet = ({
                     title={`Take ${mod.moduleNum} Mastery Quiz`}
                   >
                     <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-                    <span className="hidden sm:inline">Module Quiz</span>
-                    <span className="sm:hidden">Quiz</span>
+                    <span>Module Quiz</span>
                   </button>
 
-                  {/* Progress Pill */}
-                  <div className="flex items-center space-x-2">
+                  {/* Desktop Progress Pill */}
+                  <div className="hidden sm:flex items-center space-x-2">
                     <span className="text-xs sm:text-sm font-semibold text-[#c9d1d9]">
                       {mod.completedCount}/{mod.total} Done
                     </span>
-                    <div className="w-16 sm:w-20 bg-[#21262d] h-2 rounded-full overflow-hidden hidden sm:block border border-[#30363d]">
+                    <div className="w-16 sm:w-20 bg-[#21262d] h-2 rounded-full overflow-hidden border border-[#30363d]">
                       <div 
                         className="bg-emerald-500 h-full rounded-full transition-all duration-500 ease-out"
                         style={{ width: `${mod.percent}%` }}
@@ -274,8 +291,8 @@ export const CurriculumSheet = ({
                     </div>
                   </div>
 
-                  {/* Toggle Arrow with smooth rotation */}
-                  <div className="p-1 rounded-lg text-[#8b949e] group-hover:text-white transition-colors">
+                  {/* Desktop Animated Chevron */}
+                  <div className="hidden sm:block p-1 rounded-lg text-[#8b949e] group-hover:text-white transition-colors">
                     <ChevronDown 
                       className={`w-5 h-5 transition-transform duration-200 ease-in-out ${
                         isCollapsed ? 'rotate-0' : 'rotate-180 text-[#58a6ff]'

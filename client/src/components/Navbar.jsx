@@ -73,27 +73,11 @@ export const Navbar = ({ onSearchClick, activeTab, setActiveTab, onLeaderboardCl
           {/* Center Navigation Links */}
           <div className="hidden md:flex items-center space-x-1 lg:space-x-2">
             <button
-              onClick={() => setActiveTab('explore')}
-              className={`px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all flex items-center space-x-1.5 cursor-pointer ${
-                activeTab === 'explore'
-                  ? 'bg-[#21262d] text-white border border-[#30363d] shadow-xs'
-                  : 'text-[#c9d1d9] hover:text-white hover:bg-[#21262d]'
-              }`}
+              onClick={() => setActiveTab && setActiveTab('explore')}
+              className="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all flex items-center space-x-1.5 cursor-pointer bg-[#21262d] text-white border border-[#30363d] shadow-xs"
             >
               <Layers className="w-4 h-4 text-[#58a6ff]" />
               <span>Curriculum Modules</span>
-            </button>
-
-            <button
-              onClick={() => setActiveTab('roadmap')}
-              className={`px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all flex items-center space-x-1.5 cursor-pointer ${
-                activeTab === 'roadmap'
-                  ? 'bg-[#21262d] text-white border border-[#30363d] shadow-xs'
-                  : 'text-[#c9d1d9] hover:text-white hover:bg-[#21262d]'
-              }`}
-            >
-              <BookOpen className="w-4 h-4 text-[#58a6ff]" />
-              <span>Roadmap View</span>
             </button>
 
             <button
@@ -253,21 +237,12 @@ export const Navbar = ({ onSearchClick, activeTab, setActiveTab, onLeaderboardCl
           <div className="space-y-1">
             <button
               onClick={() => {
-                setActiveTab('explore');
+                setActiveTab && setActiveTab('explore');
                 setMobileMenuOpen(false);
               }}
-              className="w-full text-left px-3 py-2 rounded-lg text-sm font-semibold text-[#c9d1d9] hover:bg-[#21262d]"
+              className="w-full text-left px-3 py-2 rounded-lg text-sm font-semibold text-white bg-[#21262d]"
             >
               Curriculum Modules
-            </button>
-            <button
-              onClick={() => {
-                setActiveTab('roadmap');
-                setMobileMenuOpen(false);
-              }}
-              className="w-full text-left px-3 py-2 rounded-lg text-sm font-semibold text-[#c9d1d9] hover:bg-[#21262d]"
-            >
-              Roadmap View
             </button>
             <button
               onClick={() => {

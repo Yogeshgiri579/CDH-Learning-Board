@@ -10,7 +10,6 @@ import { SessionCard } from './components/SessionCard';
 import { SessionPreviewModal } from './components/SessionPreviewModal';
 import { GitHubPreviewModal } from './components/GitHubPreviewModal';
 import { QuickQuizModal } from './components/QuickQuizModal';
-import { TakeUForwardSidebar } from './components/TakeUForwardSidebar';
 import { AuthModal } from './components/AuthModal';
 import { LeaderboardModal } from './components/LeaderboardModal';
 import { Footer } from './components/Footer';
@@ -48,9 +47,7 @@ export function App() {
   const { isAuthenticated, isCompleted, toggleComplete } = useAuth();
   
   const [sessions, setSessions] = useState(initialSessions);
-  const [activeTab, setActiveTab] = useState('explore'); // 'explore' | 'roadmap'
   const [viewMode, setViewMode] = useState('sheet'); // 'sheet' | 'grid'
-  const [selectedSession, setSelectedSession] = useState(initialSessions[0]);
   const [previewModalSession, setPreviewModalSession] = useState(null);
   const [previewGithubSession, setPreviewGithubSession] = useState(null);
   const [quizModalState, setQuizModalState] = useState({
@@ -195,25 +192,19 @@ export function App() {
         onLeaderboardClick={() => setLeaderboardOpen(true)}
       />
 
-      {/* Hero Header on Explore view */}
-      {activeTab === 'explore' && (
-        <Header 
-          onStartNow={handleStartNow}
-          onPreviewSession0={handlePreviewSession}
-          firstSession={sessions[0]}
-          onSwitchToRoadmap={() => setActiveTab('roadmap')}
-        />
-      )}
+      {/* Hero Header */}
+      <Header 
+        onStartNow={handleStartNow}
+        onPreviewSession0={handlePreviewSession}
+        firstSession={sessions[0]}
+      />
 
       {/* Progress & Milestone Banner */}
       <ProgressBanner totalSessions={55} />
 
       {/* Main Content Area */}
       <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6" ref={prepHubRef}>
-        
-        {/* VIEW 1: PREP HUB EXPLORE VIEW */}
-        {activeTab === 'explore' && (
-          <div className="space-y-5">
+        <div className="space-y-5">
             
             {/* Filter and Search Bar Section */}
             <div className={`p-3.5 sm:p-5 rounded-2xl border transition-all duration-300 shadow-md space-y-3.5 ${
@@ -264,16 +255,13 @@ export function App() {
                     <option value="advanced">Advanced</option>
                   </select>
 
-                  {/* Unified View Mode Switcher: Sheet | Cards | Tree View */}
+                  {/* Unified View Mode Switcher: Sheet | Cards */}
                   <div className="flex items-center rounded-xl border border-[#30363d] bg-[#161b22] p-1 shadow-2xs">
                     <button
-                      onClick={() => {
-                        setActiveTab('explore');
-                        setViewMode('sheet');
-                      }}
+                      onClick={() => setViewMode('sheet')}
                       title="Curriculum Sheet View"
                       className={`px-2.5 py-1.5 rounded-lg text-xs font-semibold flex items-center space-x-1.5 transition-all cursor-pointer ${
-                        activeTab === 'explore' && viewMode === 'sheet'
+                        viewMode === 'sheet'
                           ? 'bg-[#21262d] text-white shadow-xs border border-[#30363d]'
                           : 'text-[#8b949e] hover:text-[#f0f6fc]'
                       }`}
@@ -283,32 +271,16 @@ export function App() {
                     </button>
 
                     <button
-                      onClick={() => {
-                        setActiveTab('explore');
-                        setViewMode('grid');
-                      }}
+                      onClick={() => setViewMode('grid')}
                       title="Cards Grid View"
                       className={`px-2.5 py-1.5 rounded-lg text-xs font-semibold flex items-center space-x-1.5 transition-all cursor-pointer ${
-                        activeTab === 'explore' && viewMode === 'grid'
+                        viewMode === 'grid'
                           ? 'bg-[#21262d] text-white shadow-xs border border-[#30363d]'
                           : 'text-[#8b949e] hover:text-[#f0f6fc]'
                       }`}
                     >
                       <LayoutGrid className="w-3.5 h-3.5" />
                       <span className="hidden sm:inline">Cards</span>
-                    </button>
-
-                    <button
-                      onClick={() => setActiveTab('roadmap')}
-                      title="Roadmap Tree View"
-                      className={`px-2.5 py-1.5 rounded-lg text-xs font-semibold flex items-center space-x-1.5 transition-all cursor-pointer ${
-                        activeTab === 'roadmap'
-                          ? 'bg-[#21262d] text-[#58a6ff] shadow-xs border border-[#30363d]'
-                          : 'text-[#8b949e] hover:text-[#f0f6fc]'
-                      }`}
-                    >
-                      <Layers className="w-3.5 h-3.5 text-[#58a6ff]" />
-                      <span className="hidden sm:inline">Tree View</span>
                     </button>
                   </div>
                 </div>
@@ -434,249 +406,7 @@ export function App() {
             )}
 
           </div>
-        )}
 
-        {/* VIEW 2: TAKEUFORWARD ROADMAP TREE VIEW */}
-        {activeTab === 'roadmap' && (
-          <div className="space-y-4 animate-in fade-in duration-200">
-            {/* Top Bar inside Roadmap View with Switchers back to Sheet / Cards */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 sm:p-4 rounded-2xl bg-[#0d1117] border border-[#30363d] shadow-sm">
-              <div className="flex items-center space-x-3">
-                <button
-                  onClick={() => setActiveTab('explore')}
-                  className="p-2 rounded-xl bg-[#161b22] hover:bg-[#21262d] border border-[#30363d] text-[#c9d1d9] hover:text-white transition-colors cursor-pointer"
-                  title="Back to Curriculum Modules"
-                >
-                  <ArrowLeft className="w-4 h-4" />
-                </button>
-                <div>
-                  <div className="flex items-center space-x-2">
-                    <h2 className="text-base font-bold text-white">Roadmap Tree View</h2>
-                    <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#58a6ff]/20 text-[#58a6ff] border border-[#58a6ff]/30">
-                      Interactive Tree
-                    </span>
-                  </div>
-                  <p className="text-xs text-[#8b949e]">
-                    TakeUForward-style hierarchical session navigator with instant markdown previews & quizzes.
-                  </p>
-                </div>
-              </div>
-
-              {/* View mode switcher */}
-              <div className="flex items-center space-x-2 self-end sm:self-auto">
-                <div className="flex items-center rounded-xl border border-[#30363d] bg-[#161b22] p-1 shadow-2xs">
-                  <button
-                    onClick={() => {
-                      setActiveTab('explore');
-                      setViewMode('sheet');
-                    }}
-                    title="Switch to Sheet View"
-                    className="px-2.5 py-1.5 rounded-lg text-xs font-semibold flex items-center space-x-1.5 text-[#8b949e] hover:text-[#f0f6fc] transition-colors cursor-pointer"
-                  >
-                    <List className="w-3.5 h-3.5" />
-                    <span className="hidden sm:inline">Sheet</span>
-                  </button>
-                  <button
-                    onClick={() => {
-                      setActiveTab('explore');
-                      setViewMode('grid');
-                    }}
-                    title="Switch to Cards View"
-                    className="px-2.5 py-1.5 rounded-lg text-xs font-semibold flex items-center space-x-1.5 text-[#8b949e] hover:text-[#f0f6fc] transition-colors cursor-pointer"
-                  >
-                    <LayoutGrid className="w-3.5 h-3.5" />
-                    <span className="hidden sm:inline">Cards</span>
-                  </button>
-                  <button
-                    disabled
-                    title="Currently on Tree View"
-                    className="px-2.5 py-1.5 rounded-lg text-xs font-semibold flex items-center space-x-1.5 bg-[#21262d] text-[#58a6ff] border border-[#30363d] shadow-xs cursor-default"
-                  >
-                    <Layers className="w-3.5 h-3.5 text-[#58a6ff]" />
-                    <span className="hidden sm:inline">Tree View</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            {/* Tree Container */}
-            <div className="bg-[#0d1117] rounded-2xl border border-[#30363d] shadow-sm overflow-hidden flex flex-col lg:flex-row min-h-[650px] text-[#f0f6fc]">
-              
-              {/* Left: TakeUForward Style Collapsible Tree Sidebar */}
-              <TakeUForwardSidebar
-                sessions={sessions}
-                selectedSession={selectedSession}
-                onSelectSession={(s) => setSelectedSession(s)}
-                onOpenGitHub={handleOpenGitHub}
-                onOpenQuiz={handleOpenQuiz}
-                onOpenModuleQuiz={handleOpenModuleQuiz}
-                onResetView={() => {
-                  setActiveTab('explore');
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                }}
-              />
-
-              {/* Right: Selected Session Detailed Preview Panel */}
-              <div className="flex-1 p-5 lg:p-7 overflow-y-auto">
-                {selectedSession ? (
-                  <div className="max-w-2xl space-y-5">
-                    
-                    {/* Top breadcrumb & Status */}
-                    <div className="flex flex-wrap items-center justify-between gap-2.5 pb-3 border-b border-[#30363d]">
-                      <div className="flex items-center space-x-2">
-                        <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-[#21262d] text-[#58a6ff] border border-[#30363d]">
-                          Session #{selectedSession.sessionNumber.toString().padStart(2, '0')}
-                        </span>
-                        {selectedSession.isFree ? (
-                          <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-[#238636]/20 text-[#3fb950] border border-[#238636]/40">
-                            🟢 Free Access
-                          </span>
-                        ) : !isAuthenticated ? (
-                          <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-amber-950/60 text-amber-400 border border-amber-800/60 flex items-center space-x-1">
-                            <Lock className="w-3 h-3" />
-                            <span>Requires Sign In</span>
-                          </span>
-                        ) : (
-                          <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-[#21262d] text-emerald-400 border border-[#30363d]">
-                            ✓ Unlocked
-                          </span>
-                        )}
-                      </div>
-
-                      <button
-                        onClick={() => toggleComplete(selectedSession.sessionNumber)}
-                        className={`px-2.5 py-1 rounded-lg text-xs font-semibold border flex items-center space-x-1.5 transition-colors cursor-pointer ${
-                          isCompleted(selectedSession.sessionNumber)
-                            ? 'bg-emerald-950/40 border-emerald-800/80 text-emerald-400'
-                            : 'bg-[#21262d] border-[#30363d] text-[#c9d1d9] hover:bg-[#30363d] hover:text-white'
-                        }`}
-                      >
-                        <CheckCircle2 className={`w-3.5 h-3.5 ${isCompleted(selectedSession.sessionNumber) ? 'fill-emerald-400 text-slate-900' : 'text-[#8b949e]'}`} />
-                        <span>{isCompleted(selectedSession.sessionNumber) ? 'Completed' : 'Mark Done'}</span>
-                      </button>
-                    </div>
-
-                    {/* Title & Module */}
-                    <div>
-                      <p className="text-[11px] font-bold uppercase tracking-wider text-[#58a6ff]">
-                        {selectedSession.module}
-                      </p>
-                      <h2 className="text-xl sm:text-2xl font-extrabold text-white mt-0.5">
-                        {selectedSession.title}
-                      </h2>
-                      <div className="flex items-center space-x-3 text-xs text-[#8b949e] mt-1.5">
-                        <span className="flex items-center space-x-1">
-                          <Clock className="w-3.5 h-3.5 text-[#8b949e]" />
-                          <span>{selectedSession.duration}</span>
-                        </span>
-                        <span>•</span>
-                        <span className="font-semibold text-[#c9d1d9]">Difficulty: {selectedSession.difficulty}</span>
-                      </div>
-                    </div>
-
-                    {/* Preview Overview Box */}
-                    <div className="p-4 rounded-xl bg-[#161b22] border border-[#30363d]">
-                      <h4 className="text-xs font-bold uppercase tracking-wider text-[#8b949e] mb-1.5 flex items-center space-x-1.5">
-                        <Layers className="w-4 h-4 text-[#58a6ff]" />
-                        <span>Session Overview</span>
-                      </h4>
-                      <p className="text-xs sm:text-sm text-[#c9d1d9] leading-relaxed">
-                        {selectedSession.preview}
-                      </p>
-                    </div>
-
-                    {/* Learning Topics */}
-                    {selectedSession.topics && (
-                      <div>
-                        <h4 className="text-xs font-bold uppercase tracking-wider text-[#8b949e] mb-2 flex items-center space-x-1.5">
-                          <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-                          <span>Core Topics</span>
-                        </h4>
-                        <div className="space-y-1.5">
-                          {selectedSession.topics.map((topic, i) => (
-                            <div key={i} className="flex items-start space-x-2.5 p-2.5 rounded-lg bg-[#161b22] border border-[#30363d] text-xs text-[#c9d1d9]">
-                              <span className="w-4 h-4 rounded bg-[#21262d] text-[#58a6ff] border border-[#30363d] flex items-center justify-center font-bold text-[10px] flex-shrink-0 mt-0.5">
-                                {i + 1}
-                              </span>
-                              <span>{topic}</span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Hands-on Labs */}
-                    {selectedSession.labs && (
-                      <div>
-                        <h4 className="text-xs font-bold uppercase tracking-wider text-[#8b949e] mb-2 flex items-center space-x-1.5">
-                          <Terminal className="w-3.5 h-3.5 text-emerald-400" />
-                          <span>Practical Hands-on Labs</span>
-                        </h4>
-                        <div className="space-y-1.5">
-                          {selectedSession.labs.map((lab, i) => (
-                            <div key={i} className="flex items-center space-x-2.5 p-2.5 rounded-lg bg-[#161b22] border border-[#30363d] text-xs text-[#c9d1d9] font-medium">
-                              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
-                              <span>{lab}</span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Direct GitHub Redirect CTA Box */}
-                    <div className="p-4 sm:p-5 rounded-xl bg-[#161b22] border border-[#30363d] text-white flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-sm">
-                      <div>
-                        <p className="text-[10px] font-bold uppercase tracking-wider text-[#58a6ff]">
-                          Practice on GitHub
-                        </p>
-                        <h3 className="text-base font-bold text-white mt-0.5">
-                          Open {selectedSession.folder}
-                        </h3>
-                        <p className="text-xs text-[#8b949e] mt-0.5 max-w-sm">
-                          Get step-by-step README instructions, code, Dockerfiles, and submission templates.
-                        </p>
-                      </div>
-
-                      <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 flex-shrink-0">
-                        <button
-                          onClick={() => handleOpenQuiz(selectedSession)}
-                          className="px-3.5 py-2 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/30 text-amber-300 font-semibold text-xs sm:text-sm transition-all flex items-center justify-center space-x-1.5 cursor-pointer"
-                          title="Take quiz on this session"
-                        >
-                          <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-                          <span>Quick Quiz</span>
-                        </button>
-
-                        <button
-                          onClick={() => handleOpenGitHub(selectedSession)}
-                          className="px-4 py-2 rounded-xl bg-[#238636] hover:bg-[#2ea043] text-white font-semibold text-xs sm:text-sm transition-all flex items-center justify-center space-x-2 shadow-xs cursor-pointer flex-shrink-0"
-                        >
-                          {!selectedSession.isFree && !isAuthenticated ? (
-                            <>
-                              <Lock className="w-3.5 h-3.5" />
-                              <span>Sign in to Unlock</span>
-                            </>
-                          ) : (
-                            <>
-                              <BookOpen className="w-3.5 h-3.5 text-white" />
-                              <span>Read in App</span>
-                            </>
-                          )}
-                        </button>
-                      </div>
-                    </div>
-
-                  </div>
-                ) : (
-                  <div className="text-center py-20 text-[#8b949e] text-sm">
-                    Select a session from the roadmap tree on the left.
-                  </div>
-                )}
-              </div>
-
-            </div>
-          </div>
-        )}
 
       </main>
 
