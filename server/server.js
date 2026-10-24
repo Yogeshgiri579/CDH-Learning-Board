@@ -34,7 +34,16 @@ app.use('/api/github', githubRoutes);
 app.use('/api/admin', adminRoutes);
 app.get('/api/leaderboard', getLeaderboard);
 
-// Health check endpoint
+// Root & Health check endpoints
+app.get('/', (req, res) => {
+  res.json({
+    status: 'online',
+    message: 'CloudDevOpsHub 55-Session LMS Backend API is running!',
+    healthCheck: '/api/health',
+    documentation: 'https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge',
+  });
+});
+
 app.get('/api/health', (req, res) => {
   res.json({
     status: 'online',
