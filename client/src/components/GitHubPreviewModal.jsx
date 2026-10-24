@@ -320,9 +320,11 @@ export const GitHubPreviewModal = ({
     }
 
     // Case 3: Official Session default README
-    const isDefaultSessionReadme = file._id === 'default_readme' || 
+    const isDefaultSessionReadme = 
+      file._id === 'default_readme' || 
       file._id === `default_readme_${session.sessionNumber}` || 
-      (!file.githubUrl?.includes('/blob/') && file.name?.toLowerCase() === 'readme.md' && !file.rawUrl?.includes('Session-'));
+      file.isDefault ||
+      file.name?.toLowerCase() === 'readme.md';
 
     if (isDefaultSessionReadme) {
       try {

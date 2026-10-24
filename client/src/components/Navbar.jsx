@@ -152,8 +152,8 @@ export const Navbar = ({ onSearchClick, activeTab, setActiveTab, onLeaderboardCl
                   aria-expanded={userDropdownOpen}
                 >
                   <div className="flex flex-col text-left">
-                    <span className="text-xs font-bold text-[#f0f6fc] truncate max-w-[120px]">
-                      {user?.name || user?.email?.split('@')[0] || 'Learner'}
+                    <span className="text-xs font-bold text-[#f0f6fc] truncate max-w-[170px]" title={user?.email || user?.name}>
+                      {user?.email || user?.name || 'Learner'}
                     </span>
                     <span className="text-[10px] text-emerald-400 font-medium leading-none">
                       {completedCount}/55 Completed
@@ -161,7 +161,7 @@ export const Navbar = ({ onSearchClick, activeTab, setActiveTab, onLeaderboardCl
                   </div>
 
                   <div className="w-8 h-8 rounded-lg bg-[#21262d] border border-[#30363d] flex items-center justify-center font-bold text-xs text-[#58a6ff]">
-                    {user?.name ? user.name[0].toUpperCase() : 'U'}
+                    {(user?.email ? user.email[0] : user?.name ? user.name[0] : 'U').toUpperCase()}
                   </div>
                 </button>
 
@@ -169,8 +169,8 @@ export const Navbar = ({ onSearchClick, activeTab, setActiveTab, onLeaderboardCl
                 {userDropdownOpen && (
                   <div className="absolute right-0 mt-2 w-56 rounded-2xl bg-[#161b22] border border-[#30363d] shadow-2xl py-1.5 z-50 animate-in fade-in zoom-in-95 duration-100">
                     <div className="px-3.5 py-2 border-b border-[#21262d]">
-                      <p className="text-xs font-bold text-white truncate">{user?.name || 'DevOps Engineer'}</p>
-                      <p className="text-[11px] text-[#8b949e] truncate">{user?.email}</p>
+                      <p className="text-xs font-bold text-white truncate">{user?.email}</p>
+                      {user?.name && <p className="text-[11px] text-[#8b949e] truncate">{user.name}</p>}
                     </div>
 
                     <div className="py-1">

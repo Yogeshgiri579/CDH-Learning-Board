@@ -12,7 +12,7 @@ import { Github } from './GithubIcon';
 import { useAuth } from '../context/AuthContext';
 
 export const SessionPreviewModal = ({ session, onClose, onOpenGitHub, onOpenQuiz }) => {
-  const { isAuthenticated, isCompleted, toggleComplete, loading: authLoading, token } = useAuth();
+  const { isAuthenticated, isCompleted, toggleComplete, loading: authLoading, token, openAuthModal } = useAuth();
 
   if (!session) return null;
 
@@ -22,7 +22,13 @@ export const SessionPreviewModal = ({ session, onClose, onOpenGitHub, onOpenQuiz
 
   const handleActionClick = () => {
     onClose();
-    onOpenGitHub(session);
+    if (isLocked) {
+      if (openAuthModal) {
+        openAuthModal(`Sign in to unlock full lab code, materials, and quizzes for Session #${session.sessionNumber}`);
+      }
+    } else {
+      onOpenGitHub(session);
+    }
   };
 
   const handleQuizClick = () => {
@@ -200,12 +206,12 @@ export const SessionPreviewModal = ({ session, onClose, onOpenGitHub, onOpenQuiz
               {isLocked ? (
                 <>
                   <Lock className="w-4 h-4 text-amber-300" />
-                  <span>Read in App</span>
+                  <span>Sign in to Unlock Full Code</span>
                 </>
               ) : (
                 <>
                   <Github className="w-4 h-4 text-white" />
-                  <span>Read in App</span>
+                  <span>Read Full Labs & Code</span>
                 </>
               )}
             </button>
