@@ -18,7 +18,7 @@ import { Github } from './GithubIcon';
 import { ThemeToggle } from './ThemeToggle';
 
 export const Navbar = ({ onSearchClick, activeTab, setActiveTab, onLeaderboardClick }) => {
-  const { user, isAuthenticated, logout, openAuthModal, completedCount, quizPassedCount = 0 } = useAuth();
+  const { user, token, loading, isAuthenticated, logout, openAuthModal, completedCount, quizPassedCount = 0 } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const dropdownTimeoutRef = useRef(null);
@@ -196,6 +196,10 @@ export const Navbar = ({ onSearchClick, activeTab, setActiveTab, onLeaderboardCl
                     </div>
                   </div>
                 )}
+              </div>
+            ) : (loading && token) ? (
+              <div className="flex items-center space-x-2">
+                <div className="w-24 h-8 rounded-xl bg-[#21262d] border border-[#30363d] animate-pulse" />
               </div>
             ) : (
               <div className="flex items-center space-x-2">

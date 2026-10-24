@@ -4,8 +4,17 @@ import { api } from '../services/api';
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
   const [token, setToken] = useState(localStorage.getItem('cdh_token') || null);
+  const [user, setUser] = useState(() => {
+    try {
+      const savedToken = localStorage.getItem('cdh_token');
+      const savedUser = localStorage.getItem('cdh_user');
+      if (savedToken && savedUser) {
+        return JSON.parse(savedUser);
+      }
+    } catch {}
+    return null;
+  });
   const [loading, setLoading] = useState(true);
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [authPromptMessage, setAuthPromptMessage] = useState('');
@@ -22,9 +31,13 @@ export const AuthProvider = ({ children }) => {
           if (isMounted) {
             if (res && res.success && res.user) {
               setUser(res.user);
+              try {
+                localStorage.setItem('cdh_user', JSON.stringify(res.user));
+              } catch {}
             } else {
               // Token expired or invalid
               localStorage.removeItem('cdh_token');
+              localStorage.removeItem('cdh_user');
               setUser(null);
               setToken(null);
             }
@@ -32,6 +45,8 @@ export const AuthProvider = ({ children }) => {
         } catch (e) {
           console.error('Auth verification error:', e);
         }
+      } else {
+        localStorage.removeItem('cdh_user');
       }
       if (isMounted) setLoading(false);
     };
@@ -47,6 +62,11 @@ export const AuthProvider = ({ children }) => {
       const res = await api.login(email, password);
       if (res && res.success && res.token) {
         localStorage.setItem('cdh_token', res.token);
+        if (res.user) {
+          try {
+            localStorage.setItem('cdh_user', JSON.stringify(res.user));
+          } catch {}
+        }
         setToken(res.token);
         setUser(res.user);
         setAuthModalOpen(false);
@@ -64,6 +84,11 @@ export const AuthProvider = ({ children }) => {
       const res = await api.register(name, email, password, phone, countryCode);
       if (res && res.success && res.token) {
         localStorage.setItem('cdh_token', res.token);
+        if (res.user) {
+          try {
+            localStorage.setItem('cdh_user', JSON.stringify(res.user));
+          } catch {}
+        }
         setToken(res.token);
         setUser(res.user);
         setAuthModalOpen(false);
@@ -88,6 +113,11 @@ export const AuthProvider = ({ children }) => {
       const res = await api.googleAuth(profile);
       if (res && res.success && res.token) {
         localStorage.setItem('cdh_token', res.token);
+        if (res.user) {
+          try {
+            localStorage.setItem('cdh_user', JSON.stringify(res.user));
+          } catch {}
+        }
         setToken(res.token);
         setUser(res.user);
         setAuthModalOpen(false);
@@ -112,6 +142,11 @@ export const AuthProvider = ({ children }) => {
       const res = await api.githubAuth(profile);
       if (res && res.success && res.token) {
         localStorage.setItem('cdh_token', res.token);
+        if (res.user) {
+          try {
+            localStorage.setItem('cdh_user', JSON.stringify(res.user));
+          } catch {}
+        }
         setToken(res.token);
         setUser(res.user);
         setAuthModalOpen(false);
@@ -130,6 +165,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = () => {
     localStorage.removeItem('cdh_token');
+    localStorage.removeItem('cdh_user');
     setToken(null);
     setUser(null);
   };
@@ -145,10 +181,16 @@ export const AuthProvider = ({ children }) => {
     try {
       const res = await api.toggleComplete(sessionNumber);
       if (res && res.success) {
-        setUser((prev) => ({
-          ...prev,
-          completedSessions: res.completedSessions,
-        }));
+        setUser((prev) => {
+          const updated = {
+            ...prev,
+            completedSessions: res.completedSessions,
+          };
+          try {
+            localStorage.setItem('cdh_user', JSON.stringify(updated));
+          } catch {}
+          return updated;
+        });
       }
     } catch (e) {
       console.error('Error updating progress:', e);
@@ -160,11 +202,17 @@ export const AuthProvider = ({ children }) => {
     try {
       const res = await api.recordQuizProgress(sessionNumber, score, totalQuestions, passed);
       if (res && res.success) {
-        setUser((prev) => ({
-          ...prev,
-          quizProgress: res.quizProgress,
-          completedSessions: res.completedSessions || prev?.completedSessions || [],
-        }));
+        setUser((prev) => {
+          const updated = {
+            ...prev,
+            quizProgress: res.quizProgress,
+            completedSessions: res.completedSessions || prev?.completedSessions || [],
+          };
+          try {
+            localStorage.setItem('cdh_user', JSON.stringify(updated));
+          } catch {}
+          return updated;
+        });
         return { success: true, quizProgress: res.quizProgress };
       }
     } catch (err) {

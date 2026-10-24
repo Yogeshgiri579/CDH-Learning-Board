@@ -3,7 +3,7 @@ import { CheckCircle2, Flame, Sparkles } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 export const ProgressBanner = ({ totalSessions = 55 }) => {
-  const { completedCount, quizPassedCount = 0, isAuthenticated, openAuthModal } = useAuth();
+  const { completedCount, quizPassedCount = 0, isAuthenticated, loading, token, openAuthModal } = useAuth();
 
   const percentage = Math.round((completedCount / totalSessions) * 100);
 
@@ -43,7 +43,9 @@ export const ProgressBanner = ({ totalSessions = 55 }) => {
             <span className="font-medium text-[#c9d1d9]">55-Day Challenge</span>
           </div>
 
-          {!isAuthenticated ? (
+          {loading && token ? (
+            <span className="text-[#8b949e] font-medium text-[11px] animate-pulse">Syncing...</span>
+          ) : !isAuthenticated ? (
             <button
               onClick={() => openAuthModal('Sign in to save and sync your learning & quiz progress')}
               className="text-[#58a6ff] hover:underline font-semibold flex items-center space-x-1 transition-colors cursor-pointer"

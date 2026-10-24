@@ -510,7 +510,10 @@ export function App() {
                 onOpenGitHub={handleOpenGitHub}
                 onOpenQuiz={handleOpenQuiz}
                 onOpenModuleQuiz={handleOpenModuleQuiz}
-                onResetView={() => setActiveTab('explore')}
+                onResetView={() => {
+                  setActiveTab('explore');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
               />
 
               {/* Right: Selected Session Detailed Preview Panel */}

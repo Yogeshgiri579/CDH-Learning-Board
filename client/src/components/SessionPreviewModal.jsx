@@ -12,12 +12,12 @@ import { Github } from './GithubIcon';
 import { useAuth } from '../context/AuthContext';
 
 export const SessionPreviewModal = ({ session, onClose, onOpenGitHub, onOpenQuiz }) => {
-  const { isAuthenticated, isCompleted, toggleComplete } = useAuth();
+  const { isAuthenticated, isCompleted, toggleComplete, loading: authLoading, token } = useAuth();
 
   if (!session) return null;
 
   const isFree = session.sessionNumber < 5;
-  const isLocked = !isFree && !isAuthenticated;
+  const isLocked = !isFree && !isAuthenticated && !(authLoading && token);
   const completed = isCompleted(session.sessionNumber);
 
   const handleActionClick = () => {
@@ -33,7 +33,10 @@ export const SessionPreviewModal = ({ session, onClose, onOpenGitHub, onOpenQuiz
   };
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
+    <div 
+      className="fixed inset-0 z-50 overflow-y-auto bg-black/85 backdrop-blur-md flex items-center justify-center p-4"
+      onClick={onClose}
+    >
       <div 
         className="relative bg-[#0d1117] w-full max-w-2xl rounded-2xl shadow-2xl border border-[#30363d] overflow-hidden animate-in fade-in zoom-in-95 duration-150 text-[#f0f6fc]"
         onClick={(e) => e.stopPropagation()}

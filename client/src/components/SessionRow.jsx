@@ -50,7 +50,11 @@ export const SessionRow = ({ session, onPreview, onOpenGitHub, onOpenQuiz, searc
 
   const handlePreviewClick = (e) => {
     e.stopPropagation();
-    onPreview(session);
+    if (onPreview) {
+      onPreview(session);
+    } else if (onOpenGitHub) {
+      onOpenGitHub(session);
+    }
   };
 
   // Difficulty color styling
@@ -168,7 +172,7 @@ export const SessionRow = ({ session, onPreview, onOpenGitHub, onOpenQuiz, searc
             title="Quick preview session breakdown"
           >
             <Eye className="w-3.5 h-3.5 text-[#8b949e]" />
-            <span className="hidden xl:inline">Overview</span>
+            <span className="hidden sm:inline">Overview</span>
           </button>
 
           {/* Quick Quiz button / Realtime Quiz Result based on score */}

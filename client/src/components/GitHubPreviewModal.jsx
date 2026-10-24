@@ -186,7 +186,7 @@ export const GitHubPreviewModal = ({
   onSelectSession, 
   onOpenQuiz 
 }) => {
-  const { isCompleted, toggleComplete, isAuthenticated, openAuthModal } = useAuth();
+  const { isCompleted, toggleComplete, isAuthenticated, loading: authLoading, token, openAuthModal } = useAuth();
 
   // Session files state
   const [sessionFiles, setSessionFiles] = useState([]);
@@ -202,7 +202,7 @@ export const GitHubPreviewModal = ({
   const sessionNumber = session?.sessionNumber;
   const folderSafe = session?.folder || `Session-${String(session?.sessionNumber || 0).padStart(2, '0')}`;
   const isFree = session ? session.sessionNumber < 5 : false;
-  const isLocked = session ? !isFree && !isAuthenticated : false;
+  const isLocked = session ? (!isFree && !isAuthenticated && !(authLoading && token)) : false;
   const completed = session ? isCompleted(session.sessionNumber) : false;
 
   // Determine current index for Prev/Next navigation
