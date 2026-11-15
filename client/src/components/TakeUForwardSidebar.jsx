@@ -27,7 +27,7 @@ export const TakeUForwardSidebar = ({
 }) => {
   const { user, isAuthenticated, openAuthModal, isCompleted, completedCount } = useAuth();
 
-  // Group modules manually to match CloudDevOpsHub 55 sessions
+  // Group modules to match CloudDevOpsHub 10-module roadmap
   const modules = [
     {
       id: 'm1',
@@ -38,52 +38,66 @@ export const TakeUForwardSidebar = ({
     },
     {
       id: 'm2',
-      title: 'Module 2: Linux Administration & Shell',
-      badge: 'Sessions 05 - 12',
+      title: 'Module 2: Linux Administration & GCP',
+      badge: 'Sessions 05 - 09',
       badgeColor: 'bg-[#21262d] text-[#c9d1d9] border border-[#30363d]',
       sessions: sessions.filter((s) => s.moduleId === 'm2'),
     },
     {
       id: 'm3',
-      title: 'Module 3: Git & Version Control Workflows',
-      badge: 'Sessions 13 - 18',
+      title: 'Module 3: AWS Top 10 Services & Practicals',
+      badge: 'Sessions 10 - 21',
       badgeColor: 'bg-[#21262d] text-[#c9d1d9] border border-[#30363d]',
       sessions: sessions.filter((s) => s.moduleId === 'm3'),
     },
     {
       id: 'm4',
-      title: 'Module 4: Multi-Cloud (AWS, GCP, Azure)',
-      badge: 'Sessions 19 - 28',
+      title: 'Module 4: CI/CD: Git, GitHub & Jenkins',
+      badge: 'Sessions 22 - 29',
       badgeColor: 'bg-[#21262d] text-[#c9d1d9] border border-[#30363d]',
       sessions: sessions.filter((s) => s.moduleId === 'm4'),
     },
     {
       id: 'm5',
-      title: 'Module 5: Containers & Docker Mastery',
-      badge: 'Sessions 29 - 36',
+      title: 'Module 5: Docker, Kubernetes & Monitoring',
+      badge: 'Sessions 30 - 37',
       badgeColor: 'bg-[#21262d] text-[#c9d1d9] border border-[#30363d]',
       sessions: sessions.filter((s) => s.moduleId === 'm5'),
     },
     {
       id: 'm6',
-      title: 'Module 6: Kubernetes (K8s) Orchestration',
-      badge: 'Sessions 37 - 45',
+      title: 'Module 6: Ansible, Terraform & Automation',
+      badge: 'Sessions 38 - 44',
       badgeColor: 'bg-[#21262d] text-[#c9d1d9] border border-[#30363d]',
       sessions: sessions.filter((s) => s.moduleId === 'm6'),
     },
     {
       id: 'm7',
-      title: 'Module 7: IaC (Terraform) & GitOps',
-      badge: 'Sessions 46 - 50',
+      title: 'Module 7: Career Prep & Resume Optimization',
+      badge: 'Sessions 45 - 46',
       badgeColor: 'bg-[#21262d] text-[#c9d1d9] border border-[#30363d]',
       sessions: sessions.filter((s) => s.moduleId === 'm7'),
     },
     {
       id: 'm8',
-      title: 'Module 8: Observability & AI in DevOps',
-      badge: 'Sessions 51 - 54',
+      title: 'Module 8: Azure DevOps & Generative AI',
+      badge: 'Sessions 47 - 49',
       badgeColor: 'bg-[#21262d] text-[#c9d1d9] border border-[#30363d]',
       sessions: sessions.filter((s) => s.moduleId === 'm8'),
+    },
+    {
+      id: 'm9',
+      title: 'Module 9: 8 Production Live Projects',
+      badge: 'Sessions 50 - 57',
+      badgeColor: 'bg-[#f78166]/20 text-[#f78166] border border-[#f78166]/40',
+      sessions: sessions.filter((s) => s.moduleId === 'm9'),
+    },
+    {
+      id: 'm10',
+      title: 'Module 10: Graduation & Mock Interviews',
+      badge: 'Session 58',
+      badgeColor: 'bg-[#e3b341]/20 text-[#e3b341] border border-[#e3b341]/40',
+      sessions: sessions.filter((s) => s.moduleId === 'm10'),
     },
   ];
 

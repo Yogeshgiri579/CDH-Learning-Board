@@ -1,1287 +1,1505 @@
-// CloudDevOpsHub 55 Sessions Data
-// First 5 sessions (Session 0 - 4) are completely FREE
-// Sessions 5 - 54 require user to Sign In
+// CloudDevOpsHub Verified Curriculum Sessions Data (Server)
+// Exactly matched with GitHub Repo: https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main
 
 export const sessionsData = [
-  // MODULE 1: Program Kickoff & DevOps Foundations (Sessions 0-4) -> ALL FREE
   {
-    id: 1,
-    sessionNumber: 0,
-    module: "Phase 1: Program Kickoff & DevOps Foundations",
-    moduleId: "m1",
-    title: "Program Kickoff & MultiCloud DevOps Roadmap Overview",
-    folder: "Session-00-Program-Kickoff",
-    githubUrl: "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-00-Program-Kickoff",
-    isFree: true,
-    difficulty: "Beginner",
-    duration: "45 mins",
-    preview: "Kickstart your MultiCloud, DevOps & AI journey. Learn how this 55-day program is structured, how to submit tasks, and access the CloudDevOpsHub community.",
-    topics: [
-      "Welcome & program guidelines by CloudDevOpsHub",
-      "55-Day challenge roadmap & milestone timeline",
-      "Setting up your learning workstation & Git repository",
-      "Community support, peer reviews & mentor guidance"
+    "id": 1,
+    "sessionNumber": 0,
+    "module": "Phase 1: Foundation: DevOps + Cloud + AI Basics",
+    "moduleId": "m1",
+    "title": "Program Kickoff & MultiCloud DevOps Roadmap Overview",
+    "folder": "Session-00-Program-Kickoff",
+    "summaryFile": "README.md",
+    "githubUrl": "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-00-Program-Kickoff",
+    "isFree": true,
+    "difficulty": "Beginner",
+    "duration": "45 mins",
+    "preview": "Master Program Kickoff & MultiCloud DevOps Roadmap Overview. Hands-on session from the CloudDevOpsHub MultiCloud DevOps & AI Bootcamp covering real-time production concepts, configurations, and industry use-cases.",
+    "topics": [
+      "Architecture & core fundamentals of Program Kickoff & MultiCloud DevOps Roadmap Overview",
+      "Production setup, configuration & hands-on practicals",
+      "Enterprise security, troubleshooting & common pitfalls",
+      "Real-time interview scenarios & industry best practices"
     ],
-    labs: [
-      "Fork the MultiCloud-DevOps-AI-Challenge repo",
-      "Configure your local Git profile and SSH keys",
-      "Submit your initial introductory PR"
+    "labs": [
+      "Set up and verify the environment for Program Kickoff & MultiCloud DevOps Roadmap Overview",
+      "Execute hands-on commands and configuration tasks",
+      "Validate output, inspect logs, and push code changes to Git"
     ]
   },
   {
-    id: 2,
-    sessionNumber: 1,
-    module: "Phase 1: Program Kickoff & DevOps Foundations",
-    moduleId: "m1",
-    title: "DevOps Introduction, Culture & Modern Architecture Overview",
-    folder: "Session-01-DevOps-Introduction-Course-Overview",
-    githubUrl: "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-01-DevOps-Introduction-Course-Over...",
-    isFree: true,
-    difficulty: "Beginner",
-    duration: "60 mins",
-    preview: "Understand what DevOps truly is beyond the buzzword. Explore CALMS principles, shift-left security, and how modern engineering teams ship reliable software.",
-    topics: [
-      "Evolution of software delivery: Waterfall to Agile to DevOps",
-      "CALMS framework: Culture, Automation, Lean, Measurement, Sharing",
-      "DevOps Lifecycle: Plan, Code, Build, Test, Release, Deploy, Operate, Monitor",
-      "Role of Site Reliability Engineering (SRE) vs DevOps"
+    "id": 2,
+    "sessionNumber": 1,
+    "module": "Phase 1: Foundation: DevOps + Cloud + AI Basics",
+    "moduleId": "m1",
+    "title": "DevOps Introduction, Culture & Modern Architecture Overview",
+    "folder": "Session-01-DevOps-Introduction-Course-Overview",
+    "summaryFile": "New Batch-45 _ Multi-Cloud + DevOps with AI  _  55 Live + 55 Q&A Session Bootcamp _  Lakshya Batch  _ 8_00 AM IST 2026-09-18 08_34(GMT+5_30).md",
+    "githubUrl": "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-01-DevOps-Introduction-Course-Overview",
+    "isFree": true,
+    "difficulty": "Beginner",
+    "duration": "60 mins",
+    "preview": "Master DevOps Introduction, Culture & Modern Architecture Overview. Hands-on session from the CloudDevOpsHub MultiCloud DevOps & AI Bootcamp covering real-time production concepts, configurations, and industry use-cases.",
+    "topics": [
+      "Architecture & core fundamentals of DevOps Introduction, Culture & Modern Architecture Overview",
+      "Production setup, configuration & hands-on practicals",
+      "Enterprise security, troubleshooting & common pitfalls",
+      "Real-time interview scenarios & industry best practices"
     ],
-    labs: [
-      "Map out a standard enterprise CI/CD release workflow",
-      "Identify common deployment bottlenecks and solutions"
+    "labs": [
+      "Set up and verify the environment for DevOps Introduction, Culture & Modern Architecture Overview",
+      "Execute hands-on commands and configuration tasks",
+      "Validate output, inspect logs, and push code changes to Git"
     ]
   },
   {
-    id: 3,
-    sessionNumber: 2,
-    module: "Phase 1: Program Kickoff & DevOps Foundations",
-    moduleId: "m1",
-    title: "Cloud Computing & Virtualization Fundamentals",
-    folder: "Session 02 Cloud Computing Virtualization",
-    githubUrl: "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session%2002%20Cloud%20Computing%20Virtualization",
-    isFree: true,
-    difficulty: "Beginner",
-    duration: "55 mins",
-    preview: "Demystify cloud fundamentals, hypervisors, type 1 vs type 2 virtualization, shared responsibility models, and cloud deployment types (Public, Private, Hybrid).",
-    topics: [
-      "Virtualization mechanics: Hypervisors, guest OS & bare metal",
-      "Cloud service models: IaaS, PaaS, SaaS, FaaS comparison",
-      "Shared Responsibility Model across cloud providers",
-      "Regions, Availability Zones & Edge Locations architecture"
+    "id": 3,
+    "sessionNumber": 2,
+    "module": "Phase 1: Foundation: DevOps + Cloud + AI Basics",
+    "moduleId": "m1",
+    "title": "Cloud Computing & Virtualization Fundamentals",
+    "folder": "Session-02-Cloud-Computing-Virtualization",
+    "summaryFile": "README.md",
+    "githubUrl": "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-02-Cloud-Computing-Virtualization",
+    "isFree": true,
+    "difficulty": "Beginner",
+    "duration": "55 mins",
+    "preview": "Master Cloud Computing & Virtualization Fundamentals. Hands-on session from the CloudDevOpsHub MultiCloud DevOps & AI Bootcamp covering real-time production concepts, configurations, and industry use-cases.",
+    "topics": [
+      "Architecture & core fundamentals of Cloud Computing & Virtualization Fundamentals",
+      "Production setup, configuration & hands-on practicals",
+      "Enterprise security, troubleshooting & common pitfalls",
+      "Real-time interview scenarios & industry best practices"
     ],
-    labs: [
-      "Compare AWS, GCP, and Azure core infrastructure terminology",
-      "Calculate high-availability design for 99.99% uptime"
+    "labs": [
+      "Set up and verify the environment for Cloud Computing & Virtualization Fundamentals",
+      "Execute hands-on commands and configuration tasks",
+      "Validate output, inspect logs, and push code changes to Git"
     ]
   },
   {
-    id: 4,
-    sessionNumber: 3,
-    module: "Phase 1: Program Kickoff & DevOps Foundations",
-    moduleId: "m1",
-    title: "DevOps Principles & Continuous Integration Best Practices",
-    folder: "Session-03-DevOps-Principles-Practices",
-    githubUrl: "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-03-DevOps-Principles-Practices",
-    isFree: true,
-    difficulty: "Beginner",
-    duration: "50 mins",
-    preview: "Dive deep into Continuous Integration (CI) best practices, automated testing, trunk-based development, semantic versioning, and build artifacts.",
-    topics: [
-      "Trunk-based development vs feature branching strategies",
-      "Continuous Integration (CI) pipeline stages & feedback loops",
-      "Automated unit, integration, and security test gates",
-      "Semantic Versioning (SemVer) & artifact tagging strategy"
+    "id": 4,
+    "sessionNumber": 3,
+    "module": "Phase 1: Foundation: DevOps + Cloud + AI Basics",
+    "moduleId": "m1",
+    "title": "DevOps Principles & Continuous Integration Practices",
+    "folder": "Session-03-DevOps-Principles-Practices",
+    "summaryFile": "New Batch-45 _ Multi-Cloud + DevOps with AI  _  55 Live + 55 Q&A Session Bootcamp _  Lakshya Batch  _ 8_00 AM IST 2026-09-22 07_50(GMT+5_30).md",
+    "githubUrl": "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-03-DevOps-Principles-Practices",
+    "isFree": true,
+    "difficulty": "Beginner",
+    "duration": "65 mins",
+    "preview": "Master DevOps Principles & Continuous Integration Practices. Hands-on session from the CloudDevOpsHub MultiCloud DevOps & AI Bootcamp covering real-time production concepts, configurations, and industry use-cases.",
+    "topics": [
+      "Architecture & core fundamentals of DevOps Principles & Continuous Integration Practices",
+      "Production setup, configuration & hands-on practicals",
+      "Enterprise security, troubleshooting & common pitfalls",
+      "Real-time interview scenarios & industry best practices"
     ],
-    labs: [
-      "Design an enterprise release pipeline schema",
-      "Document automated test gates criteria for production builds"
+    "labs": [
+      "Set up and verify the environment for DevOps Principles & Continuous Integration Practices",
+      "Execute hands-on commands and configuration tasks",
+      "Validate output, inspect logs, and push code changes to Git"
     ]
   },
   {
-    id: 5,
-    sessionNumber: 4,
-    module: "Phase 1: Program Kickoff & DevOps Foundations",
-    moduleId: "m1",
-    title: "Foundation of AI & Prompt Engineering for DevOps Engineers",
-    folder: "Session-04-Foundation-of-AI-Prompt-Engineering",
-    githubUrl: "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-04-Foundation-of-AI-Prompt-Engineer...",
-    isFree: true,
-    difficulty: "Beginner",
-    duration: "65 mins",
-    preview: "Harness modern LLMs and Prompt Engineering techniques to accelerate debugging, write Terraform & Dockerfiles 10x faster, and build AI-assisted operations.",
-    topics: [
-      "Understanding LLMs for DevOps & infrastructure automation",
-      "Prompt engineering frameworks: Role, Context, Task, Constraints (RCTC)",
-      "Using AI for Dockerfile optimization and regex generation",
-      "AI safety, credential leakage prevention, and hallucination checks"
+    "id": 5,
+    "sessionNumber": 4,
+    "module": "Phase 1: Foundation: DevOps + Cloud + AI Basics",
+    "moduleId": "m1",
+    "title": "Foundation of AI, Prompt Engineering & Co-Programmer Setup",
+    "folder": "Session-04-Foundation-of-AI-Prompt-Engineering-CoProgrammer-Setup",
+    "summaryFile": "Batch-45_Day-4_AI Fundamental's on 23rd Sep 2026.md",
+    "githubUrl": "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-04-Foundation-of-AI-Prompt-Engineering-CoProgrammer-Setup",
+    "isFree": true,
+    "difficulty": "Beginner",
+    "duration": "70 mins",
+    "preview": "Master Foundation of AI, Prompt Engineering & Co-Programmer Setup. Hands-on session from the CloudDevOpsHub MultiCloud DevOps & AI Bootcamp covering real-time production concepts, configurations, and industry use-cases.",
+    "topics": [
+      "Architecture & core fundamentals of Foundation of AI, Prompt Engineering & Co-Programmer Setup",
+      "Production setup, configuration & hands-on practicals",
+      "Enterprise security, troubleshooting & common pitfalls",
+      "Real-time interview scenarios & industry best practices"
     ],
-    labs: [
-      "Generate clean production Dockerfile using prompt templates",
-      "Debug a corrupted Kubernetes deployment manifest using AI prompts"
-    ]
-  },
-
-  // MODULE 2: Linux Administration & Shell Scripting (Sessions 5-12) -> LOCKED (Requires Sign-In)
-  {
-    id: 6,
-    sessionNumber: 5,
-    module: "Phase 2: Linux Administration & Automation",
-    moduleId: "m2",
-    title: "Linux Overview, Distros & GCP / AWS VM Setup",
-    folder: "Session-05-Linux-Overview-GCP-Setup",
-    githubUrl: "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-05-Linux-Overview-GCP-Setup",
-    isFree: false,
-    difficulty: "Beginner",
-    duration: "60 mins",
-    preview: "Set up your free tier Linux VM on GCP and AWS. Understand Debian vs RHEL distros, package managers (apt, yum), and essential initial server hardening.",
-    topics: [
-      "Linux distributions in production: Ubuntu/Debian vs RHEL/Rocky Linux",
-      "Provisioning free-tier virtual machines on GCP Compute Engine & AWS EC2",
-      "Package managers: apt, dpkg, yum, dnf comparison",
-      "Essential terminal productivity: tmux, htop, curl, wget"
-    ],
-    labs: [
-      "Provision an Ubuntu 24.04 instance on cloud provider",
-      "Configure static IP, timezone, and update software packages"
+    "labs": [
+      "Set up and verify the environment for Foundation of AI, Prompt Engineering & Co-Programmer Setup",
+      "Execute hands-on commands and configuration tasks",
+      "Validate output, inspect logs, and push code changes to Git"
     ]
   },
   {
-    id: 7,
-    sessionNumber: 6,
-    module: "Phase 2: Linux Administration & Automation",
-    moduleId: "m2",
-    title: "Linux VM, User Administration & SSH Key Hardening",
-    folder: "Session-06-Linux-VM-User-Administration",
-    githubUrl: "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-06-Linux-VM-User-Administration",
-    isFree: false,
-    difficulty: "Beginner",
-    duration: "60 mins",
-    preview: "Master multi-user management, sudoers configuration, ED25519 SSH key generation, and disabling password-based SSH root login for production servers.",
-    topics: [
-      "User & group management: useradd, usermod, groupadd, /etc/passwd",
-      "Sudo privilege delegation via /etc/sudoers.d/",
-      "Public key cryptography: generating ED25519 and RSA keys",
-      "Hardening sshd_config: Port change, permit root login false, fail2ban"
+    "id": 6,
+    "sessionNumber": 5,
+    "module": "Phase 2: Linux Administration & Practical Scenarios",
+    "moduleId": "m2",
+    "title": "Linux Overview, Distros & GCP / VM Setup",
+    "folder": "Session-05-Linux-Overview-GCP-Setup",
+    "summaryFile": "🚀 Day-5 of Batch-45 Quick Revision + Remaining Missing concept's _ 24th Sep 2026 _ 8_00 AM IST _ Zo 2026-09-24 07_48(GMT+5_30).md",
+    "githubUrl": "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-05-Linux-Overview-GCP-Setup",
+    "isFree": false,
+    "difficulty": "Beginner",
+    "duration": "45 mins",
+    "preview": "Master Linux Overview, Distros & GCP / VM Setup. Hands-on session from the CloudDevOpsHub MultiCloud DevOps & AI Bootcamp covering real-time production concepts, configurations, and industry use-cases.",
+    "topics": [
+      "Architecture & core fundamentals of Linux Overview, Distros & GCP / VM Setup",
+      "Production setup, configuration & hands-on practicals",
+      "Enterprise security, troubleshooting & common pitfalls",
+      "Real-time interview scenarios & industry best practices"
     ],
-    labs: [
-      "Create deploy user with restricted passwordless sudo",
-      "Set up SSH key pair authentication and disable root password login"
+    "labs": [
+      "Set up and verify the environment for Linux Overview, Distros & GCP / VM Setup",
+      "Execute hands-on commands and configuration tasks",
+      "Validate output, inspect logs, and push code changes to Git"
     ]
   },
   {
-    id: 8,
-    sessionNumber: 7,
-    module: "Phase 2: Linux Administration & Automation",
-    moduleId: "m2",
-    title: "Linux System Administration & Filesystem Hierarchy",
-    folder: "Session 07 Linux System Administration",
-    githubUrl: "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session%2007%20Linux%20System%20Administration",
-    isFree: false,
-    difficulty: "Intermediate",
-    duration: "65 mins",
-    preview: "Explore the Linux Filesystem Hierarchy Standard (FHS), disk partition tools (fdisk, lsblk, df, du), and mount points for enterprise storage.",
-    topics: [
-      "Filesystem Hierarchy Standard: /bin, /etc, /var, /opt, /proc, /dev",
-      "Disk storage inspection: df -h, du -sh, lsblk, fdisk, blkid",
-      "Mounting block devices, /etc/fstab persistence and UUIDs",
-      "Inodes, hard links vs soft symbolic links"
+    "id": 7,
+    "sessionNumber": 6,
+    "module": "Phase 2: Linux Administration & Practical Scenarios",
+    "moduleId": "m2",
+    "title": "Linux VM Administration & User Management (30+ Commands)",
+    "folder": "Session-06-Linux-VM-User-Administration",
+    "summaryFile": "🚀 Day-2 of Linux for DevOps (Linux 30+ Commands) Batch-45 _ 28th Sep 2026 _ 8_00 AM IST _ Zoom Sess 2026-09-28 07_49(GMT+5_30).md",
+    "githubUrl": "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-06-Linux-VM-User-Administration",
+    "isFree": false,
+    "difficulty": "Beginner",
+    "duration": "60 mins",
+    "preview": "Master Linux VM Administration & User Management (30+ Commands). Hands-on session from the CloudDevOpsHub MultiCloud DevOps & AI Bootcamp covering real-time production concepts, configurations, and industry use-cases.",
+    "topics": [
+      "Architecture & core fundamentals of Linux VM Administration & User Management (30+ Commands)",
+      "Production setup, configuration & hands-on practicals",
+      "Enterprise security, troubleshooting & common pitfalls",
+      "Real-time interview scenarios & industry best practices"
     ],
-    labs: [
-      "Attach and format an additional cloud volume with ext4",
-      "Configure persistent mount entry in /etc/fstab"
+    "labs": [
+      "Set up and verify the environment for Linux VM Administration & User Management (30+ Commands)",
+      "Execute hands-on commands and configuration tasks",
+      "Validate output, inspect logs, and push code changes to Git"
     ]
   },
   {
-    id: 9,
-    sessionNumber: 8,
-    module: "Phase 2: Linux Administration & Automation",
-    moduleId: "m2",
-    title: "Linux Permissions, Ownership, Sticky Bits & ACLs",
-    folder: "Session-08-Linux-Permissions-Ownership-Security",
-    githubUrl: "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-08-Linux-Permissions-Ownership-Security",
-    isFree: false,
-    difficulty: "Intermediate",
-    duration: "55 mins",
-    preview: "Deep dive into chmod numeric/symbolic notation, chown, chgrp, SUID, SGID, sticky bit on directories, and fine-grained POSIX Access Control Lists (ACLs).",
-    topics: [
-      "Standard permissions: Read (4), Write (2), Execute (1)",
-      "Special permissions: SUID, SGID, and Sticky Bit (1777)",
-      "POSIX Access Control Lists: getfacl and setfacl commands",
-      "Umask calculation and default permission security"
+    "id": 8,
+    "sessionNumber": 7,
+    "module": "Phase 2: Linux Administration & Practical Scenarios",
+    "moduleId": "m2",
+    "title": "Linux System Administration, Intermediate Commands & Package Management",
+    "folder": "Session-07-Linux-System-Administration",
+    "summaryFile": "🚀 Day-3 of Linux for DevOps Intermediate Commands Batch-45 | 29th Sep 2026 .md",
+    "githubUrl": "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-07-Linux-System-Administration",
+    "isFree": false,
+    "difficulty": "Beginner",
+    "duration": "55 mins",
+    "preview": "Master Linux System Administration, Intermediate Commands & Package Management. Hands-on session from the CloudDevOpsHub MultiCloud DevOps & AI Bootcamp covering real-time production concepts, configurations, and industry use-cases.",
+    "topics": [
+      "Architecture & core fundamentals of Linux System Administration, Intermediate Commands & Package Management",
+      "Production setup, configuration & hands-on practicals",
+      "Enterprise security, troubleshooting & common pitfalls",
+      "Real-time interview scenarios & industry best practices"
     ],
-    labs: [
-      "Create a shared collaborative directory with SGID and sticky bit",
-      "Apply granular read-only ACL to an external audit user"
+    "labs": [
+      "Set up and verify the environment for Linux System Administration, Intermediate Commands & Package Management",
+      "Execute hands-on commands and configuration tasks",
+      "Validate output, inspect logs, and push code changes to Git"
     ]
   },
   {
-    id: 10,
-    sessionNumber: 9,
-    module: "Phase 2: Linux Administration & Automation",
-    moduleId: "m2",
-    title: "Process Management, Daemons & Custom Systemd Services",
-    folder: "Session-09-Process-Management-Daemons-Systemd",
-    githubUrl: "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-09-Process-Management-Daemons-Systemd",
-    isFree: false,
-    difficulty: "Intermediate",
-    duration: "70 mins",
-    preview: "Learn process states (running, sleeping, zombie), kill signals (SIGTERM, SIGKILL), journalctl logs, and writing custom systemd service unit files.",
-    topics: [
-      "Process inspection: ps aux, top, htop, pstree, pkill",
-      "Linux signals: SIGINT (2), SIGTERM (15), SIGKILL (9), SIGHUP (1)",
-      "Systemd unit architecture: [Unit], [Service], [Install] sections",
-      "Inspecting system logs with journalctl -u -f"
+    "id": 9,
+    "sessionNumber": 8,
+    "module": "Phase 2: Linux Administration & Practical Scenarios",
+    "moduleId": "m2",
+    "title": "Linux Permissions, Software Management & Security Hardening",
+    "folder": "Session-08-Permissions-Software-Management",
+    "summaryFile": "README.md",
+    "githubUrl": "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-08-Permissions-Software-Management",
+    "isFree": false,
+    "difficulty": "Beginner",
+    "duration": "65 mins",
+    "preview": "Master Linux Permissions, Software Management & Security Hardening. Hands-on session from the CloudDevOpsHub MultiCloud DevOps & AI Bootcamp covering real-time production concepts, configurations, and industry use-cases.",
+    "topics": [
+      "Architecture & core fundamentals of Linux Permissions, Software Management & Security Hardening",
+      "Production setup, configuration & hands-on practicals",
+      "Enterprise security, troubleshooting & common pitfalls",
+      "Real-time interview scenarios & industry best practices"
     ],
-    labs: [
-      "Write a custom systemd service for a Node.js / Python daemon",
-      "Configure auto-restart on failure and boot-time enablement"
+    "labs": [
+      "Set up and verify the environment for Linux Permissions, Software Management & Security Hardening",
+      "Execute hands-on commands and configuration tasks",
+      "Validate output, inspect logs, and push code changes to Git"
     ]
   },
   {
-    id: 11,
-    sessionNumber: 10,
-    module: "Phase 2: Linux Administration & Automation",
-    moduleId: "m2",
-    title: "Bash Shell Scripting - Basics, Variables & Loops",
-    folder: "Session-10-Bash-Scripting-Basics-Automation",
-    githubUrl: "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-10-Bash-Scripting-Basics-Automation",
-    isFree: false,
-    difficulty: "Intermediate",
-    duration: "65 mins",
-    preview: "Write clean, robust shell scripts. Understand shebang, positional arguments, exit codes ($?), conditional tests [[ ... ]], for and while loops.",
-    topics: [
-      "Script anatomy: Shebang (#!/usr/bin/env bash) and strict mode (set -euo pipefail)",
-      "Environment vs local variables, command substitution $(command)",
-      "Conditionals: if/else, test expressions, integer and string comparisons",
-      "Iterating through files and server lists with loops"
+    "id": 10,
+    "sessionNumber": 9,
+    "module": "Phase 2: Linux Administration & Practical Scenarios",
+    "moduleId": "m2",
+    "title": "Linux Real-World Scenarios, Troubleshooting & Production Debugging",
+    "folder": "Session-09-Linux-RealWorld-Scenarios",
+    "summaryFile": "README.md",
+    "githubUrl": "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-09-Linux-RealWorld-Scenarios",
+    "isFree": false,
+    "difficulty": "Beginner",
+    "duration": "70 mins",
+    "preview": "Master Linux Real-World Scenarios, Troubleshooting & Production Debugging. Hands-on session from the CloudDevOpsHub MultiCloud DevOps & AI Bootcamp covering real-time production concepts, configurations, and industry use-cases.",
+    "topics": [
+      "Architecture & core fundamentals of Linux Real-World Scenarios, Troubleshooting & Production Debugging",
+      "Production setup, configuration & hands-on practicals",
+      "Enterprise security, troubleshooting & common pitfalls",
+      "Real-time interview scenarios & industry best practices"
     ],
-    labs: [
-      "Write a backup script that archives directories with timestamp",
-      "Build a disk usage alerting script that warns if usage > 85%"
+    "labs": [
+      "Set up and verify the environment for Linux Real-World Scenarios, Troubleshooting & Production Debugging",
+      "Execute hands-on commands and configuration tasks",
+      "Validate output, inspect logs, and push code changes to Git"
     ]
   },
   {
-    id: 12,
-    sessionNumber: 11,
-    module: "Phase 2: Linux Administration & Automation",
-    moduleId: "m2",
-    title: "Advanced Bash Scripting - Functions, Error Traps & Cron",
-    folder: "Session-11-Bash-Functions-Error-Handling-Cron",
-    githubUrl: "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-11-Bash-Functions-Error-Handling-Cron",
-    isFree: false,
-    difficulty: "Intermediate",
-    duration: "70 mins",
-    preview: "Take your scripts to enterprise level: custom functions, trapping errors with trap, logging to syslog, parsing flags with getopts, and cron automation.",
-    topics: [
-      "Modular scripting with reusable bash functions & return codes",
-      "Signal handling and cleanup handlers using trap 'cleanup' EXIT",
-      "CLI argument parsing using getopts",
-      "Automating background schedules with cron and crontab syntax"
+    "id": 11,
+    "sessionNumber": 10,
+    "module": "Phase 3: AWS Cloud Architecture & Core Services",
+    "moduleId": "m3",
+    "title": "AWS Cloud Introduction & EC2 Fundamentals",
+    "folder": "Session-10-AWS-Introduction-EC2-Basics",
+    "summaryFile": "🚀 Day-1 of AWS with Batch-45 | 05th Oct 2026 .md",
+    "githubUrl": "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-10-AWS-Introduction-EC2-Basics",
+    "isFree": false,
+    "difficulty": "Intermediate",
+    "duration": "45 mins",
+    "preview": "Master AWS Cloud Introduction & EC2 Fundamentals. Hands-on session from the CloudDevOpsHub MultiCloud DevOps & AI Bootcamp covering real-time production concepts, configurations, and industry use-cases.",
+    "topics": [
+      "Architecture & core fundamentals of AWS Cloud Introduction & EC2 Fundamentals",
+      "Production setup, configuration & hands-on practicals",
+      "Enterprise security, troubleshooting & common pitfalls",
+      "Real-time interview scenarios & industry best practices"
     ],
-    labs: [
-      "Create a CLI server health diagnostic tool with flags (-v, -h, -d)",
-      "Schedule automated daily database dumps via crontab"
+    "labs": [
+      "Set up and verify the environment for AWS Cloud Introduction & EC2 Fundamentals",
+      "Execute hands-on commands and configuration tasks",
+      "Validate output, inspect logs, and push code changes to Git"
     ]
   },
   {
-    id: 13,
-    sessionNumber: 12,
-    module: "Phase 2: Linux Administration & Automation",
-    moduleId: "m2",
-    title: "Networking Basics for DevOps - DNS, Subnets, Ports & Firewalls",
-    folder: "Session-12-DevOps-Networking-DNS-Subnets-Ports",
-    githubUrl: "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-12-DevOps-Networking-DNS-Subnets-Ports",
-    isFree: false,
-    difficulty: "Intermediate",
-    duration: "75 mins",
-    preview: "Master the networking foundations required for cloud and Kubernetes: TCP/IP, CIDR notation, DNS resolution (A, CNAME), netstat, ss, and UFW/iptables.",
-    topics: [
-      "OSI & TCP/IP stack: Transport (TCP/UDP) vs Application (HTTP/gRPC)",
-      "IPv4 CIDR calculations (/24, /16) and subnetting formulas",
-      "DNS resolution flow: Root servers, TLD, Authoritative, dig, nslookup",
-      "Host firewalls: UFW rules, iptables basics, and open port checks with ss -tulpn"
+    "id": 12,
+    "sessionNumber": 11,
+    "module": "Phase 3: AWS Cloud Architecture & Core Services",
+    "moduleId": "m3",
+    "title": "AWS EC2 Scalability, AMIs & Golden Images",
+    "folder": "Session-11-EC2-Scalability-AMI",
+    "summaryFile": "NEW link 🚀 Day-2 of AWS with Batch-45 _ 06th Oct 2026 _ 8_00 AM IST _ Zoom Session 2026-10-06 07_50(GMT+5_30).md",
+    "githubUrl": "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-11-EC2-Scalability-AMI",
+    "isFree": false,
+    "difficulty": "Intermediate",
+    "duration": "60 mins",
+    "preview": "Master AWS EC2 Scalability, AMIs & Golden Images. Hands-on session from the CloudDevOpsHub MultiCloud DevOps & AI Bootcamp covering real-time production concepts, configurations, and industry use-cases.",
+    "topics": [
+      "Architecture & core fundamentals of AWS EC2 Scalability, AMIs & Golden Images",
+      "Production setup, configuration & hands-on practicals",
+      "Enterprise security, troubleshooting & common pitfalls",
+      "Real-time interview scenarios & industry best practices"
     ],
-    labs: [
-      "Diagnose network latency and DNS packet drops using mtr & dig",
-      "Configure UFW firewall allowing only SSH, HTTP, and HTTPS ports"
-    ]
-  },
-
-  // MODULE 3: Git, Version Control & CI/CD Pipelines (Sessions 13-18)
-  {
-    id: 14,
-    sessionNumber: 13,
-    module: "Phase 3: Git & Version Control Mastery",
-    moduleId: "m3",
-    title: "Git Fundamentals, Branching Strategies & GitFlow",
-    folder: "Session-13-Git-Fundamentals-Branching-Flow",
-    githubUrl: "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-13-Git-Fundamentals-Branching-Flow",
-    isFree: false,
-    difficulty: "Beginner",
-    duration: "55 mins",
-    preview: "Demystify Git internals (blobs, trees, commits). Compare GitFlow, GitHub Flow, and Trunk-based development for cloud-native teams.",
-    topics: [
-      "Git three-tree architecture: Working Directory, Staging Index, Repository",
-      "Branching models: Trunk-Based Development vs GitFlow",
-      "Conventional Commits specification (feat, fix, chore, docs, refactor)",
-      "Remote management: fetch vs pull, tracking upstream branches"
-    ],
-    labs: [
-      "Set up branch naming conventions and enforce commit linters",
-      "Create release candidate branch and simulate production tagging"
+    "labs": [
+      "Set up and verify the environment for AWS EC2 Scalability, AMIs & Golden Images",
+      "Execute hands-on commands and configuration tasks",
+      "Validate output, inspect logs, and push code changes to Git"
     ]
   },
   {
-    id: 15,
-    sessionNumber: 14,
-    module: "Phase 3: Git & Version Control Mastery",
-    moduleId: "m3",
-    title: "Advanced Git: Rebase, Cherry-Pick, Stash & Conflict Resolution",
-    folder: "Session-14-Advanced-Git-Rebase-CherryPick-Conflicts",
-    githubUrl: "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-14-Advanced-Git-Rebase-CherryPick-Conflicts",
-    isFree: false,
-    difficulty: "Intermediate",
-    duration: "65 mins",
-    preview: "Never panic during a merge conflict again. Master git rebase -i (squash, reword), git cherry-pick, git reflog disaster recovery, and git stash.",
-    topics: [
-      "Interactive rebase: squashing messy commits into clean history",
-      "Cherry-picking specific bug fixes to hotfix branches",
-      "Git reflog: recovering lost commits and deleted branches",
-      "Resolving complex 3-way merge conflicts cleanly"
+    "id": 13,
+    "sessionNumber": 12,
+    "module": "Phase 3: AWS Cloud Architecture & Core Services",
+    "moduleId": "m3",
+    "title": "AWS IAM (Identity & Access Management) & Security Best Practices",
+    "folder": "Session-12-AWS-IAM-Identity-Access-Management",
+    "summaryFile": "🚀 Day-3 of AWS with Batch-45 | 07th Oct 2026 .md",
+    "githubUrl": "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-12-AWS-IAM-Identity-Access-Management",
+    "isFree": false,
+    "difficulty": "Intermediate",
+    "duration": "55 mins",
+    "preview": "Master AWS IAM (Identity & Access Management) & Security Best Practices. Hands-on session from the CloudDevOpsHub MultiCloud DevOps & AI Bootcamp covering real-time production concepts, configurations, and industry use-cases.",
+    "topics": [
+      "Architecture & core fundamentals of AWS IAM (Identity & Access Management) & Security Best Practices",
+      "Production setup, configuration & hands-on practicals",
+      "Enterprise security, troubleshooting & common pitfalls",
+      "Real-time interview scenarios & industry best practices"
     ],
-    labs: [
-      "Simulate a merge conflict between two branches and resolve it",
-      "Recover an accidentally deleted branch using git reflog"
+    "labs": [
+      "Set up and verify the environment for AWS IAM (Identity & Access Management) & Security Best Practices",
+      "Execute hands-on commands and configuration tasks",
+      "Validate output, inspect logs, and push code changes to Git"
     ]
   },
   {
-    id: 16,
-    sessionNumber: 15,
-    module: "Phase 3: Git & Version Control Mastery",
-    moduleId: "m3",
-    title: "GitHub Features: Pull Requests, Branch Protection & Secrets",
-    folder: "Session-15-GitHub-PR-Workflows-Secrets-Actions",
-    githubUrl: "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-15-GitHub-PR-Workflows-Secrets-Actions",
-    isFree: false,
-    difficulty: "Intermediate",
-    duration: "60 mins",
-    preview: "Configure enterprise GitHub settings: required reviewers, status checks, protected branches, repository environments, and encrypted secrets.",
-    topics: [
-      "Setting up PR templates and issue forms (.github/)",
-      "Branch protection rules: require approvals, require linear history",
-      "Managing GitHub Secrets, Environment Secrets & OIDC tokens",
-      "CODEOWNERS file for automated code review assignments"
+    "id": 14,
+    "sessionNumber": 13,
+    "module": "Phase 3: AWS Cloud Architecture & Core Services",
+    "moduleId": "m3",
+    "title": "AWS EC2 Configuration, Block Storage (EBS) & Instance Store",
+    "folder": "Session-13-EC2-Configuration-Storage",
+    "summaryFile": "🚀 Day-4 of AWS with Batch-45 | 08th Oct 2026 .md",
+    "githubUrl": "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-13-EC2-Configuration-Storage",
+    "isFree": false,
+    "difficulty": "Intermediate",
+    "duration": "65 mins",
+    "preview": "Master AWS EC2 Configuration, Block Storage (EBS) & Instance Store. Hands-on session from the CloudDevOpsHub MultiCloud DevOps & AI Bootcamp covering real-time production concepts, configurations, and industry use-cases.",
+    "topics": [
+      "Architecture & core fundamentals of AWS EC2 Configuration, Block Storage (EBS) & Instance Store",
+      "Production setup, configuration & hands-on practicals",
+      "Enterprise security, troubleshooting & common pitfalls",
+      "Real-time interview scenarios & industry best practices"
     ],
-    labs: [
-      "Create a production repository with branch protection rules",
-      "Configure repository secrets and test access scopes"
+    "labs": [
+      "Set up and verify the environment for AWS EC2 Configuration, Block Storage (EBS) & Instance Store",
+      "Execute hands-on commands and configuration tasks",
+      "Validate output, inspect logs, and push code changes to Git"
     ]
   },
   {
-    id: 17,
-    sessionNumber: 16,
-    module: "Phase 3: Git & Version Control Mastery",
-    moduleId: "m3",
-    title: "Building Continuous Integration Pipeline with GitHub Actions",
-    folder: "Session-16-GitHub-Actions-CI-Pipeline",
-    githubUrl: "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-16-GitHub-Actions-CI-Pipeline",
-    isFree: false,
-    difficulty: "Intermediate",
-    duration: "75 mins",
-    preview: "Construct your first production-grade GitHub Actions workflow (.github/workflows/ci.yml). Triggers, runners, steps, caching dependencies, and artifacts.",
-    topics: [
-      "GitHub Actions workflow syntax: on, jobs, steps, runs-on",
-      "Trigger events: push, pull_request, workflow_dispatch, schedule",
-      "Caching npm/pip packages to speed up builds by 70%",
-      "Uploading and downloading build test report artifacts"
+    "id": 15,
+    "sessionNumber": 14,
+    "module": "Phase 3: AWS Cloud Architecture & Core Services",
+    "moduleId": "m3",
+    "title": "AWS Elastic Load Balancing (ALB, NLB) & High Availability",
+    "folder": "Session-14-Elastic-Load-Balancer",
+    "summaryFile": "README.md",
+    "githubUrl": "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-14-Elastic-Load-Balancer",
+    "isFree": false,
+    "difficulty": "Intermediate",
+    "duration": "70 mins",
+    "preview": "Master AWS Elastic Load Balancing (ALB, NLB) & High Availability. Hands-on session from the CloudDevOpsHub MultiCloud DevOps & AI Bootcamp covering real-time production concepts, configurations, and industry use-cases.",
+    "topics": [
+      "Architecture & core fundamentals of AWS Elastic Load Balancing (ALB, NLB) & High Availability",
+      "Production setup, configuration & hands-on practicals",
+      "Enterprise security, troubleshooting & common pitfalls",
+      "Real-time interview scenarios & industry best practices"
     ],
-    labs: [
-      "Build a Node.js / React CI pipeline that runs linting, formatting, and unit tests",
-      "Add status badge to repository README"
+    "labs": [
+      "Set up and verify the environment for AWS Elastic Load Balancing (ALB, NLB) & High Availability",
+      "Execute hands-on commands and configuration tasks",
+      "Validate output, inspect logs, and push code changes to Git"
     ]
   },
   {
-    id: 18,
-    sessionNumber: 17,
-    module: "Phase 3: Git & Version Control Mastery",
-    moduleId: "m3",
-    title: "Multi-Environment CI/CD Pipelines & Matrix Builds",
-    folder: "Session-17-Multi-Stage-CI-CD-Matrix-Builds",
-    githubUrl: "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-17-Multi-Stage-CI-CD-Matrix-Builds",
-    isFree: false,
-    difficulty: "Advanced",
-    duration: "70 mins",
-    preview: "Scale pipelines with matrix testing (multiple Node/OS versions), sequential dependent jobs (needs: [lint, test]), and deployment approvals.",
-    topics: [
-      "Matrix strategies: testing across Ubuntu, macOS, Node 18, 20, 22",
-      "Job dependency graphs and conditional execution (if: success())",
-      "Deployment environments: staging vs production with manual gates",
-      "Re-usable workflows with workflow_call"
+    "id": 16,
+    "sessionNumber": 15,
+    "module": "Phase 3: AWS Cloud Architecture & Core Services",
+    "moduleId": "m3",
+    "title": "Amazon S3 Object Storage, Buckets & Lifecycle Policies",
+    "folder": "Session-15-Amazon-S3-Storage",
+    "summaryFile": "🚀 Day-5 of AWS with Batch-45 | 09th Oct 2026 .md",
+    "githubUrl": "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-15-Amazon-S3-Storage",
+    "isFree": false,
+    "difficulty": "Intermediate",
+    "duration": "45 mins",
+    "preview": "Master Amazon S3 Object Storage, Buckets & Lifecycle Policies. Hands-on session from the CloudDevOpsHub MultiCloud DevOps & AI Bootcamp covering real-time production concepts, configurations, and industry use-cases.",
+    "topics": [
+      "Architecture & core fundamentals of Amazon S3 Object Storage, Buckets & Lifecycle Policies",
+      "Production setup, configuration & hands-on practicals",
+      "Enterprise security, troubleshooting & common pitfalls",
+      "Real-time interview scenarios & industry best practices"
     ],
-    labs: [
-      "Create a matrix workflow testing across 3 runtime versions",
-      "Build a multi-stage pipeline: Build -> Test -> Stage -> Deploy"
+    "labs": [
+      "Set up and verify the environment for Amazon S3 Object Storage, Buckets & Lifecycle Policies",
+      "Execute hands-on commands and configuration tasks",
+      "Validate output, inspect logs, and push code changes to Git"
     ]
   },
   {
-    id: 19,
-    sessionNumber: 18,
-    module: "Phase 3: Git & Version Control Mastery",
-    moduleId: "m3",
-    title: "DevSecOps in Git: GPG Signed Commits & Secret Scanning",
-    folder: "Session-18-Git-Security-Rules-Branch-Protection",
-    githubUrl: "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-18-Git-Security-Rules-Branch-Protection",
-    isFree: false,
-    difficulty: "Intermediate",
-    duration: "60 mins",
-    preview: "Protect your supply chain. Sign commits with GPG keys for verified badges, prevent credential leaks with pre-commit hooks, and enable Trivy / GitGuardian.",
-    topics: [
-      "Generating GPG keys and configuring git config --global user.signingkey",
-      "Pre-commit hooks framework for automated formatting & secret detection",
-      "Secret scanning tools: TruffleHog, GitGuardian, and Gitleaks",
-      "Supply chain security: Dependabot and automated vulnerability PRs"
+    "id": 17,
+    "sessionNumber": 16,
+    "module": "Phase 3: AWS Cloud Architecture & Core Services",
+    "moduleId": "m3",
+    "title": "Amazon S3 Static Website Hosting & CDN Integration",
+    "folder": "Session-16-S3-Static-Website-Hosting",
+    "summaryFile": "🚀 Day-6 of AWS with Batch-45 _ 12th Oct 2026 _ 8_00 AM IST _ Zoom Session 2026-10-12 07_47(GMT+5_30).md",
+    "githubUrl": "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-16-S3-Static-Website-Hosting",
+    "isFree": false,
+    "difficulty": "Intermediate",
+    "duration": "60 mins",
+    "preview": "Master Amazon S3 Static Website Hosting & CDN Integration. Hands-on session from the CloudDevOpsHub MultiCloud DevOps & AI Bootcamp covering real-time production concepts, configurations, and industry use-cases.",
+    "topics": [
+      "Architecture & core fundamentals of Amazon S3 Static Website Hosting & CDN Integration",
+      "Production setup, configuration & hands-on practicals",
+      "Enterprise security, troubleshooting & common pitfalls",
+      "Real-time interview scenarios & industry best practices"
     ],
-    labs: [
-      "Configure GPG signing and verify commit green checkmark on GitHub",
-      "Set up pre-commit hook that blocks accidental AWS key commits"
-    ]
-  },
-
-  // MODULE 4: Multi-Cloud Foundations (AWS, GCP, Azure) (Sessions 19-28)
-  {
-    id: 20,
-    sessionNumber: 19,
-    module: "Phase 4: Multi-Cloud Engineering (AWS, GCP, Azure)",
-    moduleId: "m4",
-    title: "AWS Cloud Networking: VPC, Public/Private Subnets & NAT",
-    folder: "Session-19-AWS-VPC-Subnets-NAT-Gateways",
-    githubUrl: "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-19-AWS-VPC-Subnets-NAT-Gateways",
-    isFree: false,
-    difficulty: "Intermediate",
-    duration: "80 mins",
-    preview: "Architect a production-ready AWS Virtual Private Cloud (VPC) from scratch: CIDR blocks, public/private subnets across AZs, Internet Gateway, and NAT Gateway.",
-    topics: [
-      "AWS Global Infrastructure: Regions, Availability Zones, Edge Locations",
-      "VPC CIDR design: allocating /16 VPC and /24 subnets",
-      "Internet Gateway (IGW) vs NAT Gateway vs NAT Instance",
-      "Route Tables, Network ACLs (NACL) vs Security Groups"
-    ],
-    labs: [
-      "Design and provision a multi-AZ VPC with 2 public & 2 private subnets",
-      "Route outbound traffic from private subnet through NAT Gateway"
+    "labs": [
+      "Set up and verify the environment for Amazon S3 Static Website Hosting & CDN Integration",
+      "Execute hands-on commands and configuration tasks",
+      "Validate output, inspect logs, and push code changes to Git"
     ]
   },
   {
-    id: 21,
-    sessionNumber: 20,
-    module: "Phase 4: Multi-Cloud Engineering (AWS, GCP, Azure)",
-    moduleId: "m4",
-    title: "AWS Compute: EC2, Auto Scaling Groups & Application Load Balancers",
-    folder: "Session-20-AWS-EC2-AutoScaling-ALB-LoadBalancer",
-    githubUrl: "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-20-AWS-EC2-AutoScaling-ALB-LoadBalancer",
-    isFree: false,
-    difficulty: "Intermediate",
-    duration: "80 mins",
-    preview: "Deploy highly available compute: Launch Templates, User Data scripts, Target Groups, Application Load Balancers (ALB), and dynamic Auto Scaling Groups (ASG).",
-    topics: [
-      "EC2 instance types, spot vs on-demand vs reserved instances",
-      "Launch Templates with automated user-data bootstrap script",
-      "Application Load Balancer: path-based and host-based routing rules",
-      "Auto Scaling policies: target tracking, step scaling, scale in/out metrics"
+    "id": 18,
+    "sessionNumber": 17,
+    "module": "Phase 3: AWS Cloud Architecture & Core Services",
+    "moduleId": "m3",
+    "title": "AWS Managed Relational Databases (RDS) & Multi-AZ Failover",
+    "folder": "Session-17-AWS-Databases-RDS",
+    "summaryFile": "🚀 Day-7 of AWS RDS Batch-45 _ 13th Oct 2026 _ 8_00 AM IST _ Zoom Session 2026-10-13 07_48(GMT+5_30).md",
+    "githubUrl": "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-17-AWS-Databases-RDS",
+    "isFree": false,
+    "difficulty": "Intermediate",
+    "duration": "55 mins",
+    "preview": "Master AWS Managed Relational Databases (RDS) & Multi-AZ Failover. Hands-on session from the CloudDevOpsHub MultiCloud DevOps & AI Bootcamp covering real-time production concepts, configurations, and industry use-cases.",
+    "topics": [
+      "Architecture & core fundamentals of AWS Managed Relational Databases (RDS) & Multi-AZ Failover",
+      "Production setup, configuration & hands-on practicals",
+      "Enterprise security, troubleshooting & common pitfalls",
+      "Real-time interview scenarios & industry best practices"
     ],
-    labs: [
-      "Deploy an ALB distributing traffic between multiple private EC2 instances",
-      "Stress-test CPU to trigger automated horizontal scale-out"
+    "labs": [
+      "Set up and verify the environment for AWS Managed Relational Databases (RDS) & Multi-AZ Failover",
+      "Execute hands-on commands and configuration tasks",
+      "Validate output, inspect logs, and push code changes to Git"
     ]
   },
   {
-    id: 22,
-    sessionNumber: 21,
-    module: "Phase 4: Multi-Cloud Engineering (AWS, GCP, Azure)",
-    moduleId: "m4",
-    title: "AWS Storage & Content Delivery: S3, CloudFront & IAM RBAC",
-    folder: "Session-21-AWS-S3-CloudFront-IAM-RBAC",
-    githubUrl: "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-21-AWS-S3-CloudFront-IAM-RBAC",
-    isFree: false,
-    difficulty: "Intermediate",
-    duration: "70 mins",
-    preview: "Host static frontend applications on S3, configure CloudFront CDN for global caching and HTTPS, and secure IAM access using least-privilege policies.",
-    topics: [
-      "S3 storage classes: Standard, Infrequent Access, Glacier, Lifecycle Rules",
-      "CloudFront CDN distributions, Origin Access Control (OAC), cache behaviors",
-      "IAM principles: Users, Groups, Roles, Policies, STS AssumeRole",
-      "Writing JSON IAM Policies with conditions and explicit denys"
+    "id": 19,
+    "sessionNumber": 18,
+    "module": "Phase 3: AWS Cloud Architecture & Core Services",
+    "moduleId": "m3",
+    "title": "AWS VPC Architecture: Subnets, Route Tables & Internet Gateways",
+    "folder": "Session-18-AWS-VPC-Networking",
+    "summaryFile": "🚀 Day-9 of AWS VPC Batch-45 _ 15th Oct 2026 _ 8_00 AM IST _ Zoom Session 2026-10-15 07_48(GMT+5_30).md",
+    "githubUrl": "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-18-AWS-VPC-Networking",
+    "isFree": false,
+    "difficulty": "Intermediate",
+    "duration": "65 mins",
+    "preview": "Master AWS VPC Architecture: Subnets, Route Tables & Internet Gateways. Hands-on session from the CloudDevOpsHub MultiCloud DevOps & AI Bootcamp covering real-time production concepts, configurations, and industry use-cases.",
+    "topics": [
+      "Architecture & core fundamentals of AWS VPC Architecture",
+      "Production setup, configuration & hands-on practicals",
+      "Enterprise security, troubleshooting & common pitfalls",
+      "Real-time interview scenarios & industry best practices"
     ],
-    labs: [
-      "Host a static React SPA on S3 behind CloudFront with custom error pages",
-      "Create an IAM Role for EC2 instance with S3 read-only access"
+    "labs": [
+      "Set up and verify the environment for AWS VPC Architecture",
+      "Execute hands-on commands and configuration tasks",
+      "Validate output, inspect logs, and push code changes to Git"
     ]
   },
   {
-    id: 23,
-    sessionNumber: 22,
-    module: "Phase 4: Multi-Cloud Engineering (AWS, GCP, Azure)",
-    moduleId: "m4",
-    title: "AWS Managed Databases: RDS PostgreSQL & DynamoDB NoSQL",
-    folder: "Session-22-AWS-RDS-Postgres-DynamoDB-Databases",
-    githubUrl: "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-22-AWS-RDS-Postgres-DynamoDB-Databases",
-    isFree: false,
-    difficulty: "Intermediate",
-    duration: "75 mins",
-    preview: "Understand relational vs NoSQL in cloud: AWS RDS Multi-AZ failover, read replicas, automated backups, and DynamoDB serverless key-value tables.",
-    topics: [
-      "RDS PostgreSQL: Subnet groups, Multi-AZ high availability, Read Replicas",
-      "Database parameter groups, storage auto-scaling, automated snapshots",
-      "DynamoDB architecture: Partition keys, Sort keys, Global Secondary Indexes",
-      "Database security: VPC security group isolation, KMS encryption at rest"
+    "id": 20,
+    "sessionNumber": 19,
+    "module": "Phase 3: AWS Cloud Architecture & Core Services",
+    "moduleId": "m3",
+    "title": "AWS VPC Deep Dive Practicals: NAT Gateways, Bastions & Peering",
+    "folder": "Session-19-VPC-Practicals",
+    "summaryFile": "🚀 Day-10 of AWS VPC Batch-45 | 16th Oct 2026 .md",
+    "githubUrl": "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-19-VPC-Practicals",
+    "isFree": false,
+    "difficulty": "Intermediate",
+    "duration": "70 mins",
+    "preview": "Master AWS VPC Deep Dive Practicals: NAT Gateways, Bastions & Peering. Hands-on session from the CloudDevOpsHub MultiCloud DevOps & AI Bootcamp covering real-time production concepts, configurations, and industry use-cases.",
+    "topics": [
+      "Architecture & core fundamentals of AWS VPC Deep Dive Practicals",
+      "Production setup, configuration & hands-on practicals",
+      "Enterprise security, troubleshooting & common pitfalls",
+      "Real-time interview scenarios & industry best practices"
     ],
-    labs: [
-      "Provision private RDS PostgreSQL instance in private DB subnet",
-      "Connect securely to RDS using an EC2 bastion host"
+    "labs": [
+      "Set up and verify the environment for AWS VPC Deep Dive Practicals",
+      "Execute hands-on commands and configuration tasks",
+      "Validate output, inspect logs, and push code changes to Git"
     ]
   },
   {
-    id: 24,
-    sessionNumber: 23,
-    module: "Phase 4: Multi-Cloud Engineering (AWS, GCP, Azure)",
-    moduleId: "m4",
-    title: "Google Cloud Platform (GCP): VPC, Compute Engine & Cloud Storage",
-    folder: "Session-23-GCP-VPC-Compute-Engine-Cloud-Storage",
-    githubUrl: "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-23-GCP-VPC-Compute-Engine-Cloud-Storage",
-    isFree: false,
-    difficulty: "Intermediate",
-    duration: "70 mins",
-    preview: "Compare GCP architecture to AWS. Work with Google Cloud Projects, global VPC networks, Compute Engine VMs, and Google Cloud Storage (GCS) buckets.",
-    topics: [
-      "GCP Hierarchy: Organization, Folders, Projects, and billing accounts",
-      "Global VPC architecture in GCP vs regional VPCs in AWS",
-      "Compute Engine: VM instances, preemptible/spot VMs, startup scripts",
-      "Google Cloud Storage (GCS): buckets, access control, and gsutil CLI"
+    "id": 21,
+    "sessionNumber": 20,
+    "module": "Phase 3: AWS Cloud Architecture & Core Services",
+    "moduleId": "m3",
+    "title": "AWS CloudWatch Monitoring, Alarms & Logs Management",
+    "folder": "Session-20-AWS-CloudWatch-Monitoring",
+    "summaryFile": "🚀 Day-11 of AWS with Cloud Watch Batch-45 _ 21st Oct 2026 _ 8_00 AM IST _ Zoom Session.md",
+    "githubUrl": "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-20-AWS-CloudWatch-Monitoring",
+    "isFree": false,
+    "difficulty": "Intermediate",
+    "duration": "45 mins",
+    "preview": "Master AWS CloudWatch Monitoring, Alarms & Logs Management. Hands-on session from the CloudDevOpsHub MultiCloud DevOps & AI Bootcamp covering real-time production concepts, configurations, and industry use-cases.",
+    "topics": [
+      "Architecture & core fundamentals of AWS CloudWatch Monitoring, Alarms & Logs Management",
+      "Production setup, configuration & hands-on practicals",
+      "Enterprise security, troubleshooting & common pitfalls",
+      "Real-time interview scenarios & industry best practices"
     ],
-    labs: [
-      "Create custom GCP VPC with subnets in us-central1 and asia-south1",
-      "Deploy a Compute Engine instance and attach persistent disk via gcloud CLI"
+    "labs": [
+      "Set up and verify the environment for AWS CloudWatch Monitoring, Alarms & Logs Management",
+      "Execute hands-on commands and configuration tasks",
+      "Validate output, inspect logs, and push code changes to Git"
     ]
   },
   {
-    id: 25,
-    sessionNumber: 24,
-    module: "Phase 4: Multi-Cloud Engineering (AWS, GCP, Azure)",
-    moduleId: "m4",
-    title: "GCP Identity & Access Management (IAM) & Cloud SQL",
-    folder: "Session-24-GCP-IAM-ServiceAccounts-Cloud-SQL",
-    githubUrl: "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-24-GCP-IAM-ServiceAccounts-Cloud-SQL",
-    isFree: false,
-    difficulty: "Intermediate",
-    duration: "65 mins",
-    preview: "Master GCP Service Accounts, IAM Predefined & Custom Roles, Cloud SQL managed databases, and Cloud SQL Auth Proxy for secure private connections.",
-    topics: [
-      "GCP IAM: Members, Roles (Primitive, Predefined, Custom), Policy bindings",
-      "Service Accounts, JSON keys vs Workload Identity Federation",
-      "Cloud SQL for PostgreSQL: private IP configuration, automated backups",
-      "Connecting securely without public IP using Cloud SQL Auth Proxy"
+    "id": 22,
+    "sessionNumber": 21,
+    "module": "Phase 3: AWS Cloud Architecture & Core Services",
+    "moduleId": "m3",
+    "title": "AWS Service Integrations, SNS/SQS Decoupling & FinOps Cost Optimization",
+    "folder": "Session-21-AWS-Service-Integrations",
+    "summaryFile": "Day-12 of AWS with Integration's + AWS Cost Optimization Batch-45 _ 22nd Oct 2026 _ Q&A session.md",
+    "githubUrl": "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-21-AWS-Service-Integrations",
+    "isFree": false,
+    "difficulty": "Intermediate",
+    "duration": "60 mins",
+    "preview": "Master AWS Service Integrations, SNS/SQS Decoupling & FinOps Cost Optimization. Hands-on session from the CloudDevOpsHub MultiCloud DevOps & AI Bootcamp covering real-time production concepts, configurations, and industry use-cases.",
+    "topics": [
+      "Architecture & core fundamentals of AWS Service Integrations, SNS/SQS Decoupling & FinOps Cost Optimization",
+      "Production setup, configuration & hands-on practicals",
+      "Enterprise security, troubleshooting & common pitfalls",
+      "Real-time interview scenarios & industry best practices"
     ],
-    labs: [
-      "Configure Service Account with least-privilege Cloud Storage Viewer role",
-      "Connect an application to Cloud SQL via Cloud SQL Auth Proxy"
+    "labs": [
+      "Set up and verify the environment for AWS Service Integrations, SNS/SQS Decoupling & FinOps Cost Optimization",
+      "Execute hands-on commands and configuration tasks",
+      "Validate output, inspect logs, and push code changes to Git"
     ]
   },
   {
-    id: 26,
-    sessionNumber: 25,
-    module: "Phase 4: Multi-Cloud Engineering (AWS, GCP, Azure)",
-    moduleId: "m4",
-    title: "Microsoft Azure Core Services: VNet, Virtual Machines & Blob Storage",
-    folder: "Session-25-Azure-VNet-VMs-Blob-Storage",
-    githubUrl: "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-25-Azure-VNet-VMs-Blob-Storage",
-    isFree: false,
-    difficulty: "Intermediate",
-    duration: "70 mins",
-    preview: "Complete the Multi-Cloud trifecta with Azure: Resource Groups, Virtual Networks (VNets), Azure Virtual Machines, Network Security Groups, and Blob Storage.",
-    topics: [
-      "Azure management structure: Subscriptions & Resource Groups",
-      "Azure VNet, Subnets, and Network Security Groups (NSG) priority rules",
-      "Azure Virtual Machines: B-series burstable vs D-series general purpose",
-      "Azure Storage Accounts: Blob containers, SAS tokens, lifecycle tiers"
+    "id": 23,
+    "sessionNumber": 22,
+    "module": "Phase 4: CI/CD — Git, GitHub & Jenkins Pipelines",
+    "moduleId": "m4",
+    "title": "Git Fundamentals & GitHub Collaboration Workflows",
+    "folder": "Session-22-Git-GitHub-Learning",
+    "summaryFile": "Day-1 of DevOps i.e GIT & GITHUB with Batch-45 _ 26th Oct 2026.md",
+    "githubUrl": "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-22-Git-GitHub-Learning",
+    "isFree": false,
+    "difficulty": "Intermediate",
+    "duration": "55 mins",
+    "preview": "Master Git Fundamentals & GitHub Collaboration Workflows. Hands-on session from the CloudDevOpsHub MultiCloud DevOps & AI Bootcamp covering real-time production concepts, configurations, and industry use-cases.",
+    "topics": [
+      "Architecture & core fundamentals of Git Fundamentals & GitHub Collaboration Workflows",
+      "Production setup, configuration & hands-on practicals",
+      "Enterprise security, troubleshooting & common pitfalls",
+      "Real-time interview scenarios & industry best practices"
     ],
-    labs: [
-      "Deploy an Azure Linux VM inside a custom VNet using Azure CLI (az)",
-      "Upload static assets to Azure Blob storage with timed SAS token"
+    "labs": [
+      "Set up and verify the environment for Git Fundamentals & GitHub Collaboration Workflows",
+      "Execute hands-on commands and configuration tasks",
+      "Validate output, inspect logs, and push code changes to Git"
     ]
   },
   {
-    id: 27,
-    sessionNumber: 26,
-    module: "Phase 4: Multi-Cloud Engineering (AWS, GCP, Azure)",
-    moduleId: "m4",
-    title: "Multi-Cloud Hybrid Architecture & Disaster Recovery",
-    folder: "Session-26-MultiCloud-Hybrid-Architecture-DR",
-    githubUrl: "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-26-MultiCloud-Hybrid-Architecture-DR",
-    isFree: false,
-    difficulty: "Advanced",
-    duration: "75 mins",
-    preview: "Learn how modern global enterprises design across multiple clouds: Active-Passive, Active-Active, RPO & RTO metrics, Route 53 DNS failover, and data replication.",
-    topics: [
-      "Multi-cloud motivations: Vendor lock-in avoidance, compliance, low latency",
-      "Disaster recovery strategies: Backup & Restore, Pilot Light, Warm Standby, Multi-Site",
-      "Recovery Time Objective (RTO) vs Recovery Point Objective (RPO)",
-      "Global DNS failover using AWS Route 53 health checks & GCP Cloud DNS"
+    "id": 24,
+    "sessionNumber": 23,
+    "module": "Phase 4: CI/CD — Git, GitHub & Jenkins Pipelines",
+    "moduleId": "m4",
+    "title": "Advanced Git for Developers: Branching, Rebase & PR Workflows",
+    "folder": "Session-23-Git-for-Developers",
+    "summaryFile": "Day-2 of DevOps i.e GIT & GITHUB with Batch-45 _ 27th Oct 2026.md",
+    "githubUrl": "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-23-Git-for-Developers",
+    "isFree": false,
+    "difficulty": "Intermediate",
+    "duration": "65 mins",
+    "preview": "Master Advanced Git for Developers: Branching, Rebase & PR Workflows. Hands-on session from the CloudDevOpsHub MultiCloud DevOps & AI Bootcamp covering real-time production concepts, configurations, and industry use-cases.",
+    "topics": [
+      "Architecture & core fundamentals of Advanced Git for Developers",
+      "Production setup, configuration & hands-on practicals",
+      "Enterprise security, troubleshooting & common pitfalls",
+      "Real-time interview scenarios & industry best practices"
     ],
-    labs: [
-      "Configure multi-region DNS failover for a web application",
-      "Calculate RTO and RPO for simulated cloud region outage"
+    "labs": [
+      "Set up and verify the environment for Advanced Git for Developers",
+      "Execute hands-on commands and configuration tasks",
+      "Validate output, inspect logs, and push code changes to Git"
     ]
   },
   {
-    id: 28,
-    sessionNumber: 27,
-    module: "Phase 4: Multi-Cloud Engineering (AWS, GCP, Azure)",
-    moduleId: "m4",
-    title: "Cloud Cost Optimization & FinOps Best Practices",
-    folder: "Session-27-Cloud-FinOps-Cost-Optimization",
-    githubUrl: "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-27-Cloud-FinOps-Cost-Optimization",
-    isFree: false,
-    difficulty: "Intermediate",
-    duration: "60 mins",
-    preview: "Save thousands of dollars in cloud bills: AWS Cost Explorer, GCP Billing Budgets, unattached EBS volume detection, right-sizing instances, and savings plans.",
-    topics: [
-      "FinOps framework: Inform, Optimize, Operate phases",
-      "Tagging strategy: CostCenter, Environment, Owner tags for attribution",
-      "Identifying zombie resources: unattached EBS, unused EIPs, old snapshots",
-      "Reserved Instances, Savings Plans, and Compute Spot instances pricing"
+    "id": 25,
+    "sessionNumber": 24,
+    "module": "Phase 4: CI/CD — Git, GitHub & Jenkins Pipelines",
+    "moduleId": "m4",
+    "title": "Jenkins CI/CD Automation: Architecture, Installation & Initial Setup",
+    "folder": "Session-24-Jenkins-Introduction-Setup",
+    "summaryFile": "Day-3 of DevOps i.e GIT & GITHUB + Jenkins Overview with Batch-45 _ 28th Oct 2026.md",
+    "githubUrl": "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-24-Jenkins-Introduction-Setup",
+    "isFree": false,
+    "difficulty": "Intermediate",
+    "duration": "70 mins",
+    "preview": "Master Jenkins CI/CD Automation: Architecture, Installation & Initial Setup. Hands-on session from the CloudDevOpsHub MultiCloud DevOps & AI Bootcamp covering real-time production concepts, configurations, and industry use-cases.",
+    "topics": [
+      "Architecture & core fundamentals of Jenkins CI/CD Automation",
+      "Production setup, configuration & hands-on practicals",
+      "Enterprise security, troubleshooting & common pitfalls",
+      "Real-time interview scenarios & industry best practices"
     ],
-    labs: [
-      "Create an AWS Cost Anomaly Detection alert sending Slack alerts",
-      "Write a script that finds unattached EBS volumes across AWS regions"
+    "labs": [
+      "Set up and verify the environment for Jenkins CI/CD Automation",
+      "Execute hands-on commands and configuration tasks",
+      "Validate output, inspect logs, and push code changes to Git"
     ]
   },
   {
-    id: 29,
-    sessionNumber: 28,
-    module: "Phase 4: Multi-Cloud Engineering (AWS, GCP, Azure)",
-    moduleId: "m4",
-    title: "Cloud Security: WAF, Shield, Security Groups & Compliance",
-    folder: "Session-28-Cloud-Security-WAF-Shield-Compliance",
-    githubUrl: "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-28-Cloud-Security-WAF-Shield-Compliance",
-    isFree: false,
-    difficulty: "Advanced",
-    duration: "70 mins",
-    preview: "Harden your cloud infrastructure: Web Application Firewall (WAF) rate limiting, DDoS protection with Shield, CIS benchmarks, and security compliance.",
-    topics: [
-      "AWS WAF rules: SQL injection, Cross-Site Scripting (XSS), rate-based IP blocking",
-      "AWS Shield Standard vs Advanced for DDoS mitigation",
-      "Security Groups stateful inspection vs NACL stateless rules",
-      "CIS Benchmarks and AWS Security Hub automated compliance posture"
+    "id": 26,
+    "sessionNumber": 25,
+    "module": "Phase 4: CI/CD — Git, GitHub & Jenkins Pipelines",
+    "moduleId": "m4",
+    "title": "Jenkins Freestyle & Maven Build Jobs Automation",
+    "folder": "Session-25-Jenkins-Jobs-Maven",
+    "summaryFile": "Day-4 of DevOps i.e Jenkins SETUP + CI with Batch-45 _ 02nd Nov 2026 _.md",
+    "githubUrl": "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-25-Jenkins-Jobs-Maven",
+    "isFree": false,
+    "difficulty": "Intermediate",
+    "duration": "45 mins",
+    "preview": "Master Jenkins Freestyle & Maven Build Jobs Automation. Hands-on session from the CloudDevOpsHub MultiCloud DevOps & AI Bootcamp covering real-time production concepts, configurations, and industry use-cases.",
+    "topics": [
+      "Architecture & core fundamentals of Jenkins Freestyle & Maven Build Jobs Automation",
+      "Production setup, configuration & hands-on practicals",
+      "Enterprise security, troubleshooting & common pitfalls",
+      "Real-time interview scenarios & industry best practices"
     ],
-    labs: [
-      "Attach AWS WAF rate-limiting rule to Application Load Balancer",
-      "Perform a simulated layer 7 attack and observe WAF blocking traffic"
-    ]
-  },
-
-  // MODULE 5: Containers & Docker Mastery (Sessions 29-36)
-  {
-    id: 30,
-    sessionNumber: 29,
-    module: "Phase 5: Containers & Docker Mastery",
-    moduleId: "m5",
-    title: "Containerization Concepts & Docker Architecture",
-    folder: "Session-29-Docker-Architecture-Container-Basics",
-    githubUrl: "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-29-Docker-Architecture-Container-Basics",
-    isFree: false,
-    difficulty: "Beginner",
-    duration: "60 mins",
-    preview: "Understand containers under the hood: Linux namespaces, cgroups, UnionFS/Overlay2. Learn how Docker Engine, dockerd, and containerd interact.",
-    topics: [
-      "Containers vs Virtual Machines: kernel sharing and startup speed",
-      "Linux namespaces (PID, NET, MNT, IPC, UTS) and cgroups resource limits",
-      "Docker Engine architecture: CLI, REST API, dockerd, containerd, runc",
-      "Core Docker CLI: docker run, ps, exec, logs, stop, rm, inspect"
-    ],
-    labs: [
-      "Run your first Nginx container with port mapping (-p 8080:80)",
-      "Inspect container namespaces and CPU limits with docker stats"
+    "labs": [
+      "Set up and verify the environment for Jenkins Freestyle & Maven Build Jobs Automation",
+      "Execute hands-on commands and configuration tasks",
+      "Validate output, inspect logs, and push code changes to Git"
     ]
   },
   {
-    id: 31,
-    sessionNumber: 30,
-    module: "Phase 5: Containers & Docker Mastery",
-    moduleId: "m5",
-    title: "Writing Optimized Multi-Stage Dockerfiles",
-    folder: "Session-30-Optimized-MultiStage-Dockerfiles",
-    githubUrl: "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-30-Optimized-MultiStage-Dockerfiles",
-    isFree: false,
-    difficulty: "Intermediate",
-    duration: "70 mins",
-    preview: "Shrink image sizes from 1.2GB to 35MB. Master layer caching, non-root users, .dockerignore, distroless images, and multi-stage builds.",
-    topics: [
-      "Dockerfile instructions: FROM, WORKDIR, COPY, RUN, CMD vs ENTRYPOINT",
-      "Optimizing Docker build cache: order of operations and package managers",
-      "Multi-stage builds: separate build environment from lean runtime image",
-      "Security: running as non-root user (USER node / 10001) and distroless base"
+    "id": 27,
+    "sessionNumber": 26,
+    "module": "Phase 4: CI/CD — Git, GitHub & Jenkins Pipelines",
+    "moduleId": "m4",
+    "title": "Jenkins Declarative Pipelines & Pipeline as Code",
+    "folder": "Session-26-Jenkins-Pipelines",
+    "summaryFile": "Day-6 of DevOps i.e Jenkins Pipeline with Batch-45 _4th Nov 2026.md",
+    "githubUrl": "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-26-Jenkins-Pipelines",
+    "isFree": false,
+    "difficulty": "Intermediate",
+    "duration": "60 mins",
+    "preview": "Master Jenkins Declarative Pipelines & Pipeline as Code. Hands-on session from the CloudDevOpsHub MultiCloud DevOps & AI Bootcamp covering real-time production concepts, configurations, and industry use-cases.",
+    "topics": [
+      "Architecture & core fundamentals of Jenkins Declarative Pipelines & Pipeline as Code",
+      "Production setup, configuration & hands-on practicals",
+      "Enterprise security, troubleshooting & common pitfalls",
+      "Real-time interview scenarios & industry best practices"
     ],
-    labs: [
-      "Refactor a heavy Node/Go application Dockerfile using multi-stage build",
-      "Measure layer cache efficiency and audit final image size"
+    "labs": [
+      "Set up and verify the environment for Jenkins Declarative Pipelines & Pipeline as Code",
+      "Execute hands-on commands and configuration tasks",
+      "Validate output, inspect logs, and push code changes to Git"
     ]
   },
   {
-    id: 32,
-    sessionNumber: 31,
-    module: "Phase 5: Containers & Docker Mastery",
-    moduleId: "m5",
-    title: "Docker Networking: Bridge, Host & Custom Networks",
-    folder: "Session-31-Docker-Networking-Bridge-Host-Overlay",
-    githubUrl: "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-31-Docker-Networking-Bridge-Host-Overlay",
-    isFree: false,
-    difficulty: "Intermediate",
-    duration: "65 mins",
-    preview: "Connect containers seamlessly: default bridge vs user-defined bridge, embedded DNS resolver, host network mode, and container-to-container communication.",
-    topics: [
-      "Docker network drivers: bridge, host, none, macvlan, overlay",
-      "User-defined bridge networks & automatic DNS resolution by container name",
-      "Port forwarding mechanics via iptables NAT rules",
-      "Debugging network issues between containers using netshoot"
+    "id": 28,
+    "sessionNumber": 27,
+    "module": "Phase 4: CI/CD — Git, GitHub & Jenkins Pipelines",
+    "moduleId": "m4",
+    "title": "GitLab CI/CD Architecture & Advanced GitOps",
+    "folder": "Session-27- GITLAB",
+    "summaryFile": "Day-8 of DevOps i.e GITLAB + Jenkins Advance Batch-45 _ 6th Nov 2026ss.md",
+    "githubUrl": "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-27-%20GITLAB",
+    "isFree": false,
+    "difficulty": "Intermediate",
+    "duration": "55 mins",
+    "preview": "Master GitLab CI/CD Architecture & Advanced GitOps. Hands-on session from the CloudDevOpsHub MultiCloud DevOps & AI Bootcamp covering real-time production concepts, configurations, and industry use-cases.",
+    "topics": [
+      "Architecture & core fundamentals of GitLab CI/CD Architecture & Advanced GitOps",
+      "Production setup, configuration & hands-on practicals",
+      "Enterprise security, troubleshooting & common pitfalls",
+      "Real-time interview scenarios & industry best practices"
     ],
-    labs: [
-      "Create custom bridge network and connect web frontend to Redis cache",
-      "Verify container name resolution without hardcoded IP addresses"
+    "labs": [
+      "Set up and verify the environment for GitLab CI/CD Architecture & Advanced GitOps",
+      "Execute hands-on commands and configuration tasks",
+      "Validate output, inspect logs, and push code changes to Git"
     ]
   },
   {
-    id: 33,
-    sessionNumber: 32,
-    module: "Phase 5: Containers & Docker Mastery",
-    moduleId: "m5",
-    title: "Docker Storage: Named Volumes, Bind Mounts & Persistence",
-    folder: "Session-32-Docker-Storage-Volumes-BindMounts",
-    githubUrl: "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-32-Docker-Storage-Volumes-BindMounts",
-    isFree: false,
-    difficulty: "Intermediate",
-    duration: "60 mins",
-    preview: "Prevent data loss: understand ephemeral container storage vs persistent named volumes (/var/lib/docker/volumes/) and developer bind mounts.",
-    topics: [
-      "Container storage layer (copy-on-write) vs persistent storage",
-      "Docker Named Volumes: lifecycle, backups, and volume drivers",
-      "Bind Mounts for local development hot-reloading",
-      "Permissions issues with mounted host volumes and UID/GID mapping"
+    "id": 29,
+    "sessionNumber": 27,
+    "module": "Phase 4: CI/CD — Git, GitHub & Jenkins Pipelines",
+    "moduleId": "m4",
+    "title": "Jenkins Plugins Ecosystem & Enterprise Integrations",
+    "folder": "Session-27-Jenkins-Plugins",
+    "summaryFile": "🚀 Day-7 of DevOps i.e Day-5 of Jenkins Pipeline Batch-44 | 28th July 2026.md",
+    "githubUrl": "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-27-Jenkins-Plugins",
+    "isFree": false,
+    "difficulty": "Intermediate",
+    "duration": "65 mins",
+    "preview": "Master Jenkins Plugins Ecosystem & Enterprise Integrations. Hands-on session from the CloudDevOpsHub MultiCloud DevOps & AI Bootcamp covering real-time production concepts, configurations, and industry use-cases.",
+    "topics": [
+      "Architecture & core fundamentals of Jenkins Plugins Ecosystem & Enterprise Integrations",
+      "Production setup, configuration & hands-on practicals",
+      "Enterprise security, troubleshooting & common pitfalls",
+      "Real-time interview scenarios & industry best practices"
     ],
-    labs: [
-      "Deploy PostgreSQL in Docker with persistent named volume",
-      "Destroy and recreate the container to prove zero data loss"
+    "labs": [
+      "Set up and verify the environment for Jenkins Plugins Ecosystem & Enterprise Integrations",
+      "Execute hands-on commands and configuration tasks",
+      "Validate output, inspect logs, and push code changes to Git"
     ]
   },
   {
-    id: 34,
-    sessionNumber: 33,
-    module: "Phase 5: Containers & Docker Mastery",
-    moduleId: "m5",
-    title: "Docker Compose: Multi-Container Microservices Orchestration",
-    folder: "Session-33-Docker-Compose-Microservices-Stack",
-    githubUrl: "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-33-Docker-Compose-Microservices-Stack",
-    isFree: false,
-    difficulty: "Intermediate",
-    duration: "75 mins",
-    preview: "Orchestrate full-stack applications locally with a single command: docker compose up -d. Services, networks, volumes, depends_on, and environment files.",
-    topics: [
-      "docker-compose.yml specification: version, services, networks, volumes",
-      "Managing service dependencies with depends_on and healthchecks",
-      "Environment variable injection with .env files and variable substitution",
-      "Compose profiles for dev, test, and production stacks"
+    "id": 30,
+    "sessionNumber": 28,
+    "module": "Phase 4: CI/CD — Git, GitHub & Jenkins Pipelines",
+    "moduleId": "m4",
+    "title": "Advanced Jenkins Jobs, Multi-Branch Pipelines & Shared Libraries",
+    "folder": "Session-28-Advanced-Jenkins-Jobs",
+    "summaryFile": "Day-7_Jenkins_Advance_Batch-45.md",
+    "githubUrl": "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-28-Advanced-Jenkins-Jobs",
+    "isFree": false,
+    "difficulty": "Intermediate",
+    "duration": "70 mins",
+    "preview": "Master Advanced Jenkins Jobs, Multi-Branch Pipelines & Shared Libraries. Hands-on session from the CloudDevOpsHub MultiCloud DevOps & AI Bootcamp covering real-time production concepts, configurations, and industry use-cases.",
+    "topics": [
+      "Architecture & core fundamentals of Advanced Jenkins Jobs, Multi-Branch Pipelines & Shared Libraries",
+      "Production setup, configuration & hands-on practicals",
+      "Enterprise security, troubleshooting & common pitfalls",
+      "Real-time interview scenarios & industry best practices"
     ],
-    labs: [
-      "Write docker-compose.yml for a 3-tier app (React + Node API + MongoDB)",
-      "Implement container healthchecks and graceful restart policies"
+    "labs": [
+      "Set up and verify the environment for Advanced Jenkins Jobs, Multi-Branch Pipelines & Shared Libraries",
+      "Execute hands-on commands and configuration tasks",
+      "Validate output, inspect logs, and push code changes to Git"
     ]
   },
   {
-    id: 35,
-    sessionNumber: 34,
-    module: "Phase 5: Containers & Docker Mastery",
-    moduleId: "m5",
-    title: "Container Security: Image Vulnerability Scanning with Trivy",
-    folder: "Session-34-Container-Security-Scanning-Trivy",
-    githubUrl: "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-34-Container-Security-Scanning-Trivy",
-    isFree: false,
-    difficulty: "Intermediate",
-    duration: "60 mins",
-    preview: "Secure container images before they reach production. Scan for CVE vulnerabilities, misconfigurations, and leaked secrets using Trivy and Docker Scout.",
-    topics: [
-      "Common container vulnerabilities: outdated base images and root permissions",
-      "Installing and running Trivy scanner on images and Dockerfiles",
-      "Filtering CVE severity: CRITICAL, HIGH, MEDIUM",
-      "Integrating Trivy scan gates into CI pipelines to fail insecure builds"
+    "id": 31,
+    "sessionNumber": 29,
+    "module": "Phase 4: CI/CD — Git, GitHub & Jenkins Pipelines",
+    "moduleId": "m4",
+    "title": "Jenkins Distributed Architecture: Controller & Agent (Master-Slave)",
+    "folder": "Session-29-Jenkins-MasterSlave-Architecture",
+    "summaryFile": "🚀Reverse KT by Batch-44 Student's | 31st July 2026.md",
+    "githubUrl": "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-29-Jenkins-MasterSlave-Architecture",
+    "isFree": false,
+    "difficulty": "Intermediate",
+    "duration": "45 mins",
+    "preview": "Master Jenkins Distributed Architecture: Controller & Agent (Master-Slave). Hands-on session from the CloudDevOpsHub MultiCloud DevOps & AI Bootcamp covering real-time production concepts, configurations, and industry use-cases.",
+    "topics": [
+      "Architecture & core fundamentals of Jenkins Distributed Architecture",
+      "Production setup, configuration & hands-on practicals",
+      "Enterprise security, troubleshooting & common pitfalls",
+      "Real-time interview scenarios & industry best practices"
     ],
-    labs: [
-      "Scan a vulnerable legacy Docker image and generate a vulnerability report",
-      "Remediate CRITICAL CVEs by upgrading base images and pinning dependencies"
+    "labs": [
+      "Set up and verify the environment for Jenkins Distributed Architecture",
+      "Execute hands-on commands and configuration tasks",
+      "Validate output, inspect logs, and push code changes to Git"
     ]
   },
   {
-    id: 36,
-    sessionNumber: 35,
-    module: "Phase 5: Containers & Docker Mastery",
-    moduleId: "m5",
-    title: "Container Registries: Docker Hub & Amazon ECR CI Integration",
-    folder: "Session-35-Docker-Hub-AWS-ECR-CI-Integration",
-    githubUrl: "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-35-Docker-Hub-AWS-ECR-CI-Integration",
-    isFree: false,
-    difficulty: "Intermediate",
-    duration: "65 mins",
-    preview: "Push and pull container images like a pro. Set up private Amazon Elastic Container Registry (ECR), automated GitHub Actions build-and-push, and image tagging.",
-    topics: [
-      "Docker image tagging conventions: semantic versions, git SHA, latest",
-      "Creating and configuring Amazon ECR private repository",
-      "ECR authentication with aws ecr get-login-password",
-      "Automating docker buildx multi-arch (amd64, arm64) push via GitHub Actions"
+    "id": 32,
+    "sessionNumber": 30,
+    "module": "Phase 5: Docker, Kubernetes, GKE & Monitoring (Prometheus/Grafana)",
+    "moduleId": "m5",
+    "title": "Docker Fundamentals, Architecture & Container Basics",
+    "folder": "Session-30-Docker-Introduction",
+    "summaryFile": "Day-1ofDocker Basic to Intermediate with Batch-45 _ 11th Nov 2026 at 8AM IST.md",
+    "githubUrl": "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-30-Docker-Introduction",
+    "isFree": false,
+    "difficulty": "Intermediate",
+    "duration": "60 mins",
+    "preview": "Master Docker Fundamentals, Architecture & Container Basics. Hands-on session from the CloudDevOpsHub MultiCloud DevOps & AI Bootcamp covering real-time production concepts, configurations, and industry use-cases.",
+    "topics": [
+      "Architecture & core fundamentals of Docker Fundamentals, Architecture & Container Basics",
+      "Production setup, configuration & hands-on practicals",
+      "Enterprise security, troubleshooting & common pitfalls",
+      "Real-time interview scenarios & industry best practices"
     ],
-    labs: [
-      "Build and push tagged container image to Amazon ECR via GitHub Actions",
-      "Configure ECR lifecycle policy to automatically expire untagged images"
+    "labs": [
+      "Set up and verify the environment for Docker Fundamentals, Architecture & Container Basics",
+      "Execute hands-on commands and configuration tasks",
+      "Validate output, inspect logs, and push code changes to Git"
     ]
   },
   {
-    id: 37,
-    sessionNumber: 36,
-    module: "Phase 5: Containers & Docker Mastery",
-    moduleId: "m5",
-    title: "Troubleshooting Docker in Production Environments",
-    folder: "Session-36-Docker-Troubleshooting-Production-Debugging",
-    githubUrl: "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-36-Docker-Troubleshooting-Production-Debugging",
-    isFree: false,
-    difficulty: "Advanced",
-    duration: "65 mins",
-    preview: "Diagnose crashing containers: Out of Memory (OOMKilled), dangling volumes filling up disks, orphan containers, docker system prune, and inspecting core dumps.",
-    topics: [
-      "Diagnosing OOMKilled (Exit Code 137) and resource starvation",
-      "Disk cleanup operations: docker system prune -a --volumes safely",
-      "Docker daemon logs and debugging dockerd systemd service",
-      "Real-time debugging of live running containers without stopping them"
+    "id": 33,
+    "sessionNumber": 31,
+    "module": "Phase 5: Docker, Kubernetes, GKE & Monitoring (Prometheus/Grafana)",
+    "moduleId": "m5",
+    "title": "Docker Installation, CLI Deep Dive & Container Lifecycle",
+    "folder": "Session-31-Docker-Installation-Basics",
+    "summaryFile": "Day-2 of Docker Basic to Intermediate with Batch-45 _ 12th Nov 2026 at 8AM IST.md",
+    "githubUrl": "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-31-Docker-Installation-Basics",
+    "isFree": false,
+    "difficulty": "Intermediate",
+    "duration": "55 mins",
+    "preview": "Master Docker Installation, CLI Deep Dive & Container Lifecycle. Hands-on session from the CloudDevOpsHub MultiCloud DevOps & AI Bootcamp covering real-time production concepts, configurations, and industry use-cases.",
+    "topics": [
+      "Architecture & core fundamentals of Docker Installation, CLI Deep Dive & Container Lifecycle",
+      "Production setup, configuration & hands-on practicals",
+      "Enterprise security, troubleshooting & common pitfalls",
+      "Real-time interview scenarios & industry best practices"
     ],
-    labs: [
-      "Diagnose an artificially created memory leak container",
-      "Perform a complete safe disk reclamation on a production Docker host"
-    ]
-  },
-
-  // MODULE 6: Kubernetes (K8s) & Container Orchestration (Sessions 37-45)
-  {
-    id: 38,
-    sessionNumber: 37,
-    module: "Phase 6: Kubernetes & Container Orchestration",
-    moduleId: "m6",
-    title: "Kubernetes Architecture: Control Plane, Worker Nodes & Kubelet",
-    folder: "Session-37-Kubernetes-Architecture-ControlPlane-WorkerNodes",
-    githubUrl: "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-37-Kubernetes-Architecture-ControlPlane-WorkerNodes",
-    isFree: false,
-    difficulty: "Intermediate",
-    duration: "75 mins",
-    preview: "Understand how Kubernetes coordinates distributed systems: kube-apiserver, etcd, kube-scheduler, kube-controller-manager, kubelet, and kube-proxy.",
-    topics: [
-      "Control Plane components: API Server, etcd, Scheduler, Controller Manager",
-      "Worker Node components: Kubelet, Kube-Proxy, Container Runtime (CRI)",
-      "Declarative state reconciliation loop and desired vs actual state",
-      "Setting up Minikube / Kind for local Kubernetes development"
-    ],
-    labs: [
-      "Spin up a local multi-node Kubernetes cluster with Kind",
-      "Explore cluster components status using kubectl get componentstatuses"
+    "labs": [
+      "Set up and verify the environment for Docker Installation, CLI Deep Dive & Container Lifecycle",
+      "Execute hands-on commands and configuration tasks",
+      "Validate output, inspect logs, and push code changes to Git"
     ]
   },
   {
-    id: 39,
-    sessionNumber: 38,
-    module: "Phase 6: Kubernetes & Container Orchestration",
-    moduleId: "m6",
-    title: "Pods, Deployments & ReplicaSets Manifests",
-    folder: "Session-38-K8s-Pods-Deployments-ReplicaSets",
-    githubUrl: "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-38-K8s-Pods-Deployments-ReplicaSets",
-    isFree: false,
-    difficulty: "Intermediate",
-    duration: "70 mins",
-    preview: "Write clean Kubernetes YAML manifests. Understand Pod lifecycle, ReplicaSets for self-healing, rolling updates, and rollback strategies.",
-    topics: [
-      "Pod structure: containers, initContainers, probes, and restartPolicy",
-      "Deployment manifests: replicas, selector, matchLabels, and template",
-      "Rolling update strategies: maxSurge and maxUnavailable settings",
-      "Rollback deployments seamlessly with kubectl rollout undo"
+    "id": 34,
+    "sessionNumber": 32,
+    "module": "Phase 5: Docker, Kubernetes, GKE & Monitoring (Prometheus/Grafana)",
+    "moduleId": "m5",
+    "title": "Writing Production-Grade Dockerfiles & Multi-Stage Builds",
+    "folder": "Session-32-Docker-Lifecycle-Dockerfile",
+    "summaryFile": "🚀 Day-4 of Docker Batch-44 | 6th Aug 2026 .md",
+    "githubUrl": "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-32-Docker-Lifecycle-Dockerfile",
+    "isFree": false,
+    "difficulty": "Intermediate",
+    "duration": "65 mins",
+    "preview": "Master Writing Production-Grade Dockerfiles & Multi-Stage Builds. Hands-on session from the CloudDevOpsHub MultiCloud DevOps & AI Bootcamp covering real-time production concepts, configurations, and industry use-cases.",
+    "topics": [
+      "Architecture & core fundamentals of Writing Production-Grade Dockerfiles & Multi-Stage Builds",
+      "Production setup, configuration & hands-on practicals",
+      "Enterprise security, troubleshooting & common pitfalls",
+      "Real-time interview scenarios & industry best practices"
     ],
-    labs: [
-      "Deploy a 3-replica web application deployment with rolling update",
-      "Trigger a bad deployment and perform instant automated rollback"
+    "labs": [
+      "Set up and verify the environment for Writing Production-Grade Dockerfiles & Multi-Stage Builds",
+      "Execute hands-on commands and configuration tasks",
+      "Validate output, inspect logs, and push code changes to Git"
     ]
   },
   {
-    id: 40,
-    sessionNumber: 39,
-    module: "Phase 6: Kubernetes & Container Orchestration",
-    moduleId: "m6",
-    title: "Kubernetes Services: ClusterIP, NodePort & LoadBalancer",
-    folder: "Session-39-K8s-Services-ClusterIP-NodePort-LoadBalancer",
-    githubUrl: "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-39-K8s-Services-ClusterIP-NodePort-LoadBalancer",
-    isFree: false,
-    difficulty: "Intermediate",
-    duration: "70 mins",
-    preview: "Route network traffic reliably to dynamic Pods: ClusterIP for internal service discovery, NodePort for edge exposure, and LoadBalancer for cloud cloud provider integration.",
-    topics: [
-      "Service discovery problem in ephemeral container environments",
-      "ClusterIP: internal virtual IP and CoreDNS name resolution",
-      "NodePort: static port allocation on every cluster node",
-      "LoadBalancer service: cloud controller provision of external LB"
+    "id": 35,
+    "sessionNumber": 33,
+    "module": "Phase 5: Docker, Kubernetes, GKE & Monitoring (Prometheus/Grafana)",
+    "moduleId": "m5",
+    "title": "Kubernetes (K8s) Architecture, Fundamentals & Pod Concepts",
+    "folder": "Session-33-Kubernetes-Introduction",
+    "summaryFile": "🚀 Day-1 of Kubernetes Batch-44 | 10th Aug 2026.md",
+    "githubUrl": "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-33-Kubernetes-Introduction",
+    "isFree": false,
+    "difficulty": "Intermediate",
+    "duration": "70 mins",
+    "preview": "Master Kubernetes (K8s) Architecture, Fundamentals & Pod Concepts. Hands-on session from the CloudDevOpsHub MultiCloud DevOps & AI Bootcamp covering real-time production concepts, configurations, and industry use-cases.",
+    "topics": [
+      "Architecture & core fundamentals of Kubernetes (K8s) Architecture, Fundamentals & Pod Concepts",
+      "Production setup, configuration & hands-on practicals",
+      "Enterprise security, troubleshooting & common pitfalls",
+      "Real-time interview scenarios & industry best practices"
     ],
-    labs: [
-      "Create a ClusterIP service and test DNS resolution from a debug pod",
-      "Expose the frontend service via LoadBalancer and verify external traffic"
+    "labs": [
+      "Set up and verify the environment for Kubernetes (K8s) Architecture, Fundamentals & Pod Concepts",
+      "Execute hands-on commands and configuration tasks",
+      "Validate output, inspect logs, and push code changes to Git"
     ]
   },
   {
-    id: 41,
-    sessionNumber: 40,
-    module: "Phase 6: Kubernetes & Container Orchestration",
-    moduleId: "m6",
-    title: "Kubernetes Ingress Controller & Cert-Manager SSL/TLS",
-    folder: "Session-40-K8s-Ingress-Controller-TLS-Certificates",
-    githubUrl: "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-40-K8s-Ingress-Controller-TLS-Certificates",
-    isFree: false,
-    difficulty: "Advanced",
-    duration: "80 mins",
-    preview: "Stop creating expensive individual LoadBalancers. Install NGINX Ingress Controller, host-based routing, path rewrites, and auto-renewing Let's Encrypt TLS certificates.",
-    topics: [
-      "Ingress vs LoadBalancer cost and architectural comparison",
-      "Installing NGINX Ingress Controller on your cluster",
-      "Configuring Ingress rules: host routing and path-based routing (/api)",
-      "Cert-Manager: automated Let's Encrypt certificates and ClusterIssuer"
+    "id": 36,
+    "sessionNumber": 34,
+    "module": "Phase 5: Docker, Kubernetes, GKE & Monitoring (Prometheus/Grafana)",
+    "moduleId": "m5",
+    "title": "Kubernetes Core Components & Managed GKE Cluster Setup",
+    "folder": "Session-34-Kubernetes-Components-GKE",
+    "summaryFile": "🚀 Day-3 of Kubernetes Batch-44 | 12th Aug 2026 .md",
+    "githubUrl": "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-34-Kubernetes-Components-GKE",
+    "isFree": false,
+    "difficulty": "Intermediate",
+    "duration": "45 mins",
+    "preview": "Master Kubernetes Core Components & Managed GKE Cluster Setup. Hands-on session from the CloudDevOpsHub MultiCloud DevOps & AI Bootcamp covering real-time production concepts, configurations, and industry use-cases.",
+    "topics": [
+      "Architecture & core fundamentals of Kubernetes Core Components & Managed GKE Cluster Setup",
+      "Production setup, configuration & hands-on practicals",
+      "Enterprise security, troubleshooting & common pitfalls",
+      "Real-time interview scenarios & industry best practices"
     ],
-    labs: [
-      "Deploy Ingress routing api.domain.com and app.domain.com to different pods",
-      "Issue automated HTTPS SSL certificate via Let's Encrypt ClusterIssuer"
+    "labs": [
+      "Set up and verify the environment for Kubernetes Core Components & Managed GKE Cluster Setup",
+      "Execute hands-on commands and configuration tasks",
+      "Validate output, inspect logs, and push code changes to Git"
     ]
   },
   {
-    id: 42,
-    sessionNumber: 41,
-    module: "Phase 6: Kubernetes & Container Orchestration",
-    moduleId: "m6",
-    title: "ConfigMaps, Secrets & Environment Variables Injection",
-    folder: "Session-41-K8s-ConfigMaps-Secrets-Env-Injection",
-    githubUrl: "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-41-K8s-ConfigMaps-Secrets-Env-Injection",
-    isFree: false,
-    difficulty: "Intermediate",
-    duration: "65 mins",
-    preview: "Decouple configuration from container code. Mount ConfigMaps as files and env variables, manage base64 K8s Secrets, and integrate External Secrets Operator.",
-    topics: [
-      "ConfigMap creation from files, directories, and literals",
-      "Injecting ConfigMap as environment variables (envFrom) and volume mounts",
-      "Kubernetes Secret types (Opaque, dockerconfigjson, tls) and security caveats",
-      "Live configuration reloading without restarting application pods"
+    "id": 37,
+    "sessionNumber": 35,
+    "module": "Phase 5: Docker, Kubernetes, GKE & Monitoring (Prometheus/Grafana)",
+    "moduleId": "m5",
+    "title": "Real-World Kubernetes: Microservices E-Commerce Deployment on GKE",
+    "folder": "Session-35-GKE-Ecommerce-Project",
+    "summaryFile": "🚀 Project-2 on Day-5 of Kubernetes Batch-44 | 14th Aug 2026 .md",
+    "githubUrl": "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-35-GKE-Ecommerce-Project",
+    "isFree": false,
+    "difficulty": "Intermediate",
+    "duration": "60 mins",
+    "preview": "Master Real-World Kubernetes: Microservices E-Commerce Deployment on GKE. Hands-on session from the CloudDevOpsHub MultiCloud DevOps & AI Bootcamp covering real-time production concepts, configurations, and industry use-cases.",
+    "topics": [
+      "Architecture & core fundamentals of Real-World Kubernetes",
+      "Production setup, configuration & hands-on practicals",
+      "Enterprise security, troubleshooting & common pitfalls",
+      "Real-time interview scenarios & industry best practices"
     ],
-    labs: [
-      "Mount application config JSON file via ConfigMap volume",
-      "Secure database password in Secret and inject into backend pod"
+    "labs": [
+      "Set up and verify the environment for Real-World Kubernetes",
+      "Execute hands-on commands and configuration tasks",
+      "Validate output, inspect logs, and push code changes to Git"
     ]
   },
   {
-    id: 43,
-    sessionNumber: 42,
-    module: "Phase 6: Kubernetes & Container Orchestration",
-    moduleId: "m6",
-    title: "Kubernetes Storage: PersistentVolumes, PVCs & StorageClasses",
-    folder: "Session-42-K8s-PersistentVolumes-PVC-StorageClasses",
-    githubUrl: "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-42-K8s-PersistentVolumes-PVC-StorageClasses",
-    isFree: false,
-    difficulty: "Advanced",
-    duration: "75 mins",
-    preview: "Master stateful workloads in Kubernetes: CSI plugins, PersistentVolume (PV), PersistentVolumeClaim (PVC), Dynamic Provisioning, and StatefulSets.",
-    topics: [
-      "Container Storage Interface (CSI) specification",
-      "PV vs PVC abstraction: admin provisioning vs developer claims",
-      "StorageClasses and dynamic volume provisioning (AWS EBS gp3, GCP pd-ssd)",
-      "StatefulSets vs Deployments: stable network IDs and ordered updates"
+    "id": 38,
+    "sessionNumber": 36,
+    "module": "Phase 5: Docker, Kubernetes, GKE & Monitoring (Prometheus/Grafana)",
+    "moduleId": "m5",
+    "title": "Prometheus Monitoring: Architecture, Metrics Scraping & Exporters",
+    "folder": "Session-36-Prometheus-Grafana-Introduction",
+    "summaryFile": "🚀 Day-6 of Kubernetes Batch-44 | 17th Aug 2026.md",
+    "githubUrl": "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-36-Prometheus-Grafana-Introduction",
+    "isFree": false,
+    "difficulty": "Intermediate",
+    "duration": "55 mins",
+    "preview": "Master Prometheus Monitoring: Architecture, Metrics Scraping & Exporters. Hands-on session from the CloudDevOpsHub MultiCloud DevOps & AI Bootcamp covering real-time production concepts, configurations, and industry use-cases.",
+    "topics": [
+      "Architecture & core fundamentals of Prometheus Monitoring",
+      "Production setup, configuration & hands-on practicals",
+      "Enterprise security, troubleshooting & common pitfalls",
+      "Real-time interview scenarios & industry best practices"
     ],
-    labs: [
-      "Deploy MongoDB StatefulSet with dynamic PVC volume allocation",
-      "Simulate pod eviction and verify volume reattachment on replacement node"
+    "labs": [
+      "Set up and verify the environment for Prometheus Monitoring",
+      "Execute hands-on commands and configuration tasks",
+      "Validate output, inspect logs, and push code changes to Git"
     ]
   },
   {
-    id: 44,
-    sessionNumber: 43,
-    module: "Phase 6: Kubernetes & Container Orchestration",
-    moduleId: "m6",
-    title: "Helm 3 Package Manager: Charts, Values & Templates",
-    folder: "Session-43-Helm-3-Charts-Templates-Releases",
-    githubUrl: "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-43-Helm-3-Charts-Templates-Releases",
-    isFree: false,
-    difficulty: "Intermediate",
-    duration: "70 mins",
-    preview: "Package and deploy Kubernetes applications efficiently with Helm 3: Chart.yaml, values.yaml, Go templating, dry-run linting, and release versioning.",
-    topics: [
-      "Why Helm: templating vs copying repetitive YAML files",
-      "Helm chart structure: templates/, values.yaml, Chart.yaml",
-      "Helm Go templating: {{ .Values.image.tag }}, if/else, range loops",
-      "Managing releases: helm install, upgrade, rollback, uninstall"
+    "id": 39,
+    "sessionNumber": 37,
+    "module": "Phase 5: Docker, Kubernetes, GKE & Monitoring (Prometheus/Grafana)",
+    "moduleId": "m5",
+    "title": "Grafana Dashboards Visualization, Helm 3 & Horizontal Pod Autoscaling (HPA)",
+    "folder": "Session-37-Grafana-Dashboards",
+    "summaryFile": "🚀 Day-7 of Kubernetes HPA + Helm + Grafana Batch-44 _ 18th Aug 2026 _ 8_00 AM IST _ Live Session.md",
+    "githubUrl": "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-37-Grafana-Dashboards",
+    "isFree": false,
+    "difficulty": "Intermediate",
+    "duration": "65 mins",
+    "preview": "Master Grafana Dashboards Visualization, Helm 3 & Horizontal Pod Autoscaling (HPA). Hands-on session from the CloudDevOpsHub MultiCloud DevOps & AI Bootcamp covering real-time production concepts, configurations, and industry use-cases.",
+    "topics": [
+      "Architecture & core fundamentals of Grafana Dashboards Visualization, Helm 3 & Horizontal Pod Autoscaling (HPA)",
+      "Production setup, configuration & hands-on practicals",
+      "Enterprise security, troubleshooting & common pitfalls",
+      "Real-time interview scenarios & industry best practices"
     ],
-    labs: [
-      "Package your microservice into a custom reusable Helm chart",
-      "Deploy custom chart with different values files for dev and prod"
+    "labs": [
+      "Set up and verify the environment for Grafana Dashboards Visualization, Helm 3 & Horizontal Pod Autoscaling (HPA)",
+      "Execute hands-on commands and configuration tasks",
+      "Validate output, inspect logs, and push code changes to Git"
     ]
   },
   {
-    id: 45,
-    sessionNumber: 44,
-    module: "Phase 6: Kubernetes & Container Orchestration",
-    moduleId: "m6",
-    title: "Managed Kubernetes: AWS EKS Cluster Provisioning",
-    folder: "Session-44-Managed-Kubernetes-AWS-EKS-Setup",
-    githubUrl: "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-44-Managed-Kubernetes-AWS-EKS-Setup",
-    isFree: false,
-    difficulty: "Advanced",
-    duration: "85 mins",
-    preview: "Provision production-grade AWS Elastic Kubernetes Service (EKS): eksctl, IAM OIDC provider, managed node groups, AWS Load Balancer Controller, and VPC CNI.",
-    topics: [
-      "AWS EKS control plane pricing, architecture, and high availability",
-      "Creating cluster with eksctl config file with managed node groups",
-      "Configuring IAM Roles for Service Accounts (IRSA) with OIDC provider",
-      "Installing AWS Load Balancer Controller for automated ALB creation"
+    "id": 40,
+    "sessionNumber": 38,
+    "module": "Phase 6: Ansible, Terraform & Infrastructure Automation",
+    "moduleId": "m6",
+    "title": "Infrastructure as Code (IaC) with Terraform: HCL & Providers",
+    "folder": "Session-38-Terraform-Introduction",
+    "summaryFile": "🚀 Day-3 of Automation but Day-1 of Terraform for Batch-44 | 24th Aug 2026.md",
+    "githubUrl": "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-38-Terraform-Introduction",
+    "isFree": false,
+    "difficulty": "Intermediate",
+    "duration": "70 mins",
+    "preview": "Master Infrastructure as Code (IaC) with Terraform: HCL & Providers. Hands-on session from the CloudDevOpsHub MultiCloud DevOps & AI Bootcamp covering real-time production concepts, configurations, and industry use-cases.",
+    "topics": [
+      "Architecture & core fundamentals of Infrastructure as Code (IaC) with Terraform",
+      "Production setup, configuration & hands-on practicals",
+      "Enterprise security, troubleshooting & common pitfalls",
+      "Real-time interview scenarios & industry best practices"
     ],
-    labs: [
-      "Provision a 2-node AWS EKS cluster with eksctl",
-      "Configure IRSA allowing a pod to read from AWS S3 without access keys"
+    "labs": [
+      "Set up and verify the environment for Infrastructure as Code (IaC) with Terraform",
+      "Execute hands-on commands and configuration tasks",
+      "Validate output, inspect logs, and push code changes to Git"
     ]
   },
   {
-    id: 46,
-    sessionNumber: 45,
-    module: "Phase 6: Kubernetes & Container Orchestration",
-    moduleId: "m6",
-    title: "Managed Kubernetes: Google Kubernetes Engine (GKE) Setup",
-    folder: "Session-45-Managed-Kubernetes-GCP-GKE-Setup",
-    githubUrl: "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-45-Managed-Kubernetes-GCP-GKE-Setup",
-    isFree: false,
-    difficulty: "Advanced",
-    duration: "80 mins",
-    preview: "Deploy and manage GKE: Standard vs Autopilot clusters, Workload Identity, Cloud Logging integration, and automated node pool autoscaling.",
-    topics: [
-      "GKE Standard vs GKE Autopilot mode comparison",
-      "Node autoprovisioning, cluster autoscaler, and horizontal pod autoscaler (HPA)",
-      "GCP Workload Identity configuration for secure GCP API access",
-      "Deploying applications to GKE using gcloud container clusters get-credentials"
+    "id": 41,
+    "sessionNumber": 39,
+    "module": "Phase 6: Ansible, Terraform & Infrastructure Automation",
+    "moduleId": "m6",
+    "title": "Terraform Provisioning for AWS Resources & Modules",
+    "folder": "Session-39-Terraform-AWS-Resources",
+    "summaryFile": "🚀 Day-4 of Automation but Day-2 of Terraform for Batch-44 | 25th Aug 2026 .md",
+    "githubUrl": "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-39-Terraform-AWS-Resources",
+    "isFree": false,
+    "difficulty": "Intermediate",
+    "duration": "45 mins",
+    "preview": "Master Terraform Provisioning for AWS Resources & Modules. Hands-on session from the CloudDevOpsHub MultiCloud DevOps & AI Bootcamp covering real-time production concepts, configurations, and industry use-cases.",
+    "topics": [
+      "Architecture & core fundamentals of Terraform Provisioning for AWS Resources & Modules",
+      "Production setup, configuration & hands-on practicals",
+      "Enterprise security, troubleshooting & common pitfalls",
+      "Real-time interview scenarios & industry best practices"
     ],
-    labs: [
-      "Provision GKE cluster with cluster autoscaler enabled",
-      "Deploy a microservice and trigger node pool auto-scale under load"
-    ]
-  },
-
-  // MODULE 7: Infrastructure as Code (IaC) & GitOps (Sessions 46-50)
-  {
-    id: 47,
-    sessionNumber: 46,
-    module: "Phase 7: Infrastructure as Code (IaC) & GitOps",
-    moduleId: "m7",
-    title: "Terraform Fundamentals: HCL, Providers, Resources & State",
-    folder: "Session-46-Terraform-IaC-HCL-State-Providers",
-    githubUrl: "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-46-Terraform-IaC-HCL-State-Providers",
-    isFree: false,
-    difficulty: "Intermediate",
-    duration: "75 mins",
-    preview: "Never click in the cloud console again. Learn HashiCorp Configuration Language (HCL), provider blocks, resource creation, terraform plan, and terraform apply.",
-    topics: [
-      "Declarative IaC principles vs imperative bash scripts",
-      "Terraform CLI workflow: init, plan, apply, destroy, validate, fmt",
-      "Understanding terraform.tfstate and state file drift detection",
-      "Input variables, local values, output variables, and data sources"
-    ],
-    labs: [
-      "Write Terraform code to provision an AWS VPC with subnets and security groups",
-      "Inspect generated state file and execute terraform plan to verify zero changes"
+    "labs": [
+      "Set up and verify the environment for Terraform Provisioning for AWS Resources & Modules",
+      "Execute hands-on commands and configuration tasks",
+      "Validate output, inspect logs, and push code changes to Git"
     ]
   },
   {
-    id: 48,
-    sessionNumber: 47,
-    module: "Phase 7: Infrastructure as Code (IaC) & GitOps",
-    moduleId: "m7",
-    title: "Terraform Remote State with AWS S3 & DynamoDB Locking",
-    folder: "Session-47-Terraform-Remote-State-S3-DynamoDB",
-    githubUrl: "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-47-Terraform-Remote-State-S3-DynamoDB",
-    isFree: false,
-    difficulty: "Advanced",
-    duration: "70 mins",
-    preview: "Collaborate safely in teams. Store terraform state remotely in an encrypted S3 bucket with versioning and DynamoDB state locking to prevent race conditions.",
-    topics: [
-      "Risks of committing terraform.tfstate to Git repositories",
-      "Configuring backend 's3' with encryption at rest and bucket versioning",
-      "Distributed state locking using DynamoDB LockID table",
-      "State migration from local to remote backend safely"
+    "id": 42,
+    "sessionNumber": 40,
+    "module": "Phase 6: Ansible, Terraform & Infrastructure Automation",
+    "moduleId": "m6",
+    "title": "Ansible Configuration Management: Architecture & Fundamentals",
+    "folder": "Session-40-Ansible-Introduction",
+    "summaryFile": "README.md",
+    "githubUrl": "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-40-Ansible-Introduction",
+    "isFree": false,
+    "difficulty": "Intermediate",
+    "duration": "60 mins",
+    "preview": "Master Ansible Configuration Management: Architecture & Fundamentals. Hands-on session from the CloudDevOpsHub MultiCloud DevOps & AI Bootcamp covering real-time production concepts, configurations, and industry use-cases.",
+    "topics": [
+      "Architecture & core fundamentals of Ansible Configuration Management",
+      "Production setup, configuration & hands-on practicals",
+      "Enterprise security, troubleshooting & common pitfalls",
+      "Real-time interview scenarios & industry best practices"
     ],
-    labs: [
-      "Provision backend S3 and DynamoDB resources with Terraform",
-      "Migrate local state to remote backend and verify lock acquisition during apply"
+    "labs": [
+      "Set up and verify the environment for Ansible Configuration Management",
+      "Execute hands-on commands and configuration tasks",
+      "Validate output, inspect logs, and push code changes to Git"
     ]
   },
   {
-    id: 49,
-    sessionNumber: 48,
-    module: "Phase 7: Infrastructure as Code (IaC) & GitOps",
-    moduleId: "m7",
-    title: "Reusable Terraform Modules & Multi-Environment Workspaces",
-    folder: "Session-48-Terraform-Modules-Workspaces-DRY",
-    githubUrl: "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-48-Terraform-Modules-Workspaces-DRY",
-    isFree: false,
-    difficulty: "Advanced",
-    duration: "80 mins",
-    preview: "Write DRY (Don't Repeat Yourself) infrastructure. Build reusable custom Terraform modules with versioning, and structure dev, staging, and prod environments.",
-    topics: [
-      "Module design: root module, child modules, inputs, and outputs",
-      "Terragrunt vs Terraform directory structures vs Terraform workspaces",
-      "Publishing and sourcing modules from Git tags and private registries",
-      "Terraform best practices: strict provider pinning and documentation with terraform-docs"
+    "id": 43,
+    "sessionNumber": 41,
+    "module": "Phase 6: Ansible, Terraform & Infrastructure Automation",
+    "moduleId": "m6",
+    "title": "Ansible Architecture, Inventories & Dynamic Cloud Targeting",
+    "folder": "Session-41-Ansible-Architecture",
+    "summaryFile": "README.md",
+    "githubUrl": "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-41-Ansible-Architecture",
+    "isFree": false,
+    "difficulty": "Intermediate",
+    "duration": "55 mins",
+    "preview": "Master Ansible Architecture, Inventories & Dynamic Cloud Targeting. Hands-on session from the CloudDevOpsHub MultiCloud DevOps & AI Bootcamp covering real-time production concepts, configurations, and industry use-cases.",
+    "topics": [
+      "Architecture & core fundamentals of Ansible Architecture, Inventories & Dynamic Cloud Targeting",
+      "Production setup, configuration & hands-on practicals",
+      "Enterprise security, troubleshooting & common pitfalls",
+      "Real-time interview scenarios & industry best practices"
     ],
-    labs: [
-      "Build a reusable EC2 Webserver module with customizable inputs",
-      "Deploy development and production environments using the same module"
+    "labs": [
+      "Set up and verify the environment for Ansible Architecture, Inventories & Dynamic Cloud Targeting",
+      "Execute hands-on commands and configuration tasks",
+      "Validate output, inspect logs, and push code changes to Git"
     ]
   },
   {
-    id: 50,
-    sessionNumber: 49,
-    module: "Phase 7: Infrastructure as Code (IaC) & GitOps",
-    moduleId: "m7",
-    title: "Configuration Management with Ansible Playbooks & Roles",
-    folder: "Session-49-Ansible-Playbooks-Roles-Inventory",
-    githubUrl: "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-49-Ansible-Playbooks-Roles-Inventory",
-    isFree: false,
-    difficulty: "Intermediate",
-    duration: "75 mins",
-    preview: "Automate server configuration without agents. Learn Ansible architecture over SSH, inventory files, ad-hoc commands, YAML playbooks, and reusable roles.",
-    topics: [
-      "Ansible agentless architecture: SSH communication and Python interpreter",
-      "Static vs Dynamic inventory files (AWS EC2 inventory plugin)",
-      "Writing idempotent playbooks: apt, yum, copy, template, service, lineinfile",
-      "Organizing production code with Ansible Galaxy and reusable Roles"
+    "id": 44,
+    "sessionNumber": 42,
+    "module": "Phase 6: Ansible, Terraform & Infrastructure Automation",
+    "moduleId": "m6",
+    "title": "Ansible Playbooks, Roles, Handlers & Ansible Vault Security",
+    "folder": "Session-42-Ansible-Playbooks-Roles",
+    "summaryFile": "🚀 Day-6 of Automation i.e Ansible Setup for Batch-44 _ 27th Aug 2026 _ 8_00 AM IST _ Live Session.md",
+    "githubUrl": "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-42-Ansible-Playbooks-Roles",
+    "isFree": false,
+    "difficulty": "Intermediate",
+    "duration": "65 mins",
+    "preview": "Master Ansible Playbooks, Roles, Handlers & Ansible Vault Security. Hands-on session from the CloudDevOpsHub MultiCloud DevOps & AI Bootcamp covering real-time production concepts, configurations, and industry use-cases.",
+    "topics": [
+      "Architecture & core fundamentals of Ansible Playbooks, Roles, Handlers & Ansible Vault Security",
+      "Production setup, configuration & hands-on practicals",
+      "Enterprise security, troubleshooting & common pitfalls",
+      "Real-time interview scenarios & industry best practices"
     ],
-    labs: [
-      "Write a playbook to install, configure, and secure Nginx on remote servers",
-      "Execute playbook with check mode (--check) to audit changes before applying"
+    "labs": [
+      "Set up and verify the environment for Ansible Playbooks, Roles, Handlers & Ansible Vault Security",
+      "Execute hands-on commands and configuration tasks",
+      "Validate output, inspect logs, and push code changes to Git"
     ]
   },
   {
-    id: 51,
-    sessionNumber: 50,
-    module: "Phase 7: Infrastructure as Code (IaC) & GitOps",
-    moduleId: "m7",
-    title: "GitOps with ArgoCD for Automated Kubernetes Deployments",
-    folder: "Session-50-GitOps-with-ArgoCD-Kube-Deployment",
-    githubUrl: "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-50-GitOps-with-ArgoCD-Kube-Deployment",
-    isFree: false,
-    difficulty: "Advanced",
-    duration: "85 mins",
-    preview: "Turn your Git repository into the single source of truth for Kubernetes. Install ArgoCD, configure Application CRD, auto-sync, and automated self-healing.",
-    topics: [
-      "GitOps principles: Declarative state, version controlled, automated pull",
-      "ArgoCD architecture: API Server, Repository Server, Application Controller",
-      "Configuring ArgoCD Applications with automated sync & self-healing",
-      "Managing secrets in GitOps using Sealed Secrets and HashiCorp Vault"
+    "id": 45,
+    "sessionNumber": 43,
+    "module": "Phase 6: Ansible, Terraform & Infrastructure Automation",
+    "moduleId": "m6",
+    "title": "Production Bash Shell Scripting for DevOps Automation",
+    "folder": "Session-43-Bash-Scripting",
+    "summaryFile": "README.md",
+    "githubUrl": "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-43-Bash-Scripting",
+    "isFree": false,
+    "difficulty": "Intermediate",
+    "duration": "70 mins",
+    "preview": "Master Production Bash Shell Scripting for DevOps Automation. Hands-on session from the CloudDevOpsHub MultiCloud DevOps & AI Bootcamp covering real-time production concepts, configurations, and industry use-cases.",
+    "topics": [
+      "Architecture & core fundamentals of Production Bash Shell Scripting for DevOps Automation",
+      "Production setup, configuration & hands-on practicals",
+      "Enterprise security, troubleshooting & common pitfalls",
+      "Real-time interview scenarios & industry best practices"
     ],
-    labs: [
-      "Install ArgoCD in Kubernetes and connect your Git repository",
-      "Commit a manifest change to Git and watch ArgoCD auto-sync within seconds"
-    ]
-  },
-
-  // MODULE 8: Observability, SRE & AI in DevOps (Sessions 51-54)
-  {
-    id: 52,
-    sessionNumber: 51,
-    module: "Phase 8: Observability, SRE & AI in DevOps",
-    moduleId: "m8",
-    title: "Prometheus Monitoring: Architecture & Metrics Collection",
-    folder: "Session-51-Monitoring-Prometheus-Architecture-Metrics",
-    githubUrl: "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-51-Monitoring-Prometheus-Architecture-Metrics",
-    isFree: false,
-    difficulty: "Intermediate",
-    duration: "75 mins",
-    preview: "Understand modern observability metrics: Counter, Gauge, Histogram, Summary. Learn Prometheus pull architecture, service discovery, and PromQL queries.",
-    topics: [
-      "Three pillars of observability: Metrics, Logs, Traces",
-      "Prometheus server components: TSDB, Retrieval, HTTP Server, AlertManager",
-      "Scraping metrics: node_exporter, application instrumentation, scrape_configs",
-      "PromQL fundamentals: rate(), increase(), sum by(), histogram_quantile()"
-    ],
-    labs: [
-      "Deploy Prometheus and node_exporter to monitor host CPU, memory, and disk",
-      "Write PromQL queries calculating 95th percentile request latency"
+    "labs": [
+      "Set up and verify the environment for Production Bash Shell Scripting for DevOps Automation",
+      "Execute hands-on commands and configuration tasks",
+      "Validate output, inspect logs, and push code changes to Git"
     ]
   },
   {
-    id: 53,
-    sessionNumber: 52,
-    module: "Phase 8: Observability, SRE & AI in DevOps",
-    moduleId: "m8",
-    title: "Grafana Dashboards & AlertManager Alert Routing",
-    folder: "Session-52-Visualization-Grafana-Dashboards-Alerts",
-    githubUrl: "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-52-Visualization-Grafana-Dashboards-Alerts",
-    isFree: false,
-    difficulty: "Intermediate",
-    duration: "70 mins",
-    preview: "Turn raw metrics into stunning actionable dashboards. Connect Prometheus data sources in Grafana, create alerting rules, and route incident alerts to Slack/Discord.",
-    topics: [
-      "Grafana architecture: Data sources, Dashboards, Panels, Variables",
-      "Importing community dashboards (Node Exporter Full, Kubernetes Cluster)",
-      "AlertManager configuration: routing trees, grouping, inhibit rules, receivers",
-      "Integrating webhook alert notifications with Slack, Discord, and PagerDuty"
+    "id": 46,
+    "sessionNumber": 44,
+    "module": "Phase 6: Ansible, Terraform & Infrastructure Automation",
+    "moduleId": "m6",
+    "title": "Python for DevOps Automation & Cloud SDKs (boto3)",
+    "folder": "Session-44-Python-for-DevOps",
+    "summaryFile": "🚀 Day-1 of Python Automation for Batch-44 | 20th Aug 2026.md",
+    "githubUrl": "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-44-Python-for-DevOps",
+    "isFree": false,
+    "difficulty": "Intermediate",
+    "duration": "45 mins",
+    "preview": "Master Python for DevOps Automation & Cloud SDKs (boto3). Hands-on session from the CloudDevOpsHub MultiCloud DevOps & AI Bootcamp covering real-time production concepts, configurations, and industry use-cases.",
+    "topics": [
+      "Architecture & core fundamentals of Python for DevOps Automation & Cloud SDKs (boto3)",
+      "Production setup, configuration & hands-on practicals",
+      "Enterprise security, troubleshooting & common pitfalls",
+      "Real-time interview scenarios & industry best practices"
     ],
-    labs: [
-      "Build an executive DevOps dashboard displaying application SLOs",
-      "Trigger high memory usage alert and receive automated notification in Slack"
+    "labs": [
+      "Set up and verify the environment for Python for DevOps Automation & Cloud SDKs (boto3)",
+      "Execute hands-on commands and configuration tasks",
+      "Validate output, inspect logs, and push code changes to Git"
     ]
   },
   {
-    id: 54,
-    sessionNumber: 53,
-    module: "Phase 8: Observability, SRE & AI in DevOps",
-    moduleId: "m8",
-    title: "Centralized Logging with Grafana Loki & Promtail Stack",
-    folder: "Session-53-Logging-Loki-Promtail-Grafana-Stack",
-    githubUrl: "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-53-Logging-Loki-Promtail-Grafana-Stack",
-    isFree: false,
-    difficulty: "Advanced",
-    duration: "75 mins",
-    preview: "Like Prometheus, but for logs. Understand why Loki is 10x cheaper than Elasticsearch. Deploy Promtail log collectors and query logs with LogQL.",
-    topics: [
-      "Log aggregation challenges in microservices and Kubernetes pods",
-      "Grafana Loki architecture: indexing metadata labels, not text contents",
-      "Deploying Promtail daemonset to ingest container stdout/stderr logs",
-      "LogQL syntax: stream selectors, line filters |= 'error', and log-to-metrics"
+    "id": 47,
+    "sessionNumber": 45,
+    "module": "Phase 7: Career Preparation — ATS Resume, LinkedIn & Electives",
+    "moduleId": "m7",
+    "title": "DevOps Career Acceleration: ATS Resume Preparation & LinkedIn Strategy",
+    "folder": "Session-45-ATS-Resume-Preparation",
+    "summaryFile": "README.md",
+    "githubUrl": "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-45-ATS-Resume-Preparation",
+    "isFree": false,
+    "difficulty": "Advanced",
+    "duration": "60 mins",
+    "preview": "Master DevOps Career Acceleration: ATS Resume Preparation & LinkedIn Strategy. Hands-on session from the CloudDevOpsHub MultiCloud DevOps & AI Bootcamp covering real-time production concepts, configurations, and industry use-cases.",
+    "topics": [
+      "Architecture & core fundamentals of DevOps Career Acceleration",
+      "Production setup, configuration & hands-on practicals",
+      "Enterprise security, troubleshooting & common pitfalls",
+      "Real-time interview scenarios & industry best practices"
     ],
-    labs: [
-      "Deploy Loki & Promtail in Kubernetes cluster to ingest all pod logs",
-      "Construct LogQL dashboard showing real-time HTTP 500 error spikes"
+    "labs": [
+      "Set up and verify the environment for DevOps Career Acceleration",
+      "Execute hands-on commands and configuration tasks",
+      "Validate output, inspect logs, and push code changes to Git"
     ]
   },
   {
-    id: 55,
-    sessionNumber: 54,
-    module: "Phase 8: Observability, SRE & AI in DevOps",
-    moduleId: "m8",
-    title: "AI in DevOps: LLM-Assisted Root Cause Analysis (RCA) & Copilots",
-    folder: "Session-54-AI-DevOps-LLM-RCA-Copilot-Automation",
-    githubUrl: "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-54-AI-DevOps-LLM-RCA-Copilot-Automation",
-    isFree: false,
-    difficulty: "Advanced",
-    duration: "80 mins",
-    preview: "Cap off the 55-day journey: Build an automated incident response workflow with AI. Use LLMs to analyze Prometheus alerts, parse Loki logs, and recommend exact fixes.",
-    topics: [
-      "The future of SRE: AI-assisted operations (AIOps) and Copilots",
-      "Building automated triage pipelines: Alert -> Log Extraction -> LLM Analysis",
-      "Generating automated post-mortem reports and incident timelines",
-      "Graduation Capstone: MultiCloud DevOps & AI Portfolio Showcase"
+    "id": 48,
+    "sessionNumber": 46,
+    "module": "Phase 7: Career Preparation — ATS Resume, LinkedIn & Electives",
+    "moduleId": "m7",
+    "title": "Students Choice & Emerging Technologies in Cloud Native",
+    "folder": "Session-46-Students-Choice-Topics",
+    "summaryFile": "README.md",
+    "githubUrl": "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-46-Students-Choice-Topics",
+    "isFree": false,
+    "difficulty": "Advanced",
+    "duration": "55 mins",
+    "preview": "Master Students Choice & Emerging Technologies in Cloud Native. Hands-on session from the CloudDevOpsHub MultiCloud DevOps & AI Bootcamp covering real-time production concepts, configurations, and industry use-cases.",
+    "topics": [
+      "Architecture & core fundamentals of Students Choice & Emerging Technologies in Cloud Native",
+      "Production setup, configuration & hands-on practicals",
+      "Enterprise security, troubleshooting & common pitfalls",
+      "Real-time interview scenarios & industry best practices"
     ],
-    labs: [
-      "Build a webhook script sending incident logs to LLM for automated RCA",
-      "Complete your MultiCloud DevOps & AI Capstone and earn your certificate"
+    "labs": [
+      "Set up and verify the environment for Students Choice & Emerging Technologies in Cloud Native",
+      "Execute hands-on commands and configuration tasks",
+      "Validate output, inspect logs, and push code changes to Git"
+    ]
+  },
+  {
+    "id": 49,
+    "sessionNumber": 47,
+    "module": "Phase 8: Azure DevOps & Generative AI Co-Programmer",
+    "moduleId": "m8",
+    "title": "Microsoft Azure Fundamentals & Azure DevOps CI/CD Pipelines",
+    "folder": "Session-47-Azure-Fundamentals-Azure-DevOps",
+    "summaryFile": "🚀 Day-1 of Azure DevOps with Batch-44 | 1st Sep 2026 .md",
+    "githubUrl": "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-47-Azure-Fundamentals-Azure-DevOps",
+    "isFree": false,
+    "difficulty": "Advanced",
+    "duration": "65 mins",
+    "preview": "Master Microsoft Azure Fundamentals & Azure DevOps CI/CD Pipelines. Hands-on session from the CloudDevOpsHub MultiCloud DevOps & AI Bootcamp covering real-time production concepts, configurations, and industry use-cases.",
+    "topics": [
+      "Architecture & core fundamentals of Microsoft Azure Fundamentals & Azure DevOps CI/CD Pipelines",
+      "Production setup, configuration & hands-on practicals",
+      "Enterprise security, troubleshooting & common pitfalls",
+      "Real-time interview scenarios & industry best practices"
+    ],
+    "labs": [
+      "Set up and verify the environment for Microsoft Azure Fundamentals & Azure DevOps CI/CD Pipelines",
+      "Execute hands-on commands and configuration tasks",
+      "Validate output, inspect logs, and push code changes to Git"
+    ]
+  },
+  {
+    "id": 50,
+    "sessionNumber": 48,
+    "module": "Phase 8: Azure DevOps & Generative AI Co-Programmer",
+    "moduleId": "m8",
+    "title": "Advanced Prompt Engineering & AI Co-Programmers for DevOps",
+    "folder": "Session-48-Advanced-Prompt-Engineering-AI-CoProgrammer",
+    "summaryFile": "README.md",
+    "githubUrl": "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-48-Advanced-Prompt-Engineering-AI-CoProgrammer",
+    "isFree": false,
+    "difficulty": "Advanced",
+    "duration": "70 mins",
+    "preview": "Master Advanced Prompt Engineering & AI Co-Programmers for DevOps. Hands-on session from the CloudDevOpsHub MultiCloud DevOps & AI Bootcamp covering real-time production concepts, configurations, and industry use-cases.",
+    "topics": [
+      "Architecture & core fundamentals of Advanced Prompt Engineering & AI Co-Programmers for DevOps",
+      "Production setup, configuration & hands-on practicals",
+      "Enterprise security, troubleshooting & common pitfalls",
+      "Real-time interview scenarios & industry best practices"
+    ],
+    "labs": [
+      "Set up and verify the environment for Advanced Prompt Engineering & AI Co-Programmers for DevOps",
+      "Execute hands-on commands and configuration tasks",
+      "Validate output, inspect logs, and push code changes to Git"
+    ]
+  },
+  {
+    "id": 51,
+    "sessionNumber": 49,
+    "module": "Phase 8: Azure DevOps & Generative AI Co-Programmer",
+    "moduleId": "m8",
+    "title": "Generative AI, Autonomous AI Agents & GitHub Copilot Workflows",
+    "folder": "Session-49-AI-Generative-AI-AI-Agents-Copilot",
+    "summaryFile": "README.md",
+    "githubUrl": "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-49-AI-Generative-AI-AI-Agents-Copilot",
+    "isFree": false,
+    "difficulty": "Advanced",
+    "duration": "45 mins",
+    "preview": "Master Generative AI, Autonomous AI Agents & GitHub Copilot Workflows. Hands-on session from the CloudDevOpsHub MultiCloud DevOps & AI Bootcamp covering real-time production concepts, configurations, and industry use-cases.",
+    "topics": [
+      "Architecture & core fundamentals of Generative AI, Autonomous AI Agents & GitHub Copilot Workflows",
+      "Production setup, configuration & hands-on practicals",
+      "Enterprise security, troubleshooting & common pitfalls",
+      "Real-time interview scenarios & industry best practices"
+    ],
+    "labs": [
+      "Set up and verify the environment for Generative AI, Autonomous AI Agents & GitHub Copilot Workflows",
+      "Execute hands-on commands and configuration tasks",
+      "Validate output, inspect logs, and push code changes to Git"
+    ]
+  },
+  {
+    "id": 52,
+    "sessionNumber": 50,
+    "module": "Phase 9: 8 Production-Grade Real-Time Capstone Projects",
+    "moduleId": "m9",
+    "title": "Capstone Project 1: End-to-End Enterprise CI/CD Pipeline Automation on AWS",
+    "folder": "Session-50-Project-1-CICD-Pipeline-Automation",
+    "summaryFile": "🚀 CI-CD Project-1 with Batch 44 .md",
+    "githubUrl": "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-50-Project-1-CICD-Pipeline-Automation",
+    "isFree": false,
+    "difficulty": "Advanced",
+    "duration": "60 mins",
+    "preview": "Master Capstone Project 1: End-to-End Enterprise CI/CD Pipeline Automation on AWS. Hands-on session from the CloudDevOpsHub MultiCloud DevOps & AI Bootcamp covering real-time production concepts, configurations, and industry use-cases.",
+    "topics": [
+      "Architecture & core fundamentals of Capstone Project 1",
+      "Production setup, configuration & hands-on practicals",
+      "Enterprise security, troubleshooting & common pitfalls",
+      "Real-time interview scenarios & industry best practices"
+    ],
+    "labs": [
+      "Set up and verify the environment for Capstone Project 1",
+      "Execute hands-on commands and configuration tasks",
+      "Validate output, inspect logs, and push code changes to Git"
+    ]
+  },
+  {
+    "id": 53,
+    "sessionNumber": 51,
+    "module": "Phase 9: 8 Production-Grade Real-Time Capstone Projects",
+    "moduleId": "m9",
+    "title": "Capstone Project 2: Microservices Deployment & Service Discovery on GKE",
+    "folder": "Session-51-Project-2-Microservices-Deployment-on-GKE",
+    "summaryFile": "README.md",
+    "githubUrl": "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-51-Project-2-Microservices-Deployment-on-GKE",
+    "isFree": false,
+    "difficulty": "Advanced",
+    "duration": "55 mins",
+    "preview": "Master Capstone Project 2: Microservices Deployment & Service Discovery on GKE. Hands-on session from the CloudDevOpsHub MultiCloud DevOps & AI Bootcamp covering real-time production concepts, configurations, and industry use-cases.",
+    "topics": [
+      "Architecture & core fundamentals of Capstone Project 2",
+      "Production setup, configuration & hands-on practicals",
+      "Enterprise security, troubleshooting & common pitfalls",
+      "Real-time interview scenarios & industry best practices"
+    ],
+    "labs": [
+      "Set up and verify the environment for Capstone Project 2",
+      "Execute hands-on commands and configuration tasks",
+      "Validate output, inspect logs, and push code changes to Git"
+    ]
+  },
+  {
+    "id": 54,
+    "sessionNumber": 52,
+    "module": "Phase 9: 8 Production-Grade Real-Time Capstone Projects",
+    "moduleId": "m9",
+    "title": "Capstone Project 3: 3-Tier Enterprise Infrastructure Provisioning with Terraform",
+    "folder": "Session-52-Project-3-Terraform-IaC-Infra-Provisioning",
+    "summaryFile": "🚀 Project-3 on Day-7 of Automation Batch-44 | 31st Aug 2026 .md",
+    "githubUrl": "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-52-Project-3-Terraform-IaC-Infra-Provisioning",
+    "isFree": false,
+    "difficulty": "Advanced",
+    "duration": "65 mins",
+    "preview": "Master Capstone Project 3: 3-Tier Enterprise Infrastructure Provisioning with Terraform. Hands-on session from the CloudDevOpsHub MultiCloud DevOps & AI Bootcamp covering real-time production concepts, configurations, and industry use-cases.",
+    "topics": [
+      "Architecture & core fundamentals of Capstone Project 3",
+      "Production setup, configuration & hands-on practicals",
+      "Enterprise security, troubleshooting & common pitfalls",
+      "Real-time interview scenarios & industry best practices"
+    ],
+    "labs": [
+      "Set up and verify the environment for Capstone Project 3",
+      "Execute hands-on commands and configuration tasks",
+      "Validate output, inspect logs, and push code changes to Git"
+    ]
+  },
+  {
+    "id": 55,
+    "sessionNumber": 53,
+    "module": "Phase 9: 8 Production-Grade Real-Time Capstone Projects",
+    "moduleId": "m9",
+    "title": "Capstone Project 4: DevSecOps Implementation with SAST, DAST & Container Scanning",
+    "folder": "Session-53-Project-4-DevSecOps-Implementation",
+    "summaryFile": "🚀 Project-4 i.e DevSecOps Batch-44 | 14th Sep 2026 .md",
+    "githubUrl": "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-53-Project-4-DevSecOps-Implementation",
+    "isFree": false,
+    "difficulty": "Advanced",
+    "duration": "70 mins",
+    "preview": "Master Capstone Project 4: DevSecOps Implementation with SAST, DAST & Container Scanning. Hands-on session from the CloudDevOpsHub MultiCloud DevOps & AI Bootcamp covering real-time production concepts, configurations, and industry use-cases.",
+    "topics": [
+      "Architecture & core fundamentals of Capstone Project 4",
+      "Production setup, configuration & hands-on practicals",
+      "Enterprise security, troubleshooting & common pitfalls",
+      "Real-time interview scenarios & industry best practices"
+    ],
+    "labs": [
+      "Set up and verify the environment for Capstone Project 4",
+      "Execute hands-on commands and configuration tasks",
+      "Validate output, inspect logs, and push code changes to Git"
+    ]
+  },
+  {
+    "id": 56,
+    "sessionNumber": 54,
+    "module": "Phase 9: 8 Production-Grade Real-Time Capstone Projects",
+    "moduleId": "m9",
+    "title": "Capstone Project 5: Azure DevOps Multi-Stage Production CI/CD",
+    "folder": "Session-54-Project-5-Azure-DevOps-CICD-Implementation",
+    "summaryFile": "🚀 Project-5 on Azure DevOps Batch-44 | 2nd Sep 2026 .md",
+    "githubUrl": "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-54-Project-5-Azure-DevOps-CICD-Implementation",
+    "isFree": false,
+    "difficulty": "Advanced",
+    "duration": "45 mins",
+    "preview": "Master Capstone Project 5: Azure DevOps Multi-Stage Production CI/CD. Hands-on session from the CloudDevOpsHub MultiCloud DevOps & AI Bootcamp covering real-time production concepts, configurations, and industry use-cases.",
+    "topics": [
+      "Architecture & core fundamentals of Capstone Project 5",
+      "Production setup, configuration & hands-on practicals",
+      "Enterprise security, troubleshooting & common pitfalls",
+      "Real-time interview scenarios & industry best practices"
+    ],
+    "labs": [
+      "Set up and verify the environment for Capstone Project 5",
+      "Execute hands-on commands and configuration tasks",
+      "Validate output, inspect logs, and push code changes to Git"
+    ]
+  },
+  {
+    "id": 57,
+    "sessionNumber": 55,
+    "module": "Phase 9: 8 Production-Grade Real-Time Capstone Projects",
+    "moduleId": "m9",
+    "title": "Capstone Project 6: AI API Integration with Python & Serverless Backend",
+    "folder": "Session-55-Project-6-AI-API-Integration-from-Cloud",
+    "summaryFile": "🚀 Project-6 on AI integration Batch-44 | 8th Sep 2026 .md",
+    "githubUrl": "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-55-Project-6-AI-API-Integration-from-Cloud",
+    "isFree": false,
+    "difficulty": "Advanced",
+    "duration": "60 mins",
+    "preview": "Master Capstone Project 6: AI API Integration with Python & Serverless Backend. Hands-on session from the CloudDevOpsHub MultiCloud DevOps & AI Bootcamp covering real-time production concepts, configurations, and industry use-cases.",
+    "topics": [
+      "Architecture & core fundamentals of Capstone Project 6",
+      "Production setup, configuration & hands-on practicals",
+      "Enterprise security, troubleshooting & common pitfalls",
+      "Real-time interview scenarios & industry best practices"
+    ],
+    "labs": [
+      "Set up and verify the environment for Capstone Project 6",
+      "Execute hands-on commands and configuration tasks",
+      "Validate output, inspect logs, and push code changes to Git"
+    ]
+  },
+  {
+    "id": 58,
+    "sessionNumber": 56,
+    "module": "Phase 9: 8 Production-Grade Real-Time Capstone Projects",
+    "moduleId": "m9",
+    "title": "Capstone Project 7: AIOps Automated Incident Triage & Log Analysis on EKS",
+    "folder": "Session-56-Project-7-MLOps-in-EKS",
+    "summaryFile": "🚀 Project-7 on AI OPS Batch-44 | 9th Sep 2026  .md",
+    "githubUrl": "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-56-Project-7-MLOps-in-EKS",
+    "isFree": false,
+    "difficulty": "Advanced",
+    "duration": "55 mins",
+    "preview": "Master Capstone Project 7: AIOps Automated Incident Triage & Log Analysis on EKS. Hands-on session from the CloudDevOpsHub MultiCloud DevOps & AI Bootcamp covering real-time production concepts, configurations, and industry use-cases.",
+    "topics": [
+      "Architecture & core fundamentals of Capstone Project 7",
+      "Production setup, configuration & hands-on practicals",
+      "Enterprise security, troubleshooting & common pitfalls",
+      "Real-time interview scenarios & industry best practices"
+    ],
+    "labs": [
+      "Set up and verify the environment for Capstone Project 7",
+      "Execute hands-on commands and configuration tasks",
+      "Validate output, inspect logs, and push code changes to Git"
+    ]
+  },
+  {
+    "id": 59,
+    "sessionNumber": 57,
+    "module": "Phase 9: 8 Production-Grade Real-Time Capstone Projects",
+    "moduleId": "m9",
+    "title": "Capstone Project 8: MLOps Career Prediction System Deployment on Kubernetes",
+    "folder": "Session-57-Project-8-AI-OPS-Automations",
+    "summaryFile": "🚀 Project-8 on MLOps Batch-44 | 10th Sep 2026 .md",
+    "githubUrl": "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-57-Project-8-AI-OPS-Automations",
+    "isFree": false,
+    "difficulty": "Advanced",
+    "duration": "65 mins",
+    "preview": "Master Capstone Project 8: MLOps Career Prediction System Deployment on Kubernetes. Hands-on session from the CloudDevOpsHub MultiCloud DevOps & AI Bootcamp covering real-time production concepts, configurations, and industry use-cases.",
+    "topics": [
+      "Architecture & core fundamentals of Capstone Project 8",
+      "Production setup, configuration & hands-on practicals",
+      "Enterprise security, troubleshooting & common pitfalls",
+      "Real-time interview scenarios & industry best practices"
+    ],
+    "labs": [
+      "Set up and verify the environment for Capstone Project 8",
+      "Execute hands-on commands and configuration tasks",
+      "Validate output, inspect logs, and push code changes to Git"
+    ]
+  },
+  {
+    "id": 60,
+    "sessionNumber": 58,
+    "module": "Phase 10: Graduation, Career Placement & Mock Interviews",
+    "moduleId": "m10",
+    "title": "Program Graduation, Technical Mock Interviews & Career Placement Meet",
+    "folder": "Session-58-QA-Meet-Greet-Graduation",
+    "summaryFile": "README.md",
+    "githubUrl": "https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/tree/main/Session-58-QA-Meet-Greet-Graduation",
+    "isFree": false,
+    "difficulty": "Advanced",
+    "duration": "70 mins",
+    "preview": "Master Program Graduation, Technical Mock Interviews & Career Placement Meet. Hands-on session from the CloudDevOpsHub MultiCloud DevOps & AI Bootcamp covering real-time production concepts, configurations, and industry use-cases.",
+    "topics": [
+      "Architecture & core fundamentals of Program Graduation, Technical Mock Interviews & Career Placement Meet",
+      "Production setup, configuration & hands-on practicals",
+      "Enterprise security, troubleshooting & common pitfalls",
+      "Real-time interview scenarios & industry best practices"
+    ],
+    "labs": [
+      "Set up and verify the environment for Program Graduation, Technical Mock Interviews & Career Placement Meet",
+      "Execute hands-on commands and configuration tasks",
+      "Validate output, inspect logs, and push code changes to Git"
     ]
   }
 ];

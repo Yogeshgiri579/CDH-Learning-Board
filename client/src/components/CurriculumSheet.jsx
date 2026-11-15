@@ -10,7 +10,7 @@ import {
 import { SessionRow } from './SessionRow';
 import { useAuth } from '../context/AuthContext';
 
-// Exact 8 Module Definitions matching CloudDevOpsHub 55 Sessions
+// Exact 10 Module Definitions matching CloudDevOpsHub Roadmap
 export const MODULE_METADATA = [
   {
     id: 'm1',
@@ -23,58 +23,74 @@ export const MODULE_METADATA = [
   {
     id: 'm2',
     moduleNum: 'Module 2',
-    title: 'Linux Administration & Shell Automation',
-    description: 'Bash scripting, user permissions, networking, process management & systemd (Sessions 05 - 12)',
-    badge: '8 Sessions',
+    title: 'Linux Administration & GCP Fundamentals',
+    description: 'Linux commands, VM administration, permissions, system administration & real-world troubleshooting (Sessions 05 - 09)',
+    badge: '5 Sessions',
     badgeClass: 'bg-[#21262d] text-[#c9d1d9] border border-[#30363d]',
   },
   {
     id: 'm3',
     moduleNum: 'Module 3',
-    title: 'Git & Version Control Workflows',
-    description: 'Branching strategies, interactive rebase, pull request workflows & CI triggers (Sessions 13 - 18)',
-    badge: '6 Sessions',
+    title: 'AWS Top 10 Services & Architecture Practicals',
+    description: 'EC2, AMI, IAM, EBS, ELB, S3, RDS, VPC networking, CloudWatch & integrations (Sessions 10 - 21)',
+    badge: '12 Sessions',
     badgeClass: 'bg-[#21262d] text-[#c9d1d9] border border-[#30363d]',
   },
   {
     id: 'm4',
     moduleNum: 'Module 4',
-    title: 'Multi-Cloud Architecture (AWS, GCP, Azure)',
-    description: 'IAM, VPC networking, compute, storage, security & multi-cloud design (Sessions 19 - 28)',
-    badge: '10 Sessions',
+    title: 'CI/CD Pipelines: Git, GitHub & Jenkins Mastery',
+    description: 'Git workflows, Jenkins setup, Maven jobs, declarative pipelines & master-slave distributed builds (Sessions 22 - 29)',
+    badge: '9 Sessions',
     badgeClass: 'bg-[#21262d] text-[#c9d1d9] border border-[#30363d]',
   },
   {
     id: 'm5',
     moduleNum: 'Module 5',
-    title: 'Containers & Docker Mastery',
-    description: 'Images, multi-stage Dockerfiles, Docker Compose, volumes & container networking (Sessions 29 - 36)',
+    title: 'Docker, Kubernetes (GKE) & Monitoring Stack',
+    description: 'Containers, Dockerfiles, Kubernetes pods, GKE microservices, Prometheus & Grafana dashboards (Sessions 30 - 37)',
     badge: '8 Sessions',
     badgeClass: 'bg-[#21262d] text-[#c9d1d9] border border-[#30363d]',
   },
   {
     id: 'm6',
     moduleNum: 'Module 6',
-    title: 'Kubernetes (K8s) Production Orchestration',
-    description: 'Pods, Deployments, Services, Ingress, ConfigMaps, Helm charts & RBAC (Sessions 37 - 45)',
-    badge: '9 Sessions',
+    title: 'Ansible, Terraform & Production Automation',
+    description: 'Infrastructure as Code (Terraform), Ansible configuration playbooks, Bash & Python automation (Sessions 38 - 44)',
+    badge: '7 Sessions',
     badgeClass: 'bg-[#21262d] text-[#c9d1d9] border border-[#30363d]',
   },
   {
     id: 'm7',
     moduleNum: 'Module 7',
-    title: 'Infrastructure as Code with Terraform & GitOps',
-    description: 'HCL syntax, state management, modules, remote backends & multi-env IaC (Sessions 46 - 50)',
-    badge: '5 Sessions',
+    title: 'Career Preparation & Emerging Electives',
+    description: 'ATS resume optimization, LinkedIn profile branding & elective topics (Sessions 45 - 46)',
+    badge: '2 Sessions',
     badgeClass: 'bg-[#21262d] text-[#c9d1d9] border border-[#30363d]',
   },
   {
     id: 'm8',
     moduleNum: 'Module 8',
-    title: 'Observability, SRE & AI in DevOps',
-    description: 'Prometheus, Grafana, Loki logs, alert triage & AI Root Cause Analysis (Sessions 51 - 54)',
-    badge: '4 Sessions',
+    title: 'Azure DevOps & Generative AI Co-Programmer',
+    description: 'Azure DevOps pipelines, prompt engineering, Copilot & autonomous AI agents for operations (Sessions 47 - 49)',
+    badge: '3 Sessions',
     badgeClass: 'bg-[#21262d] text-[#c9d1d9] border border-[#30363d]',
+  },
+  {
+    id: 'm9',
+    moduleNum: 'Module 9',
+    title: '8 Real-Time Production Capstone Projects',
+    description: 'End-to-end production projects: CI/CD, GKE microservices, Terraform IaC, DevSecOps, Azure, AI APIs, AIOps & MLOps (Sessions 50 - 57)',
+    badge: '8 Projects',
+    badgeClass: 'bg-[#f78166]/20 text-[#f78166] border border-[#f78166]/40',
+  },
+  {
+    id: 'm10',
+    moduleNum: 'Module 10',
+    title: 'Graduation, Mock Interviews & Placement',
+    description: 'Comprehensive technical mock interview preparation, Q&A meet & community graduation (Session 58)',
+    badge: 'Placement 🏆',
+    badgeClass: 'bg-[#e3b341]/20 text-[#e3b341] border border-[#e3b341]/40',
   },
 ];
 
