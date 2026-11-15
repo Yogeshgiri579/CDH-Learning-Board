@@ -311,3 +311,11 @@ html.light .to-\[\#0d1117\] {
   --tw-gradient-to: #f0fdf4 !important;
 }
 
+@keyframes stepProgress {
+  0% { width: 0%; }
+  100% { width: 100%; }
+}
+.animate-step-progress {
+  animation: stepProgress 2s linear forwards;
+}
+

@@ -13,10 +13,7 @@ import {
   Cpu,
   Trophy,
   HelpCircle,
-  MousePointer,
-  RotateCw,
-  Flame,
-  ChevronRight
+  RotateCw
 } from 'lucide-react';
 import { Github } from './GithubIcon';
 
@@ -25,18 +22,17 @@ export const Header = ({ onStartNow, onPreviewSession0, firstSession, onOpenQuiz
   const [isFlipped, setIsFlipped] = useState(false);
   const [copied, setCopied] = useState(false);
   
-  // Animation loop state for interactive preview
-  const [animStep, setAnimStep] = useState(0); // 0: Learn, 1: Play Quiz, 2: Rank Yourself
-  const [isHovered, setIsHovered] = useState(false);
+  // Animation loop state for interactive preview: 0: Learn, 1: Play Quiz, 2: Rank Yourself
+  const [animStep, setAnimStep] = useState(0);
 
-  // Auto-cycle through the 3 steps smoothly when not manually hovered
+  // Auto-cycle through the 3 steps smoothly with reduced snappy timing (2000ms)
   useEffect(() => {
-    if (isHovered) return;
+    if (isFlipped || activeTab !== 'interactive') return;
     const interval = setInterval(() => {
       setAnimStep((prev) => (prev + 1) % 3);
-    }, 3200);
+    }, 2000);
     return () => clearInterval(interval);
-  }, [isHovered]);
+  }, [animStep, isFlipped, activeTab]);
 
   const terraformSnippet = `module "production_vpc" {
   source  = "terraform-aws-modules/vpc/aws"
@@ -164,11 +160,7 @@ export const Header = ({ onStartNow, onPreviewSession0, firstSession, onOpenQuiz
 
           {/* Right Column: Interactive 3-Step Flip & Simulation Card Window */}
           <div className="lg:col-span-5">
-            <div 
-              className="relative rounded-2xl bg-[#0d1117] border border-[#30363d] shadow-2xl shadow-black/80 overflow-hidden transition-all duration-300 hover:border-[#58a6ff]/50"
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
-            >
+            <div className="relative rounded-2xl bg-[#0d1117] border border-[#30363d] shadow-2xl shadow-black/80 overflow-hidden transition-all duration-300 hover:border-[#58a6ff]/50">
               
               {/* Window Titlebar */}
               <div className="flex items-center justify-between px-4 py-3 border-b border-[#30363d] bg-[#161b22]">
@@ -211,7 +203,7 @@ export const Header = ({ onStartNow, onPreviewSession0, firstSession, onOpenQuiz
                   <button
                     onClick={() => setIsFlipped(!isFlipped)}
                     title="Flip card between 3-Step Journey and Live Simulation"
-                    className="p-1.5 rounded-lg bg-[#21262d] hover:bg-[#30363d] text-[#8b949e] hover:text-[#58a6ff] border border-[#30363d] transition-colors"
+                    className="p-1.5 rounded-lg bg-[#21262d] hover:bg-[#30363d] text-[#8b949e] hover:text-[#58a6ff] border border-[#30363d] transition-colors cursor-pointer"
                   >
                     <RotateCw className="w-3.5 h-3.5" />
                   </button>
@@ -220,17 +212,17 @@ export const Header = ({ onStartNow, onPreviewSession0, firstSession, onOpenQuiz
 
               {/* CARD FACE A: 3 Clear Steps (LEARN • PLAY QUIZ • RANK YOURSELF) with Live Simulation */}
               {!isFlipped && activeTab === 'interactive' && (
-                <div className="p-4 sm:p-5 space-y-4 text-left font-sans animate-in fade-in duration-200">
+                <div className="p-4 sm:p-5 space-y-4 text-left font-sans">
                   
                   {/* The 3 Core Pillars Banner */}
                   <div className="grid grid-cols-3 gap-2 p-1.5 bg-[#010409] rounded-xl border border-[#30363d]">
                     {/* Step 1: Learn */}
                     <button
                       onClick={() => setAnimStep(0)}
-                      className={`p-2.5 rounded-lg text-left transition-all cursor-pointer ${
+                      className={`relative p-2.5 rounded-lg text-left transition-all cursor-pointer overflow-hidden ${
                         animStep === 0 
                           ? 'bg-[#238636]/15 border border-[#238636]/40 text-[#3fb950] shadow-sm' 
-                          : 'hover:bg-[#161b22] text-[#8b949e]'
+                          : 'hover:bg-[#161b22] text-[#8b949e] border border-transparent'
                       }`}
                     >
                       <div className="flex items-center space-x-1.5">
@@ -239,15 +231,20 @@ export const Header = ({ onStartNow, onPreviewSession0, firstSession, onOpenQuiz
                       </div>
                       <div className="font-extrabold text-xs sm:text-sm text-white mt-0.5">LEARN</div>
                       <div className="text-[10px] text-[#8b949e] leading-tight mt-0.5 truncate">Read 55 Labs</div>
+                      {animStep === 0 && (
+                        <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#238636]/40 overflow-hidden">
+                          <div key={animStep} className="h-full bg-emerald-400 animate-step-progress" />
+                        </div>
+                      )}
                     </button>
 
                     {/* Step 2: Play Quiz */}
                     <button
                       onClick={() => setAnimStep(1)}
-                      className={`p-2.5 rounded-lg text-left transition-all cursor-pointer ${
+                      className={`relative p-2.5 rounded-lg text-left transition-all cursor-pointer overflow-hidden ${
                         animStep === 1 
                           ? 'bg-[#f78166]/15 border border-[#f78166]/40 text-[#f78166] shadow-sm' 
-                          : 'hover:bg-[#161b22] text-[#8b949e]'
+                          : 'hover:bg-[#161b22] text-[#8b949e] border border-transparent'
                       }`}
                     >
                       <div className="flex items-center space-x-1.5">
@@ -256,15 +253,20 @@ export const Header = ({ onStartNow, onPreviewSession0, firstSession, onOpenQuiz
                       </div>
                       <div className="font-extrabold text-xs sm:text-sm text-white mt-0.5">PLAY QUIZ</div>
                       <div className="text-[10px] text-[#8b949e] leading-tight mt-0.5 truncate">149+ MCQs</div>
+                      {animStep === 1 && (
+                        <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#f78166]/40 overflow-hidden">
+                          <div key={animStep} className="h-full bg-orange-400 animate-step-progress" />
+                        </div>
+                      )}
                     </button>
 
                     {/* Step 3: Rank Yourself */}
                     <button
                       onClick={() => setAnimStep(2)}
-                      className={`p-2.5 rounded-lg text-left transition-all cursor-pointer ${
+                      className={`relative p-2.5 rounded-lg text-left transition-all cursor-pointer overflow-hidden ${
                         animStep === 2 
                           ? 'bg-[#e3b341]/15 border border-[#e3b341]/40 text-[#e3b341] shadow-sm' 
-                          : 'hover:bg-[#161b22] text-[#8b949e]'
+                          : 'hover:bg-[#161b22] text-[#8b949e] border border-transparent'
                       }`}
                     >
                       <div className="flex items-center space-x-1.5">
@@ -273,31 +275,20 @@ export const Header = ({ onStartNow, onPreviewSession0, firstSession, onOpenQuiz
                       </div>
                       <div className="font-extrabold text-xs sm:text-sm text-white mt-0.5">RANK UP</div>
                       <div className="text-[10px] text-[#8b949e] leading-tight mt-0.5 truncate">Leaderboard</div>
+                      {animStep === 2 && (
+                        <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#e3b341]/40 overflow-hidden">
+                          <div key={animStep} className="h-full bg-amber-400 animate-step-progress" />
+                        </div>
+                      )}
                     </button>
                   </div>
 
-                  {/* Dynamic Simulation Box - Displays what happens at each step */}
-                  <div className="relative p-3.5 sm:p-4 rounded-xl bg-[#010409] border border-[#30363d] min-h-[170px] flex flex-col justify-between overflow-hidden">
-                    
-                    {/* Simulated Animated Cursor */}
-                    <div 
-                      className={`absolute pointer-events-none transition-all duration-700 ease-out z-20 ${
-                        animStep === 0 
-                          ? 'top-8 right-12 translate-x-0' 
-                          : animStep === 1 
-                          ? 'top-20 right-14 -translate-y-1' 
-                          : 'bottom-6 right-16 translate-x-1'
-                      }`}
-                    >
-                      <div className="flex items-center space-x-1 bg-white text-black text-[10px] font-bold px-1.5 py-0.5 rounded shadow-lg">
-                        <MousePointer className="w-3 h-3 fill-black text-black animate-bounce" />
-                        <span>Click to action</span>
-                      </div>
-                    </div>
+                  {/* Dynamic Simulation Box - Fixed height and clean transition */}
+                  <div className="relative p-3.5 sm:p-4 rounded-xl bg-[#010409] border border-[#30363d] h-[185px] sm:h-[180px] flex flex-col justify-between overflow-hidden">
 
                     {/* STEP 0: Simulated Reading Screen */}
                     {animStep === 0 && (
-                      <div className="space-y-2.5 animate-in fade-in duration-200">
+                      <div className="space-y-2.5 transition-opacity duration-200">
                         <div className="flex items-center justify-between text-xs">
                           <div className="flex items-center space-x-2">
                             <span className="px-1.5 py-0.5 rounded bg-[#238636]/20 text-emerald-400 font-mono text-[10px] font-bold border border-[#238636]/40">
@@ -335,7 +326,7 @@ export const Header = ({ onStartNow, onPreviewSession0, firstSession, onOpenQuiz
 
                     {/* STEP 1: Simulated Quiz Question Screen */}
                     {animStep === 1 && (
-                      <div className="space-y-2.5 animate-in fade-in duration-200">
+                      <div className="space-y-2.5 transition-opacity duration-200">
                         <div className="flex items-center justify-between text-xs">
                           <div className="flex items-center space-x-2">
                             <span className="px-1.5 py-0.5 rounded bg-[#f78166]/20 text-[#f78166] font-mono text-[10px] font-bold border border-[#f78166]/40">
@@ -378,7 +369,7 @@ export const Header = ({ onStartNow, onPreviewSession0, firstSession, onOpenQuiz
 
                     {/* STEP 2: Simulated Leaderboard Rank Screen */}
                     {animStep === 2 && (
-                      <div className="space-y-2.5 animate-in fade-in duration-200">
+                      <div className="space-y-2.5 transition-opacity duration-200">
                         <div className="flex items-center justify-between text-xs">
                           <div className="flex items-center space-x-2">
                             <span className="px-1.5 py-0.5 rounded bg-[#e3b341]/20 text-[#e3b341] font-mono text-[10px] font-bold border border-[#e3b341]/40">
@@ -428,20 +419,6 @@ export const Header = ({ onStartNow, onPreviewSession0, firstSession, onOpenQuiz
 
                   </div>
 
-                  {/* Micro Footer Indicator */}
-                  <div className="flex items-center justify-between text-[11px] text-[#8b949e] border-t border-[#21262d] pt-2">
-                    <span className="flex items-center space-x-1.5">
-                      <Flame className="w-3.5 h-3.5 text-amber-400" />
-                      <span>TakeUForward-style interactive learning loop</span>
-                    </span>
-                    <button 
-                      onClick={() => setIsFlipped(true)}
-                      className="text-[#58a6ff] hover:underline flex items-center space-x-0.5 cursor-pointer font-medium"
-                    >
-                      <span>Show Code</span>
-                      <ChevronRight className="w-3 h-3" />
-                    </button>
-                  </div>
                 </div>
               )}
 
