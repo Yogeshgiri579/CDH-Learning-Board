@@ -194,6 +194,8 @@ export function App() {
         onStartNow={handleStartNow}
         onPreviewSession0={handlePreviewSession}
         firstSession={sessions[0]}
+        onOpenQuiz={handleOpenQuiz}
+        onOpenLeaderboard={() => setLeaderboardOpen(true)}
       />
 
       {/* Progress & Milestone Banner */}

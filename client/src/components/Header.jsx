@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   ArrowRight, 
   PlayCircle, 
@@ -10,13 +10,33 @@ import {
   BookOpen, 
   Layers, 
   Code2, 
-  Cpu
+  Cpu,
+  Trophy,
+  HelpCircle,
+  MousePointer,
+  RotateCw,
+  Flame,
+  ChevronRight
 } from 'lucide-react';
 import { Github } from './GithubIcon';
 
-export const Header = ({ onStartNow, onPreviewSession0, firstSession, onSwitchToRoadmap }) => {
-  const [activeTab, setActiveTab] = useState('code'); // 'code' | 'progress' | 'arch'
+export const Header = ({ onStartNow, onPreviewSession0, firstSession, onOpenQuiz, onOpenLeaderboard }) => {
+  const [activeTab, setActiveTab] = useState('interactive'); // 'interactive' | 'code' | 'progress' | 'arch'
+  const [isFlipped, setIsFlipped] = useState(false);
   const [copied, setCopied] = useState(false);
+  
+  // Animation loop state for interactive preview
+  const [animStep, setAnimStep] = useState(0); // 0: Learn, 1: Play Quiz, 2: Rank Yourself
+  const [isHovered, setIsHovered] = useState(false);
+
+  // Auto-cycle through the 3 steps smoothly when not manually hovered
+  useEffect(() => {
+    if (isHovered) return;
+    const interval = setInterval(() => {
+      setAnimStep((prev) => (prev + 1) % 3);
+    }, 3200);
+    return () => clearInterval(interval);
+  }, [isHovered]);
 
   const terraformSnippet = `module "production_vpc" {
   source  = "terraform-aws-modules/vpc/aws"
@@ -142,9 +162,13 @@ export const Header = ({ onStartNow, onPreviewSession0, firstSession, onSwitchTo
 
           </div>
 
-          {/* Right Column: Code & Architecture Window */}
+          {/* Right Column: Interactive 3-Step Flip & Simulation Card Window */}
           <div className="lg:col-span-5">
-            <div className="relative rounded-2xl bg-[#0d1117] border border-[#30363d] shadow-2xl shadow-black/80 overflow-hidden">
+            <div 
+              className="relative rounded-2xl bg-[#0d1117] border border-[#30363d] shadow-2xl shadow-black/80 overflow-hidden transition-all duration-300 hover:border-[#58a6ff]/50"
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+            >
               
               {/* Window Titlebar */}
               <div className="flex items-center justify-between px-4 py-3 border-b border-[#30363d] bg-[#161b22]">
@@ -153,50 +177,276 @@ export const Header = ({ onStartNow, onPreviewSession0, firstSession, onSwitchTo
                   <span className="w-3 h-3 rounded-full bg-amber-500/80 inline-block" />
                   <span className="w-3 h-3 rounded-full bg-emerald-500/80 inline-block" />
                   <span className="text-xs font-mono text-[#8b949e] pl-2 hidden sm:inline">
-                    /labs/multicloud-vpc.tf
+                    {isFlipped ? 'devops-workflow.ts' : '/labs/multicloud-vpc.tf'}
                   </span>
                 </div>
 
-                {/* Tab Controls */}
-                <div className="flex items-center space-x-1 p-0.5 bg-[#21262d] rounded-lg text-xs border border-[#30363d]">
+                {/* Tab Controls + Flip Button */}
+                <div className="flex items-center space-x-1.5">
+                  <div className="flex items-center space-x-1 p-0.5 bg-[#21262d] rounded-lg text-xs border border-[#30363d]">
+                    <button
+                      onClick={() => { setActiveTab('interactive'); setIsFlipped(false); }}
+                      className={`px-2 py-1 rounded text-[11px] font-semibold transition-all flex items-center space-x-1 ${
+                        activeTab === 'interactive' && !isFlipped
+                          ? 'bg-[#58a6ff]/20 text-[#58a6ff] border border-[#58a6ff]/40 shadow-xs' 
+                          : 'text-[#8b949e] hover:text-white'
+                      }`}
+                    >
+                      <Sparkles className="w-3 h-3" />
+                      <span>Learn & Rank</span>
+                    </button>
+                    <button
+                      onClick={() => { setActiveTab('code'); setIsFlipped(false); }}
+                      className={`px-2 py-1 rounded text-[11px] font-semibold transition-all flex items-center space-x-1 ${
+                        activeTab === 'code' && !isFlipped
+                          ? 'bg-[#30363d] text-white shadow-xs' 
+                          : 'text-[#8b949e] hover:text-white'
+                      }`}
+                    >
+                      <Code2 className="w-3 h-3" />
+                      <span>Code</span>
+                    </button>
+                  </div>
+
                   <button
-                    onClick={() => setActiveTab('code')}
-                    className={`px-2 py-1 rounded text-[11px] font-semibold transition-all flex items-center space-x-1 ${
-                      activeTab === 'code' 
-                        ? 'bg-[#30363d] text-white shadow-xs' 
-                        : 'text-[#8b949e] hover:text-white'
-                    }`}
+                    onClick={() => setIsFlipped(!isFlipped)}
+                    title="Flip card between 3-Step Journey and Live Simulation"
+                    className="p-1.5 rounded-lg bg-[#21262d] hover:bg-[#30363d] text-[#8b949e] hover:text-[#58a6ff] border border-[#30363d] transition-colors"
                   >
-                    <Code2 className="w-3 h-3" />
-                    <span>Code</span>
-                  </button>
-                  <button
-                    onClick={() => setActiveTab('progress')}
-                    className={`px-2 py-1 rounded text-[11px] font-semibold transition-all flex items-center space-x-1 ${
-                      activeTab === 'progress' 
-                        ? 'bg-[#30363d] text-white shadow-xs' 
-                        : 'text-[#8b949e] hover:text-white'
-                    }`}
-                  >
-                    <BookOpen className="w-3 h-3" />
-                    <span>Roadmap</span>
-                  </button>
-                  <button
-                    onClick={() => setActiveTab('arch')}
-                    className={`px-2 py-1 rounded text-[11px] font-semibold transition-all flex items-center space-x-1 ${
-                      activeTab === 'arch' 
-                        ? 'bg-[#30363d] text-white shadow-xs' 
-                        : 'text-[#8b949e] hover:text-white'
-                    }`}
-                  >
-                    <Layers className="w-3 h-3" />
-                    <span>Stack</span>
+                    <RotateCw className="w-3.5 h-3.5" />
                   </button>
                 </div>
               </div>
 
-              {/* Window Body: Tab 1 - Code Snippet */}
-              {activeTab === 'code' && (
+              {/* CARD FACE A: 3 Clear Steps (LEARN • PLAY QUIZ • RANK YOURSELF) with Live Simulation */}
+              {!isFlipped && activeTab === 'interactive' && (
+                <div className="p-4 sm:p-5 space-y-4 text-left font-sans animate-in fade-in duration-200">
+                  
+                  {/* The 3 Core Pillars Banner */}
+                  <div className="grid grid-cols-3 gap-2 p-1.5 bg-[#010409] rounded-xl border border-[#30363d]">
+                    {/* Step 1: Learn */}
+                    <button
+                      onClick={() => setAnimStep(0)}
+                      className={`p-2.5 rounded-lg text-left transition-all cursor-pointer ${
+                        animStep === 0 
+                          ? 'bg-[#238636]/15 border border-[#238636]/40 text-[#3fb950] shadow-sm' 
+                          : 'hover:bg-[#161b22] text-[#8b949e]'
+                      }`}
+                    >
+                      <div className="flex items-center space-x-1.5">
+                        <BookOpen className="w-3.5 h-3.5 flex-shrink-0" />
+                        <span className="text-[10px] font-bold uppercase tracking-wider">Step 1</span>
+                      </div>
+                      <div className="font-extrabold text-xs sm:text-sm text-white mt-0.5">LEARN</div>
+                      <div className="text-[10px] text-[#8b949e] leading-tight mt-0.5 truncate">Read 55 Labs</div>
+                    </button>
+
+                    {/* Step 2: Play Quiz */}
+                    <button
+                      onClick={() => setAnimStep(1)}
+                      className={`p-2.5 rounded-lg text-left transition-all cursor-pointer ${
+                        animStep === 1 
+                          ? 'bg-[#f78166]/15 border border-[#f78166]/40 text-[#f78166] shadow-sm' 
+                          : 'hover:bg-[#161b22] text-[#8b949e]'
+                      }`}
+                    >
+                      <div className="flex items-center space-x-1.5">
+                        <HelpCircle className="w-3.5 h-3.5 flex-shrink-0" />
+                        <span className="text-[10px] font-bold uppercase tracking-wider">Step 2</span>
+                      </div>
+                      <div className="font-extrabold text-xs sm:text-sm text-white mt-0.5">PLAY QUIZ</div>
+                      <div className="text-[10px] text-[#8b949e] leading-tight mt-0.5 truncate">149+ MCQs</div>
+                    </button>
+
+                    {/* Step 3: Rank Yourself */}
+                    <button
+                      onClick={() => setAnimStep(2)}
+                      className={`p-2.5 rounded-lg text-left transition-all cursor-pointer ${
+                        animStep === 2 
+                          ? 'bg-[#e3b341]/15 border border-[#e3b341]/40 text-[#e3b341] shadow-sm' 
+                          : 'hover:bg-[#161b22] text-[#8b949e]'
+                      }`}
+                    >
+                      <div className="flex items-center space-x-1.5">
+                        <Trophy className="w-3.5 h-3.5 flex-shrink-0" />
+                        <span className="text-[10px] font-bold uppercase tracking-wider">Step 3</span>
+                      </div>
+                      <div className="font-extrabold text-xs sm:text-sm text-white mt-0.5">RANK UP</div>
+                      <div className="text-[10px] text-[#8b949e] leading-tight mt-0.5 truncate">Leaderboard</div>
+                    </button>
+                  </div>
+
+                  {/* Dynamic Simulation Box - Displays what happens at each step */}
+                  <div className="relative p-3.5 sm:p-4 rounded-xl bg-[#010409] border border-[#30363d] min-h-[170px] flex flex-col justify-between overflow-hidden">
+                    
+                    {/* Simulated Animated Cursor */}
+                    <div 
+                      className={`absolute pointer-events-none transition-all duration-700 ease-out z-20 ${
+                        animStep === 0 
+                          ? 'top-8 right-12 translate-x-0' 
+                          : animStep === 1 
+                          ? 'top-20 right-14 -translate-y-1' 
+                          : 'bottom-6 right-16 translate-x-1'
+                      }`}
+                    >
+                      <div className="flex items-center space-x-1 bg-white text-black text-[10px] font-bold px-1.5 py-0.5 rounded shadow-lg">
+                        <MousePointer className="w-3 h-3 fill-black text-black animate-bounce" />
+                        <span>Click to action</span>
+                      </div>
+                    </div>
+
+                    {/* STEP 0: Simulated Reading Screen */}
+                    {animStep === 0 && (
+                      <div className="space-y-2.5 animate-in fade-in duration-200">
+                        <div className="flex items-center justify-between text-xs">
+                          <div className="flex items-center space-x-2">
+                            <span className="px-1.5 py-0.5 rounded bg-[#238636]/20 text-emerald-400 font-mono text-[10px] font-bold border border-[#238636]/40">
+                              ACTION 01
+                            </span>
+                            <span className="font-bold text-white text-xs truncate max-w-[190px]">
+                              Read Session Notes
+                            </span>
+                          </div>
+                          <span className="text-[10px] text-emerald-400 font-mono">100% Free Notes</span>
+                        </div>
+
+                        <div className="p-2.5 rounded-lg bg-[#0d1117] border border-[#30363d] space-y-1.5 text-xs text-[#c9d1d9]">
+                          <div className="flex items-center justify-between font-mono text-[11px] text-[#8b949e]">
+                            <span>Session-01-DevOps-Introduction</span>
+                            <span className="text-emerald-400 text-[10px]">● live</span>
+                          </div>
+                          <p className="text-[11px] text-[#8b949e] line-clamp-2">
+                            Deep dive into CALMS framework, CI/CD pipeline automation, and multi-cloud infrastructure patterns with runnable GitHub code.
+                          </p>
+                        </div>
+
+                        <div className="pt-1 flex items-center justify-between">
+                          <button
+                            onClick={() => firstSession && onPreviewSession0(firstSession)}
+                            className="px-3 py-1.5 rounded-lg bg-[#238636] hover:bg-[#2ea043] text-white text-xs font-semibold flex items-center space-x-1.5 transition-colors cursor-pointer shadow-sm"
+                          >
+                            <BookOpen className="w-3.5 h-3.5" />
+                            <span>Click to Read Notes</span>
+                          </button>
+                          <span className="text-[11px] text-[#8b949e]">Step 1 of 3</span>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* STEP 1: Simulated Quiz Question Screen */}
+                    {animStep === 1 && (
+                      <div className="space-y-2.5 animate-in fade-in duration-200">
+                        <div className="flex items-center justify-between text-xs">
+                          <div className="flex items-center space-x-2">
+                            <span className="px-1.5 py-0.5 rounded bg-[#f78166]/20 text-[#f78166] font-mono text-[10px] font-bold border border-[#f78166]/40">
+                              ACTION 02
+                            </span>
+                            <span className="font-bold text-white text-xs truncate max-w-[190px]">
+                              Play Interactive Quiz
+                            </span>
+                          </div>
+                          <span className="text-[10px] text-[#f78166] font-mono">+25 Points</span>
+                        </div>
+
+                        <div className="p-2.5 rounded-lg bg-[#0d1117] border border-[#30363d] space-y-2">
+                          <p className="text-xs font-semibold text-white">
+                            Q: What does CALMS stand for in DevOps culture?
+                          </p>
+                          <div className="grid grid-cols-2 gap-1.5 text-[10px]">
+                            <div className="p-1 rounded bg-[#21262d] text-[#8b949e] border border-[#30363d] truncate">
+                              A. Code, Auto, Log...
+                            </div>
+                            <div className="p-1 rounded bg-[#238636]/20 text-emerald-400 border border-[#238636]/60 font-bold flex items-center justify-between truncate">
+                              <span>B. Culture, Auto...</span>
+                              <Check className="w-3 h-3 text-emerald-400 flex-shrink-0" />
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="pt-1 flex items-center justify-between">
+                          <button
+                            onClick={() => firstSession && onOpenQuiz && onOpenQuiz(firstSession)}
+                            className="px-3 py-1.5 rounded-lg bg-[#f78166] hover:bg-[#fa9a85] text-black font-extrabold text-xs flex items-center space-x-1.5 transition-colors cursor-pointer shadow-sm"
+                          >
+                            <HelpCircle className="w-3.5 h-3.5" />
+                            <span>Play Live Quiz</span>
+                          </button>
+                          <span className="text-[11px] text-[#8b949e]">Step 2 of 3</span>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* STEP 2: Simulated Leaderboard Rank Screen */}
+                    {animStep === 2 && (
+                      <div className="space-y-2.5 animate-in fade-in duration-200">
+                        <div className="flex items-center justify-between text-xs">
+                          <div className="flex items-center space-x-2">
+                            <span className="px-1.5 py-0.5 rounded bg-[#e3b341]/20 text-[#e3b341] font-mono text-[10px] font-bold border border-[#e3b341]/40">
+                              ACTION 03
+                            </span>
+                            <span className="font-bold text-white text-xs truncate max-w-[190px]">
+                              Rank Yourself on Board
+                            </span>
+                          </div>
+                          <span className="text-[10px] text-[#e3b341] font-mono">Top 5% Rank</span>
+                        </div>
+
+                        <div className="p-2.5 rounded-lg bg-[#0d1117] border border-[#30363d] space-y-1.5">
+                          <div className="flex items-center justify-between text-xs font-semibold text-[#c9d1d9]">
+                            <div className="flex items-center space-x-2">
+                              <span className="w-5 h-5 rounded-full bg-amber-400 text-black font-black text-[10px] flex items-center justify-center">
+                                1
+                              </span>
+                              <span className="text-white text-xs">Rahul S.</span>
+                              <span className="text-[10px] text-[#8b949e]">(55/55 Passed)</span>
+                            </div>
+                            <span className="font-mono text-emerald-400 text-xs">1,850 pts</span>
+                          </div>
+                          <div className="flex items-center justify-between text-xs font-semibold text-[#c9d1d9] bg-[#21262d]/50 p-1 rounded">
+                            <div className="flex items-center space-x-2">
+                              <span className="w-5 h-5 rounded-full bg-[#58a6ff] text-black font-black text-[10px] flex items-center justify-center">
+                                You
+                              </span>
+                              <span className="text-[#58a6ff] text-xs">Your Profile</span>
+                            </div>
+                            <span className="font-mono text-white text-xs">Ready to Rank</span>
+                          </div>
+                        </div>
+
+                        <div className="pt-1 flex items-center justify-between">
+                          <button
+                            onClick={onOpenLeaderboard}
+                            className="px-3 py-1.5 rounded-lg bg-[#e3b341] hover:bg-[#f0c24c] text-black font-extrabold text-xs flex items-center space-x-1.5 transition-colors cursor-pointer shadow-sm"
+                          >
+                            <Trophy className="w-3.5 h-3.5" />
+                            <span>View Leaderboard</span>
+                          </button>
+                          <span className="text-[11px] text-[#8b949e]">Step 3 of 3</span>
+                        </div>
+                      </div>
+                    )}
+
+                  </div>
+
+                  {/* Micro Footer Indicator */}
+                  <div className="flex items-center justify-between text-[11px] text-[#8b949e] border-t border-[#21262d] pt-2">
+                    <span className="flex items-center space-x-1.5">
+                      <Flame className="w-3.5 h-3.5 text-amber-400" />
+                      <span>TakeUForward-style interactive learning loop</span>
+                    </span>
+                    <button 
+                      onClick={() => setIsFlipped(true)}
+                      className="text-[#58a6ff] hover:underline flex items-center space-x-0.5 cursor-pointer font-medium"
+                    >
+                      <span>Show Code</span>
+                      <ChevronRight className="w-3 h-3" />
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* CARD FACE B: Code & Infrastructure Details */}
+              {(isFlipped || activeTab === 'code') && (
                 <div className="p-4 sm:p-5 space-y-3 font-mono text-left animate-in fade-in duration-150">
                   <div className="flex items-center justify-between text-[11px]">
                     <div className="flex items-center space-x-2">
@@ -243,89 +493,12 @@ export const Header = ({ onStartNow, onPreviewSession0, firstSession, onSwitchTo
                       <span className="w-2 h-2 rounded-full bg-emerald-400" />
                       <span>Ready to Deploy</span>
                     </div>
-                    <span className="text-[#8b949e]">Terraform v1.6+ • AWS Provider</span>
-                  </div>
-                </div>
-              )}
-
-              {/* Window Body: Tab 2 - Progress Tracker */}
-              {activeTab === 'progress' && (
-                <div className="p-5 space-y-4 text-left font-sans animate-in fade-in duration-150">
-                  <div>
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#58a6ff]">
-                      MultiCloud & DevOps Roadmap
-                    </span>
-                    <h3 className="text-base font-bold text-white mt-0.5">Your Active Learning Track</h3>
-                    <p className="text-xs text-[#8b949e]">Master 55 curated sessions step-by-step with checkpoints.</p>
-                  </div>
-
-                  <div className="bg-[#010409] p-4 rounded-xl border border-[#30363d] space-y-3">
-                    <div className="flex justify-between items-center text-xs">
-                      <span className="text-[#8b949e]">Completed Sessions:</span>
-                      <span className="font-bold text-emerald-400">1 / 55 (Starter Active)</span>
-                    </div>
-
-                    <div className="w-full bg-[#21262d] rounded-full h-2">
-                      <div className="bg-[#238636] h-2 rounded-full w-[4%]" />
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-2 pt-2 border-t border-[#21262d] text-[11px]">
-                      <div>
-                        <span className="text-[#8b949e] block">Current Module</span>
-                        <span className="font-medium text-[#c9d1d9]">AWS Core Networking</span>
-                      </div>
-                      <div>
-                        <span className="text-[#8b949e] block">Next Milestone</span>
-                        <span className="font-medium text-[#c9d1d9]">Docker & Containers</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <button
-                    onClick={onStartNow}
-                    className="w-full py-2.5 px-3 rounded-lg bg-[#21262d] hover:bg-[#30363d] text-[#c9d1d9] hover:text-white border border-[#30363d] text-xs font-semibold flex items-center justify-center space-x-1.5 transition-all cursor-pointer"
-                  >
-                    <span>Explore Curriculum</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </button>
-                </div>
-              )}
-
-              {/* Window Body: Tab 3 - Architecture Specs */}
-              {activeTab === 'arch' && (
-                <div className="p-5 space-y-3.5 text-left font-sans animate-in fade-in duration-150">
-                  <div className="flex items-center space-x-2">
-                    <div className="w-7 h-7 rounded-lg bg-[#21262d] border border-[#30363d] flex items-center justify-center text-[#58a6ff]">
-                      <Cpu className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <h4 className="text-sm font-bold text-white">Full-Stack Cloud Architecture</h4>
-                      <p className="text-[11px] text-[#8b949e]">Production tools covered across the 55 sessions</p>
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-2 text-xs">
-                    <div className="p-2.5 rounded-lg bg-[#010409] border border-[#30363d]">
-                      <span className="text-[#8b949e] text-[10px] block">Cloud Providers</span>
-                      <span className="font-bold text-white">AWS, GCP & Azure</span>
-                    </div>
-                    <div className="p-2.5 rounded-lg bg-[#010409] border border-[#30363d]">
-                      <span className="text-[#8b949e] text-[10px] block">Containers</span>
-                      <span className="font-bold text-white">Docker, K8s, EKS</span>
-                    </div>
-                    <div className="p-2.5 rounded-lg bg-[#010409] border border-[#30363d]">
-                      <span className="text-[#8b949e] text-[10px] block">IaC & CI/CD</span>
-                      <span className="font-bold text-white">Terraform, GitHub Actions</span>
-                    </div>
-                    <div className="p-2.5 rounded-lg bg-[#010409] border border-[#30363d]">
-                      <span className="text-[#8b949e] text-[10px] block">Monitoring & AI</span>
-                      <span className="font-bold text-white">Prometheus, AI Ops</span>
-                    </div>
-                  </div>
-
-                  <div className="p-2.5 rounded-lg bg-[#238636]/15 border border-[#238636]/40 text-[#3fb950] text-[11px] flex items-center space-x-2">
-                    <Sparkles className="w-3.5 h-3.5 flex-shrink-0 text-emerald-400" />
-                    <span>Includes real GitHub repositories with deployable terraform scripts.</span>
+                    <button
+                      onClick={() => { setIsFlipped(false); setActiveTab('interactive'); }}
+                      className="text-[#58a6ff] hover:underline flex items-center space-x-1 cursor-pointer font-medium"
+                    >
+                      <span>← Back to Learn & Rank</span>
+                    </button>
                   </div>
                 </div>
               )}
