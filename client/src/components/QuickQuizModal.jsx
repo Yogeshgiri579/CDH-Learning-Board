@@ -12,6 +12,7 @@ import {
   Check 
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { shuffleQuizAnswers } from '../utils/shuffleQuizAnswers';
 
 export const QuickQuizModal = ({ 
   isOpen, 
@@ -27,12 +28,12 @@ export const QuickQuizModal = ({
   const [selectedAnswers, setSelectedAnswers] = useState({}); // { [qIndex]: optionIndex }
   const [submittedQuestions, setSubmittedQuestions] = useState({}); // { [qIndex]: true }
   const [isFinished, setIsFinished] = useState(false);
+  const [questions, setQuestions] = useState(() => quizData?.questions || []);
 
   if (!isOpen || !quizData || !quizData.questions || quizData.questions.length === 0) {
     return null;
   }
 
-  const questions = quizData.questions;
   const currentQ = questions[currentIndex];
   const totalQuestions = questions.length;
   const currentSelected = selectedAnswers[currentIndex];
@@ -83,6 +84,7 @@ export const QuickQuizModal = ({
     setSelectedAnswers({});
     setSubmittedQuestions({});
     setIsFinished(false);
+    setQuestions(shuffleQuizAnswers(quizData.questions));
   };
 
   // Score calculation

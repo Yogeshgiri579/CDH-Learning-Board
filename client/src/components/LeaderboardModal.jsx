@@ -3,138 +3,34 @@ import {
   X, 
   Trophy, 
   Award, 
-  Sparkles, 
   CheckCircle2, 
   Search, 
   RotateCw,
-  Zap,
-  Star,
-  Users,
   Download,
-  Share2,
   Check,
   ChevronLeft,
-  ChevronRight,
-  Eye,
-  EyeOff
+  ChevronRight
 } from 'lucide-react';
 import { LinkedInIcon } from './LinkedInIcon';
 import { ModuleBadgeHexagon } from './ModuleBadgeHexagon';
 import { api } from '../services/api';
 import { useAuth } from '../context/AuthContext';
+import {
+  CURRICULUM_MODULE_BADGES,
+  getCurriculumBadgeProgress,
+} from '../../../shared/curriculumBadges.mjs';
 import { 
-  generateAndDownloadBadgeImage, 
   downloadHexagonBadgeImage,
   shareRankingOnLinkedIn, 
   shareBadgeOnLinkedIn 
 } from '../utils/badgeCertificateGenerator';
 
-// Curriculum Module Badges matching Batch 45 curriculum shield badges
-export const CURRICULUM_MODULE_BADGES = [
-  {
-    moduleNumber: '01',
-    moduleId: 'm1',
-    title: 'FOUNDATIONS',
-    subtitle: '& AI',
-    fullName: 'Foundations & AI Module',
-    sessions: [0, 1, 2, 3, 4],
-    requiredPosts: 5,
-    gradient: { from: '#334155', to: '#1e293b' },
-  },
-  {
-    moduleNumber: '02',
-    moduleId: 'm2',
-    title: 'LINUX',
-    subtitle: 'UBUNTU + GCP',
-    fullName: 'Linux Ubuntu & GCP Module',
-    sessions: [5, 6, 7, 8, 9],
-    requiredPosts: 5,
-    gradient: { from: '#f04124', to: '#9e1c07' },
-  },
-  {
-    moduleNumber: '03',
-    moduleId: 'm3',
-    title: 'AWS',
-    subtitle: 'SERVICES',
-    fullName: 'AWS Cloud Services Module',
-    sessions: [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21],
-    requiredPosts: 5,
-    gradient: { from: '#ff8c00', to: '#b34700' },
-  },
-  {
-    moduleNumber: '04',
-    moduleId: 'm4',
-    title: 'CI/CD',
-    subtitle: 'GIT & JENKINS',
-    fullName: 'CI/CD Git & Jenkins Module',
-    sessions: [22, 23, 24, 25, 26, 27, 28, 29],
-    requiredPosts: 5,
-    gradient: { from: '#e11d74', to: '#88053a' },
-  },
-  {
-    moduleNumber: '05',
-    moduleId: 'm5',
-    title: 'DOCKER',
-    subtitle: '& KUBERNETES',
-    fullName: 'Docker & Kubernetes Module',
-    sessions: [30, 31, 32, 33, 34, 35, 36, 37],
-    requiredPosts: 5,
-    gradient: { from: '#0284c7', to: '#075985' },
-  },
-  {
-    moduleNumber: '06',
-    moduleId: 'm6',
-    title: 'IAC',
-    subtitle: '& ANSIBLE',
-    fullName: 'Terraform & Ansible Module',
-    sessions: [38, 39, 40, 41, 42, 43, 44],
-    requiredPosts: 5,
-    gradient: { from: '#8b5cf6', to: '#4c1d95' },
-  },
-  {
-    moduleNumber: '07',
-    moduleId: 'm7',
-    title: 'CAREER',
-    subtitle: '& RESUME',
-    fullName: 'Career Prep & Resume Module',
-    sessions: [45, 46],
-    requiredPosts: 5,
-    gradient: { from: '#10b981', to: '#047857' },
-  },
-  {
-    moduleNumber: '08',
-    moduleId: 'm8',
-    title: 'AZURE',
-    subtitle: 'DEVOPS + GENAI',
-    fullName: 'Azure DevOps & GenAI Module',
-    sessions: [47, 48, 49],
-    requiredPosts: 5,
-    gradient: { from: '#06b6d4', to: '#0e7490' },
-  },
-  {
-    moduleNumber: '09',
-    moduleId: 'm9',
-    title: 'CAPSTONE',
-    subtitle: '8 REAL PROJECTS',
-    fullName: 'Graduation Capstone Projects',
-    sessions: [50, 51, 52, 53, 54, 55, 56, 57],
-    requiredPosts: 5,
-    gradient: { from: '#f59e0b', to: '#92400e' },
-  },
-  {
-    moduleNumber: '10',
-    moduleId: 'm10',
-    title: 'GRADUATION',
-    subtitle: '& INTERVIEWS',
-    fullName: 'Graduation & Placement Module',
-    sessions: [58],
-    requiredPosts: 5,
-    gradient: { from: '#ef4444', to: '#991b1b' },
-  },
-];
-
 // Fast in-memory cache so reopening the modal is instant (0ms lag)
 let cachedLeaderboardData = null;
+let cachedLeaderboardTimestamp = 0;
+const CLIENT_LEADERBOARD_CACHE_TTL = 45 * 1000;
+const EMPTY_COMPLETED_SESSIONS = [];
+const EMPTY_QUIZ_PROGRESS = [];
 
 // Deterministic gradient palette based on string hash
 const AVATAR_GRADIENTS = [
@@ -207,41 +103,15 @@ export const LeaderboardModal = ({ isOpen, onClose }) => {
     showToast('🚀 Your personal ranking caption copied to clipboard & LinkedIn opened!');
   };
 
-  const userCompleted = user?.completedSessions || [];
-  const userQuizzes = user?.quizProgress || [];
+  const userCompleted = user?.completedSessions ?? EMPTY_COMPLETED_SESSIONS;
+  const userQuizzes = user?.quizProgress ?? EMPTY_QUIZ_PROGRESS;
 
   // Calculate unlocked status and progress per module
   // Requirement: Badge unlocks ONLY when all module sessions are marked as done AND quizzes passed
-  const curriculumBadgesWithStatus = useMemo(() => {
-    return CURRICULUM_MODULE_BADGES.map((b) => {
-      const totalSessions = b.sessions.length;
-
-      // Fully finished = session is marked as done AND quiz is completed & passed
-      const fullyCompletedSessions = b.sessions.filter((sNum) => {
-        const isDone = userCompleted.includes(sNum);
-        const isQuizPassed = userQuizzes.some((q) => Number(q.sessionNumber) === sNum && q.passed);
-        return isDone && isQuizPassed;
-      });
-
-      const fullyFinishedCount = fullyCompletedSessions.length;
-      const completedSessionsCount = b.sessions.filter((sNum) => userCompleted.includes(sNum)).length;
-      const quizzesPassedCount = b.sessions.filter((sNum) => 
-        userQuizzes.some((q) => Number(q.sessionNumber) === sNum && q.passed)
-      ).length;
-
-      // Badge unlocks only when all sessions in this module are both marked done & quiz passed
-      const isUnlocked = totalSessions > 0 && fullyFinishedCount >= totalSessions;
-
-      return {
-        ...b,
-        fullyFinishedCount,
-        completedSessionsCount,
-        quizzesPassedCount,
-        totalSessions,
-        isUnlocked,
-      };
-    });
-  }, [userCompleted, userQuizzes]);
+  const curriculumBadgesWithStatus = useMemo(
+    () => getCurriculumBadgeProgress(userCompleted, userQuizzes),
+    [userCompleted, userQuizzes]
+  );
 
   const unlockedCount = useMemo(() => {
     return curriculumBadgesWithStatus.filter((b) => b.isUnlocked).length;
@@ -278,7 +148,15 @@ export const LeaderboardModal = ({ isOpen, onClose }) => {
   };
 
   const fetchLeaderboard = async (isManual = false) => {
-    if (!cachedLeaderboardData || isManual) {
+    if (
+      !isManual &&
+      cachedLeaderboardData &&
+      Date.now() - cachedLeaderboardTimestamp < CLIENT_LEADERBOARD_CACHE_TTL
+    ) {
+      return;
+    }
+
+    if (isManual) {
       setLoading(true);
     }
     try {
@@ -286,6 +164,7 @@ export const LeaderboardModal = ({ isOpen, onClose }) => {
       if (res && res.success) {
         const list = res.leaderboard || [];
         cachedLeaderboardData = list;
+        cachedLeaderboardTimestamp = Date.now();
         setLeaderboard(list);
       }
     } catch (err) {
@@ -313,12 +192,13 @@ export const LeaderboardModal = ({ isOpen, onClose }) => {
 
   const top3 = useMemo(() => leaderboard.slice(0, 3), [leaderboard]);
 
-  const currentUserRank = useMemo(() => {
-    if (!user) return null;
-    return leaderboard.find(
-      (item) => item.id === user.id || item.email?.toLowerCase() === user.email?.toLowerCase()
-    );
-  }, [leaderboard, user]);
+  const userId = user?.id;
+  const userEmail = user?.email?.toLowerCase();
+  const currentUserRank = userId || userEmail
+    ? leaderboard.find(
+      (item) => item.id === userId || item.email?.toLowerCase() === userEmail
+    )
+    : null;
 
   if (!isOpen) return null;
 
@@ -590,6 +470,9 @@ export const LeaderboardModal = ({ isOpen, onClose }) => {
                         const isMe = user && (student.id === user.id || student.email?.toLowerCase() === user.email?.toLowerCase());
                         const gradient = getAvatarGradient(student.name);
                         const initials = getInitials(student.name);
+                        const unlockedBadges = (student.badgeIds || [])
+                          .map((moduleId) => CURRICULUM_MODULE_BADGES.find((badge) => badge.moduleId === moduleId))
+                          .filter(Boolean);
 
                         return (
                           <tr 
@@ -631,14 +514,30 @@ export const LeaderboardModal = ({ isOpen, onClose }) => {
                               {student.quizzesPassed}
                             </td>
                             <td className="py-3 px-4">
-                              <div className="flex flex-wrap gap-1 max-w-xs">
-                                {student.badges && student.badges.slice(0, 2).map((b, i) => (
-                                  <span key={i} className="text-[10px] px-1.5 py-0.2 rounded-md bg-[#21262d] border border-[#30363d] text-[#c9d1d9]">
-                                    {b}
+                              <div className="flex items-center gap-1.5 min-h-[44px]">
+                                {unlockedBadges.slice(0, 3).map((badge) => (
+                                  <span
+                                    key={badge.moduleId}
+                                    title={`Module ${badge.moduleNumber}: ${badge.title} ${badge.subtitle}`}
+                                    className="inline-flex items-center justify-center"
+                                  >
+                                    <ModuleBadgeHexagon
+                                      moduleNumber={badge.moduleNumber}
+                                      title={badge.title}
+                                      subtitle={badge.subtitle}
+                                      isUnlocked
+                                      gradient={badge.gradient}
+                                      size={48}
+                                    />
                                   </span>
                                 ))}
-                                {student.badges && student.badges.length > 2 && (
-                                  <span className="text-[10px] text-[#8b949e]">+{student.badges.length - 2}</span>
+                                {unlockedBadges.length > 3 && (
+                                  <span className="text-[10px] font-semibold text-[#8b949e]">
+                                    +{unlockedBadges.length - 3}
+                                  </span>
+                                )}
+                                {unlockedBadges.length === 0 && (
+                                  <span className="text-[10px] text-[#484f58]">—</span>
                                 )}
                               </div>
                             </td>

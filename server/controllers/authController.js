@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
 import { User, inMemoryUsers } from '../models/User.js';
 import { getDbStatus } from '../config/db.js';
+import { getUnlockedCurriculumBadges } from '../../shared/curriculumBadges.mjs';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'clouddevopshub_super_secret_jwt_key_2026';
 
@@ -11,39 +12,9 @@ const generateToken = (userId, email) => {
   return jwt.sign({ id: userId, email }, JWT_SECRET, { expiresIn: '30d' });
 };
 
-// Official 10 Curriculum Modules matching Batch 45 shield badges
-export const CURRICULUM_MODULES = [
-  { moduleNumber: '01', title: 'FOUNDATIONS & AI', sessions: [0, 1, 2, 3, 4] },
-  { moduleNumber: '02', title: 'LINUX (Ubuntu + GCP)', sessions: [5, 6, 7, 8, 9, 10, 11, 12] },
-  { moduleNumber: '03', title: 'AWS Cloud Services', sessions: [19, 20, 21, 22, 23, 24, 25, 26, 27, 28] },
-  { moduleNumber: '04', title: 'CI/CD (Git & Jenkins)', sessions: [13, 14, 15, 16, 17, 18, 45, 46, 47, 48, 49, 50] },
-  { moduleNumber: '05', title: 'DOCKER & KUBERNETES', sessions: [29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44] },
-  { moduleNumber: '06', title: 'TERRAFORM & ANSIBLE', sessions: [23, 24, 25] },
-  { moduleNumber: '07', title: 'PYTHON & AUTOMATION', sessions: [51, 52] },
-  { moduleNumber: '08', title: 'AZURE (AIOps + GenAI)', sessions: [53, 54] },
-  { moduleNumber: '09', title: 'CAPSTONE (9 Projects)', sessions: [54] },
-  { moduleNumber: '10', title: 'CAREER & REFERRALS', sessions: [0, 54] },
-];
-
-// Calculate badges based on completed sessions & quiz progress
-// REQUIREMENT: A badge unlocks ONLY when all sessions in that module are BOTH marked done AND quiz passed
-export const calculateBadges = (completedSessions = [], quizProgress = []) => {
-  const compSet = new Set((completedSessions || []).map(Number));
-  const passedQuizSet = new Set(
-    (quizProgress || []).filter((q) => q && q.passed).map((q) => Number(q.sessionNumber))
-  );
-
-  const unlocked = [];
-  for (const mod of CURRICULUM_MODULES) {
-    const isUnlocked = mod.sessions.length > 0 && mod.sessions.every(
-      (s) => compSet.has(s) && passedQuizSet.has(s)
-    );
-    if (isUnlocked) {
-      unlocked.push(`Module ${mod.moduleNumber}: ${mod.title}`);
-    }
-  }
-  return unlocked;
-};
+export const calculateBadges = (completedSessions = [], quizProgress = []) =>
+  getUnlockedCurriculumBadges(completedSessions, quizProgress)
+    .map((badge) => `Module ${badge.moduleNumber}: ${badge.fullName}`);
 
 // Calculate total points with base, completed sessions, passed quizzes, and badge bonuses
 export const calculatePoints = (completedSessions = [], quizProgress = [], bonusPoints = 0) => {
@@ -86,7 +57,7 @@ export const register = async (req, res) => {
         countryCode: cleanCountryCode,
         avatar: `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(name)}`,
         points: 50,
-        badges: ['DevOps Pioneer'],
+        badges: [],
         completedSessions: [0], // grant kickoff session as completed welcome gift!
         bookmarkedSessions: [],
         quizProgress: [],
@@ -106,7 +77,7 @@ export const register = async (req, res) => {
           avatar: user.avatar,
           role: user.role || 'user',
           points: user.points || 50,
-          badges: user.badges || ['DevOps Pioneer'],
+          badges: calculateBadges(user.completedSessions, user.quizProgress),
           completedSessions: user.completedSessions,
           bookmarkedSessions: user.bookmarkedSessions,
           quizProgress: user.quizProgress || [],
@@ -131,7 +102,7 @@ export const register = async (req, res) => {
         countryCode: cleanCountryCode,
         avatar: `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(name)}`,
         points: 50,
-        badges: ['DevOps Pioneer'],
+        badges: [],
         completedSessions: [0],
         bookmarkedSessions: [],
         quizProgress: [],
@@ -153,7 +124,7 @@ export const register = async (req, res) => {
           avatar: newUser.avatar,
           role: newUser.role || 'user',
           points: newUser.points || 50,
-          badges: newUser.badges || ['DevOps Pioneer'],
+          badges: calculateBadges(newUser.completedSessions, newUser.quizProgress),
           completedSessions: newUser.completedSessions,
           bookmarkedSessions: newUser.bookmarkedSessions,
           quizProgress: newUser.quizProgress || [],
@@ -209,7 +180,7 @@ export const login = async (req, res) => {
         avatar: user.avatar,
         role: user.role || 'user',
         points: user.points || 50,
-        badges: user.badges && user.badges.length > 0 ? user.badges : calculateBadges(user.completedSessions, user.quizProgress),
+        badges: calculateBadges(user.completedSessions, user.quizProgress),
         completedSessions: user.completedSessions || [],
         bookmarkedSessions: user.bookmarkedSessions || [],
         quizProgress: user.quizProgress || [],
@@ -380,7 +351,7 @@ export const getMe = async (req, res) => {
         avatar: user.avatar,
         role: user.role || 'user',
         points: user.points || 50,
-        badges: user.badges && user.badges.length > 0 ? user.badges : calculateBadges(user.completedSessions, user.quizProgress),
+        badges: calculateBadges(user.completedSessions, user.quizProgress),
         completedSessions: user.completedSessions || [],
         bookmarkedSessions: user.bookmarkedSessions || [],
         quizProgress: user.quizProgress || [],
@@ -539,14 +510,16 @@ export const recordQuizProgress = async (req, res) => {
       user.completedSessions.push(sNum);
     }
 
+    user.badges = calculateBadges(user.completedSessions, user.quizProgress);
+    user.points = calculatePoints(user.completedSessions, user.quizProgress);
     invalidateLeaderboardCache();
 
     return res.json({
       success: true,
       quizProgress: user.quizProgress,
       completedSessions: user.completedSessions,
-      points: user.points || 50,
-      badges: user.badges || [],
+      points: user.points,
+      badges: user.badges,
       progressPercentage: Math.round((user.completedSessions.length / 55) * 100),
     });
   } catch (error) {
@@ -577,7 +550,9 @@ export const getLeaderboard = async (req, res) => {
     let users = [];
 
     if (isMongo) {
-      users = await User.find({ role: { $ne: 'admin' } }).select('name email avatar points badges completedSessions quizProgress role createdAt').lean();
+      users = await User.find({ role: { $ne: 'admin' } })
+        .select('name email points completedSessions quizProgress.sessionNumber quizProgress.passed role')
+        .lean();
     } else {
       users = inMemoryUsers.filter((u) => u.role !== 'admin');
     }
@@ -585,17 +560,18 @@ export const getLeaderboard = async (req, res) => {
     const leaderboard = users.map((u) => {
       const comp = u.completedSessions || [];
       const qProg = u.quizProgress || [];
-      const badges = u.badges && u.badges.length > 0 ? u.badges : calculateBadges(comp, qProg);
+      const unlockedBadges = getUnlockedCurriculumBadges(comp, qProg);
+      const badges = unlockedBadges.map((badge) => `Module ${badge.moduleNumber}: ${badge.fullName}`);
       const computedPoints = u.points !== undefined && u.points !== null ? u.points : calculatePoints(comp, qProg);
 
       return {
         id: u._id,
         name: u.name,
         email: u.email,
-        avatar: u.avatar || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(u.name || 'User')}`,
         role: u.role || 'user',
         points: computedPoints,
         badges,
+        badgeIds: unlockedBadges.map((badge) => badge.moduleId),
         completedCount: comp.length,
         quizzesPassed: qProg.filter((q) => q.passed).length,
       };

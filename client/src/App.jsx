@@ -15,6 +15,7 @@ import { LeaderboardModal } from './components/LeaderboardModal';
 import { Footer } from './components/Footer';
 import { FloatingWhatsApp } from './components/FloatingWhatsApp';
 import { getQuizForSession, getQuizForModule } from './data/quizzes';
+import { shuffleQuizAnswers } from './utils/shuffleQuizAnswers';
 import { 
   Search, 
   Layers, 
@@ -147,6 +148,9 @@ export function App() {
     if (!quiz) {
       quiz = getQuizForSession(session);
     }
+    if (quiz) {
+      quiz = { ...quiz, questions: shuffleQuizAnswers(quiz.questions) };
+    }
 
     setQuizModalState({
       isOpen: true,
@@ -161,7 +165,7 @@ export function App() {
     if (!quiz) return;
     setQuizModalState({
       isOpen: true,
-      quizData: quiz,
+      quizData: { ...quiz, questions: shuffleQuizAnswers(quiz.questions) },
       session: null,
       moduleTitle,
     });
@@ -186,6 +190,11 @@ export function App() {
           setTimeout(() => searchInputRef.current?.focus(), 50);
         }}
         onCurriculumClick={handleStartNow}
+        onCareerClick={() => {
+          setSelectedModule('m7');
+          setSelectedDifficulty('all');
+          handleStartNow();
+        }}
         onLeaderboardClick={() => setLeaderboardOpen(true)}
       />
 

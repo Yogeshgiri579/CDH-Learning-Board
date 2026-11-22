@@ -1,23 +1,19 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { 
-  Terminal, 
   Search, 
-  BookOpen, 
   LogOut, 
   Menu, 
   X, 
-  ExternalLink, 
   ArrowRight,
-  Layers,
-  Star,
-  Shield,
-  Trophy
+  Trophy,
+  Cloud,
+  Code2
 } from 'lucide-react';
 import { Github } from './GithubIcon';
 import { ThemeToggle } from './ThemeToggle';
 
-export const Navbar = ({ onSearchClick, onCurriculumClick, onLeaderboardClick }) => {
+export const Navbar = ({ onSearchClick, onCurriculumClick, onCareerClick, onLeaderboardClick }) => {
   const { user, token, loading, isAuthenticated, logout, openAuthModal, completedCount, quizPassedCount = 0 } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
@@ -43,73 +39,86 @@ export const Navbar = ({ onSearchClick, onCurriculumClick, onLeaderboardClick })
   }, []);
 
   return (
-    <header className="sticky top-0 z-40 bg-[#161b22]/95 backdrop-blur-md border-b border-[#30363d] text-white shadow-md shadow-black/40">
+    <header className="sticky top-0 z-40 border-b border-emerald-300/10 bg-[#020a0b]/90 text-white shadow-[0_8px_30px_rgba(0,0,0,0.22)] backdrop-blur-xl">
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 sm:h-18 gap-4">
+        <div className="flex h-16 items-center justify-between gap-4 sm:h-[72px]">
           
           {/* Brand Logo */}
-          <div 
-            className="flex items-center space-x-3 cursor-pointer flex-shrink-0 group" 
-            onClick={() => setActiveTab('explore')}
+          <button
+            type="button"
+            className="group flex flex-shrink-0 cursor-pointer items-center gap-2.5 text-left"
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            aria-label="CloudDevOpsHub home"
           >
-            <div className="w-9 h-9 rounded-xl bg-[#21262d] border border-[#30363d] flex items-center justify-center text-white group-hover:border-[#58a6ff] transition-all">
-              <Terminal className="w-4 h-4 text-[#58a6ff]" />
+            <div className="relative flex h-9 w-10 items-center justify-center text-emerald-300 transition group-hover:drop-shadow-[0_0_8px_rgba(52,211,153,0.7)]">
+              <Cloud className="absolute h-9 w-10 stroke-[1.8]" />
+              <Code2 className="relative mt-1 h-4 w-4 stroke-[2.4]" />
             </div>
-            <div>
-              <div className="flex items-center space-x-1.5">
-                <span className="font-extrabold text-base sm:text-lg tracking-tight text-white leading-tight">
-                  CloudDevOps<span className="text-[#58a6ff]">Hub</span>
-                </span>
-                <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-[#21262d] text-[#58a6ff] border border-[#30363d]">
-                  LMS
-                </span>
+            <div className="leading-tight">
+              <div className="font-extrabold text-sm tracking-tight text-white sm:text-lg">
+                CloudDevOps<span className="text-emerald-300">Hub</span>
               </div>
-              <p className="text-[10px] text-[#8b949e] font-medium hidden sm:block leading-none">
-                55-Day MultiCloud Challenge
+              <p className="mt-1 hidden text-[9px] font-semibold tracking-[0.16em] text-slate-400 sm:block">
+                CLOUD · DEVOPS · AI
               </p>
             </div>
-          </div>
+          </button>
 
           {/* Center Navigation Links */}
-          <div className="hidden md:flex items-center space-x-1 lg:space-x-2">
+          <div className="hidden items-center gap-1 min-[1200px]:flex xl:gap-2">
             <button
               onClick={() => onCurriculumClick ? onCurriculumClick() : window.scrollTo({ top: 0, behavior: 'smooth' })}
-              className="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all flex items-center space-x-1.5 cursor-pointer bg-[#21262d] text-white border border-[#30363d] shadow-xs"
+              className="rounded-full px-3 py-2 text-sm font-semibold text-slate-300 transition hover:bg-white/[0.06] hover:text-emerald-200 xl:px-3.5"
             >
-              <Layers className="w-4 h-4 text-[#58a6ff]" />
-              <span>Curriculum Modules</span>
+              Labs
+            </button>
+            <button
+              onClick={onCurriculumClick}
+              className="rounded-full px-3 py-2 text-sm font-semibold text-slate-300 transition hover:bg-white/[0.06] hover:text-emerald-200 xl:px-3.5"
+            >
+              Courses
+            </button>
+            <button
+              onClick={onCurriculumClick}
+              className="rounded-full px-3 py-2 text-sm font-semibold text-slate-300 transition hover:bg-white/[0.06] hover:text-emerald-200 xl:px-3.5"
+            >
+              Practice
             </button>
 
             <button
               onClick={() => onLeaderboardClick && onLeaderboardClick()}
-              className="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all flex items-center space-x-1.5 cursor-pointer text-[#c9d1d9] hover:text-white hover:bg-[#21262d]"
+              className="inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-sm font-semibold text-slate-300 transition hover:bg-white/[0.06] hover:text-emerald-200 xl:px-3.5"
             >
-              <Trophy className="w-4 h-4 text-amber-400" />
+              <Trophy className="h-4 w-4 text-amber-300" />
               <span>Leaderboard</span>
             </button>
 
+            <button
+              type="button"
+              onClick={onCareerClick || onCurriculumClick}
+              className="rounded-full px-3 py-2 text-sm font-semibold text-slate-300 transition hover:bg-white/[0.06] hover:text-emerald-200 xl:px-3.5"
+            >
+              Career Prep
+            </button>
+          </div>
+
+          {/* Right Action Icons & Auth */}
+          <div className="hidden flex-shrink-0 items-center gap-2 min-[1200px]:flex xl:gap-3">
             <a
               href="https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center space-x-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium text-[#c9d1d9] hover:text-white hover:bg-[#21262d] transition-colors"
+              aria-label="Open CloudDevOpsHub GitHub repository"
+              title="GitHub Repository"
+              className="rounded-full border border-white/15 bg-white/[0.03] p-2 text-slate-400 transition hover:border-emerald-300/40 hover:bg-white/[0.08] hover:text-white"
             >
-              <Github className="w-3.5 h-3.5 text-[#c9d1d9]" />
-              <span>GitHub</span>
-              <span className="hidden lg:inline-flex items-center space-x-0.5 px-1.5 py-0.2 rounded-full bg-[#21262d] border border-[#30363d] text-[10px] text-amber-300 font-mono">
-                <Star className="w-2.5 h-2.5 fill-amber-300" />
-                <span>1.2k</span>
-              </span>
-              <ExternalLink className="w-3 h-3 text-[#8b949e]" />
+              <Github className="h-4 w-4" />
             </a>
-          </div>
 
-          {/* Right Action Icons & Auth */}
-          <div className="hidden md:flex items-center space-x-3 flex-shrink-0">
             {/* Quick Search Trigger */}
             <button
               onClick={onSearchClick}
-              className="flex items-center space-x-2 px-3 py-2 rounded-xl border border-[#30363d] bg-[#0d1117] hover:bg-[#21262d] text-[#8b949e] hover:text-[#f0f6fc] text-xs transition-all shadow-xs cursor-pointer focus:outline-none"
+              className="flex items-center space-x-2 rounded-full border border-white/15 bg-white/[0.03] px-3 py-2 text-xs text-slate-400 shadow-xs transition-all hover:bg-white/[0.08] hover:text-white focus:outline-none"
               title="Search Sessions (⌘K)"
             >
               <Search className="w-3.5 h-3.5 text-[#8b949e]" />
@@ -131,7 +140,7 @@ export const Navbar = ({ onSearchClick, onCurriculumClick, onLeaderboardClick })
               >
                 <button
                   onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-                  className="flex items-center space-x-2.5 p-1 pl-3 rounded-xl border border-[#30363d] bg-[#0d1117] hover:bg-[#21262d] transition-all cursor-pointer focus:outline-none"
+                  className="flex cursor-pointer items-center space-x-2.5 rounded-xl border border-white/15 bg-white/[0.04] p-1 pl-3 transition-all hover:bg-white/[0.08] focus:outline-none"
                   aria-haspopup="true"
                   aria-expanded={userDropdownOpen}
                 >
@@ -189,13 +198,13 @@ export const Navbar = ({ onSearchClick, onCurriculumClick, onLeaderboardClick })
               <div className="flex items-center space-x-2">
                 <button
                   onClick={() => openAuthModal('', 'signin')}
-                  className="px-3 py-2 rounded-xl text-xs font-semibold text-[#c9d1d9] hover:text-white hover:bg-[#21262d] transition-colors cursor-pointer"
+                  className="rounded-full border border-white/25 px-4 py-2 text-xs font-bold text-white transition-colors hover:border-emerald-300 hover:text-emerald-200"
                 >
                   Log in
                 </button>
                 <button
                   onClick={() => openAuthModal('', 'signup')}
-                  className="px-4 py-2 rounded-xl text-xs font-bold bg-[#238636] hover:bg-[#2ea043] text-white shadow-xs transition-all flex items-center space-x-1.5 cursor-pointer"
+                  className="flex items-center space-x-1.5 rounded-full bg-gradient-to-r from-lime-300 to-emerald-400 px-4 py-2 text-xs font-extrabold text-slate-950 shadow-[0_0_22px_rgba(74,222,128,0.16)] transition-all hover:-translate-y-0.5 hover:shadow-[0_0_30px_rgba(74,222,128,0.3)]"
                 >
                   <span>Start Free</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -205,10 +214,10 @@ export const Navbar = ({ onSearchClick, onCurriculumClick, onLeaderboardClick })
           </div>
 
           {/* Mobile Right Controls: Search, Theme Toggle & Menu Hamburger */}
-          <div className="md:hidden flex items-center space-x-1.5">
+          <div className="flex items-center space-x-1.5 min-[1200px]:hidden">
             <button
               onClick={onSearchClick}
-              className="p-2 rounded-xl text-[#8b949e] hover:text-white hover:bg-[#21262d] transition-colors"
+              className="hidden rounded-xl p-2 text-[#8b949e] transition-colors hover:bg-[#21262d] hover:text-white sm:inline-flex"
               title="Search Sessions"
             >
               <Search className="w-4 h-4" />
@@ -228,50 +237,79 @@ export const Navbar = ({ onSearchClick, onCurriculumClick, onLeaderboardClick })
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-[#30363d] bg-[#161b22] px-4 pt-3 pb-5 space-y-3">
+        <div className="space-y-3 border-t border-emerald-300/10 bg-[#061013] px-4 pb-5 pt-3 shadow-xl min-[1200px]:hidden">
           {/* Mobile Theme Toggle Row */}
-          <div className="flex items-center justify-between px-3 py-2 rounded-xl bg-[#0d1117] border border-[#30363d]">
-            <span className="text-xs font-semibold text-[#c9d1d9]">Theme Mode</span>
+          <div className="flex items-center justify-between rounded-xl border border-white/10 bg-white/[0.03] px-3 py-2">
+            <span className="text-xs font-semibold text-slate-300">Theme Mode</span>
             <ThemeToggle showLabel={true} />
           </div>
           <div className="space-y-1">
             <button
               onClick={() => {
-                if (onCurriculumClick) onCurriculumClick();
+                if (onSearchClick) onSearchClick();
                 setMobileMenuOpen(false);
               }}
-              className="w-full text-left px-3 py-2 rounded-lg text-sm font-semibold text-white bg-[#21262d]"
+              className="flex w-full items-center gap-2 rounded-xl px-3 py-2.5 text-left text-sm font-semibold text-slate-300 transition hover:bg-white/[0.06] sm:hidden"
             >
-              Curriculum Modules
+              <Search className="h-4 w-4" />
+              Search topics
             </button>
             <button
               onClick={() => {
-                onLeaderboardClick && onLeaderboardClick();
+                if (onCurriculumClick) onCurriculumClick();
                 setMobileMenuOpen(false);
               }}
-              className="w-full text-left px-3 py-2 rounded-lg text-sm font-semibold text-[#c9d1d9] hover:bg-[#21262d] flex items-center space-x-2"
+              className="w-full rounded-xl px-3 py-2.5 text-left text-sm font-semibold text-white transition hover:bg-white/[0.06]"
+            >
+              Labs &amp; Courses
+            </button>
+            <button
+              onClick={() => {
+                if (onCurriculumClick) onCurriculumClick();
+                setMobileMenuOpen(false);
+              }}
+              className="w-full rounded-xl px-3 py-2.5 text-left text-sm font-semibold text-slate-300 transition hover:bg-white/[0.06]"
+            >
+              Practice
+            </button>
+            <button
+              onClick={() => {
+                if (onLeaderboardClick) onLeaderboardClick();
+                setMobileMenuOpen(false);
+              }}
+              className="flex w-full items-center space-x-2 rounded-xl px-3 py-2.5 text-left text-sm font-semibold text-slate-300 transition hover:bg-white/[0.06]"
             >
               <Trophy className="w-4 h-4 text-amber-400" />
               <span>Leaderboard & Badges</span>
+            </button>
+            <button
+              onClick={() => {
+                if (onCareerClick) onCareerClick();
+                else if (onCurriculumClick) onCurriculumClick();
+                setMobileMenuOpen(false);
+              }}
+              className="w-full rounded-xl px-3 py-2.5 text-left text-sm font-semibold text-slate-300 transition hover:bg-white/[0.06]"
+            >
+              Career Prep
             </button>
             <a
               href="https://github.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge"
               target="_blank"
               rel="noopener noreferrer"
-              className="block px-3 py-2 rounded-lg text-sm font-semibold text-[#c9d1d9] hover:bg-[#21262d]"
+              className="block rounded-xl px-3 py-2.5 text-sm font-semibold text-slate-300 transition hover:bg-white/[0.06]"
             >
               GitHub Repository
             </a>
           </div>
 
-          <div className="pt-2 border-t border-[#21262d]">
+          <div className="border-t border-white/10 pt-3">
             {isAuthenticated ? (
               <button
                 onClick={() => {
                   logout();
                   setMobileMenuOpen(false);
                 }}
-                className="w-full py-2 px-3 rounded-lg bg-rose-500/10 text-rose-400 text-xs font-semibold text-center"
+                className="w-full rounded-xl bg-rose-500/10 px-3 py-2.5 text-center text-xs font-semibold text-rose-300"
               >
                 Sign Out ({user?.email})
               </button>
@@ -282,7 +320,7 @@ export const Navbar = ({ onSearchClick, onCurriculumClick, onLeaderboardClick })
                     openAuthModal('', 'signin');
                     setMobileMenuOpen(false);
                   }}
-                  className="py-2 px-3 rounded-lg border border-[#30363d] bg-[#21262d] text-xs font-semibold text-[#c9d1d9] text-center"
+                  className="rounded-full border border-white/25 px-3 py-2.5 text-center text-xs font-bold text-white"
                 >
                   Log In
                 </button>
@@ -291,7 +329,7 @@ export const Navbar = ({ onSearchClick, onCurriculumClick, onLeaderboardClick })
                     openAuthModal('', 'signup');
                     setMobileMenuOpen(false);
                   }}
-                  className="py-2 px-3 rounded-lg bg-[#238636] hover:bg-[#2ea043] text-xs font-bold text-white text-center"
+                  className="rounded-full bg-gradient-to-r from-lime-300 to-emerald-400 px-3 py-2.5 text-center text-xs font-extrabold text-slate-950"
                 >
                   Start Free
                 </button>

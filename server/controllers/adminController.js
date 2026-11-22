@@ -19,7 +19,7 @@ export const getAllUsers = async (req, res) => {
     const formattedUsers = users.map((u) => {
       const comp = u.completedSessions || [];
       const qProg = u.quizProgress || [];
-      const badges = u.badges && u.badges.length > 0 ? u.badges : calculateBadges(comp, qProg);
+      const badges = calculateBadges(comp, qProg);
       const points = u.points !== undefined && u.points !== null ? u.points : calculatePoints(comp, qProg);
 
       return {
@@ -83,7 +83,7 @@ export const createUser = async (req, res) => {
         role: role === 'admin' ? 'admin' : 'user',
         avatar: `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(name.trim())}`,
         points: 50,
-        badges: ['DevOps Pioneer'],
+        badges: [],
         completedSessions: [0],
         bookmarkedSessions: [],
         quizProgress: [],
@@ -110,7 +110,7 @@ export const createUser = async (req, res) => {
         role: role === 'admin' ? 'admin' : 'user',
         avatar: `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(name.trim())}`,
         points: 50,
-        badges: ['DevOps Pioneer'],
+        badges: [],
         completedSessions: [0],
         bookmarkedSessions: [],
         quizProgress: [],
@@ -212,7 +212,7 @@ export const getAdminLeaderboard = async (req, res) => {
     const leaderboard = users.map((u) => {
       const comp = u.completedSessions || [];
       const qProg = u.quizProgress || [];
-      const badges = u.badges && u.badges.length > 0 ? u.badges : calculateBadges(comp, qProg);
+      const badges = calculateBadges(comp, qProg);
       const points = u.points !== undefined && u.points !== null ? u.points : calculatePoints(comp, qProg);
 
       return {
@@ -277,7 +277,7 @@ export const updateLeaderboardEntry = async (req, res) => {
 // Create a new leaderboard record
 export const createLeaderboardEntry = async (req, res) => {
   try {
-    const { name, email, points = 100, badges = ['DevOps Pioneer'], completedCount = 0 } = req.body;
+    const { name, email, points = 100, badges = [], completedCount = 0 } = req.body;
     if (!name || !email) {
       return res.status(400).json({ success: false, message: 'Name and email are required' });
     }
