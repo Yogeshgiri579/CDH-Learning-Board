@@ -20,7 +20,9 @@ export const QuickQuizModal = ({
   quizData, 
   session = null, 
   moduleTitle = null, 
-  onOpenReader 
+  onOpenReader,
+  onNextQuiz,
+  onQuizProgress,
 }) => {
   const { toggleComplete, isCompleted, recordQuizProgress } = useAuth();
 
@@ -68,7 +70,11 @@ export const QuickQuizModal = ({
           }
         });
         const percent = Math.round((correct / totalQuestions) * 100);
-        recordQuizProgress(session.sessionNumber, correct, totalQuestions, percent >= 60);
+        recordQuizProgress(session.sessionNumber, correct, totalQuestions, percent >= 60)
+          .then((result) => {
+            if (result?.success) onQuizProgress?.();
+          })
+          .catch((error) => console.error('Unable to refresh leaderboard after quiz:', error));
       }
     }
   };
@@ -345,7 +351,7 @@ export const QuickQuizModal = ({
               </div>
             </>
           ) : (
-            <div className="flex items-center justify-between w-full">
+            <div className="flex w-full flex-wrap items-center justify-between gap-2">
               <button
                 type="button"
                 onClick={handleRestart}
@@ -355,7 +361,7 @@ export const QuickQuizModal = ({
                 <span>Retake Quiz</span>
               </button>
 
-              <div className="flex items-center space-x-2">
+              <div className="flex flex-wrap items-center justify-end gap-2">
                 {session && onOpenReader && (
                   <button
                     type="button"
@@ -367,6 +373,16 @@ export const QuickQuizModal = ({
                   >
                     <BookOpen className="w-3.5 h-3.5" />
                     <span>Back to GitHub Reader</span>
+                  </button>
+                )}
+                {onNextQuiz && (
+                  <button
+                    type="button"
+                    onClick={onNextQuiz}
+                    className="px-3.5 py-1.5 rounded-xl bg-[#238636] hover:bg-[#2ea043] text-white text-xs font-semibold flex items-center space-x-1.5 transition-colors cursor-pointer"
+                  >
+                    <span>Next Quiz</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
                   </button>
                 )}
                 <button

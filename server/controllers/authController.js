@@ -2,10 +2,13 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
 import { User, inMemoryUsers } from '../models/User.js';
+import { sessionsData } from '../data/sessionsData.js';
 import { getDbStatus } from '../config/db.js';
 import { getUnlockedCurriculumBadges } from '../../shared/curriculumBadges.mjs';
+import { getQuizAccuracy, mergeQuizProgressAttempt } from '../utils/quizProgress.js';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'clouddevopshub_super_secret_jwt_key_2026';
+const TOTAL_SESSIONS = sessionsData.length;
 
 // Helper to generate JWT token
 const generateToken = (userId, email) => {
@@ -396,7 +399,7 @@ export const toggleComplete = async (req, res) => {
           completedSessions: updatedCompleted,
           points: user.points,
           badges: user.badges,
-          progressPercentage: Math.round((updatedCompleted.length / 55) * 100),
+          progressPercentage: Math.round((updatedCompleted.length / TOTAL_SESSIONS) * 100),
         });
       }
     }
@@ -423,7 +426,7 @@ export const toggleComplete = async (req, res) => {
       completedSessions: updatedCompleted,
       points: user.points,
       badges: user.badges,
-      progressPercentage: Math.round((updatedCompleted.length / 55) * 100),
+      progressPercentage: Math.round((updatedCompleted.length / TOTAL_SESSIONS) * 100),
     });
   } catch (error) {
     console.error('Toggle complete error:', error);
@@ -441,9 +444,13 @@ export const recordQuizProgress = async (req, res) => {
       return res.status(400).json({ success: false, message: 'sessionNumber, score, and totalQuestions are required' });
     }
 
-    const sNum = parseInt(sessionNumber, 10);
-    const numScore = parseInt(score, 10);
-    const numTotal = parseInt(totalQuestions, 10);
+    const sNum = Number(sessionNumber);
+    const numScore = Number(score);
+    const numTotal = Number(totalQuestions);
+    if (!Number.isInteger(sNum) || sNum < 0 || !Number.isInteger(numScore) || !Number.isInteger(numTotal)
+      || numScore < 0 || numTotal < 1 || numScore > numTotal) {
+      return res.status(400).json({ success: false, message: 'Session number, score, and question count must be valid integers; score and question count must be in range' });
+    }
     const percentage = numTotal > 0 ? Math.round((numScore / numTotal) * 100) : 0;
     const isPassed = passed !== undefined ? Boolean(passed) : percentage >= 60;
 
@@ -464,11 +471,9 @@ export const recordQuizProgress = async (req, res) => {
         if (!user.quizProgress) user.quizProgress = [];
         const existingIdx = user.quizProgress.findIndex((q) => q.sessionNumber === sNum);
         if (existingIdx >= 0) {
-          if (percentage >= (user.quizProgress[existingIdx].percentage || 0)) {
-            user.quizProgress[existingIdx] = record;
-          }
+          user.quizProgress[existingIdx] = mergeQuizProgressAttempt(user.quizProgress[existingIdx], record);
         } else {
-          user.quizProgress.push(record);
+          user.quizProgress.push(mergeQuizProgressAttempt(null, record));
         }
 
         if (isPassed && !user.completedSessions.includes(sNum)) {
@@ -486,7 +491,7 @@ export const recordQuizProgress = async (req, res) => {
           completedSessions: user.completedSessions,
           points: user.points,
           badges: user.badges,
-          progressPercentage: Math.round((user.completedSessions.length / 55) * 100),
+          progressPercentage: Math.round((user.completedSessions.length / TOTAL_SESSIONS) * 100),
         });
       }
     }
@@ -500,11 +505,9 @@ export const recordQuizProgress = async (req, res) => {
     if (!user.quizProgress) user.quizProgress = [];
     const existingIdx = user.quizProgress.findIndex((q) => q.sessionNumber === sNum);
     if (existingIdx >= 0) {
-      if (percentage >= (user.quizProgress[existingIdx].percentage || 0)) {
-        user.quizProgress[existingIdx] = record;
-      }
+      user.quizProgress[existingIdx] = mergeQuizProgressAttempt(user.quizProgress[existingIdx], record);
     } else {
-      user.quizProgress.push(record);
+      user.quizProgress.push(mergeQuizProgressAttempt(null, record));
     }
     if (isPassed && !user.completedSessions.includes(sNum)) {
       user.completedSessions.push(sNum);
@@ -520,7 +523,7 @@ export const recordQuizProgress = async (req, res) => {
       completedSessions: user.completedSessions,
       points: user.points,
       badges: user.badges,
-      progressPercentage: Math.round((user.completedSessions.length / 55) * 100),
+      progressPercentage: Math.round((user.completedSessions.length / TOTAL_SESSIONS) * 100),
     });
   } catch (error) {
     console.error('Record quiz progress error:', error);
@@ -551,7 +554,7 @@ export const getLeaderboard = async (req, res) => {
 
     if (isMongo) {
       users = await User.find({ role: { $ne: 'admin' } })
-        .select('name email points completedSessions quizProgress.sessionNumber quizProgress.passed role')
+        .select('name email points completedSessions quizProgress.sessionNumber quizProgress.passed quizProgress.score quizProgress.totalQuestions quizProgress.totalAttempts quizProgress.totalCorrectAnswers quizProgress.totalQuestionsAttempted role')
         .lean();
     } else {
       users = inMemoryUsers.filter((u) => u.role !== 'admin');
@@ -563,6 +566,7 @@ export const getLeaderboard = async (req, res) => {
       const unlockedBadges = getUnlockedCurriculumBadges(comp, qProg);
       const badges = unlockedBadges.map((badge) => `Module ${badge.moduleNumber}: ${badge.fullName}`);
       const computedPoints = u.points !== undefined && u.points !== null ? u.points : calculatePoints(comp, qProg);
+      const { accuracy, questionsAttempted } = getQuizAccuracy(qProg);
 
       return {
         id: u._id,
@@ -574,6 +578,8 @@ export const getLeaderboard = async (req, res) => {
         badgeIds: unlockedBadges.map((badge) => badge.moduleId),
         completedCount: comp.length,
         quizzesPassed: qProg.filter((q) => q.passed).length,
+        accuracy,
+        questionsAttempted,
       };
     });
 

@@ -475,6 +475,24 @@ html.light .to-\[\#0d1117\] {
   }
 }
 
+@keyframes cdh-robot-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-2px);
+  }
+}
+
+.cdh-robot-bob {
+  animation: cdh-robot-bob 900ms ease-in-out infinite;
+}
+
+.cdh-destination-flag {
+  animation: cdh-roadmap-pulse 1800ms ease-in-out infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .cdh-hero-grid,
   .cdh-hero-glow,
@@ -485,6 +503,15 @@ html.light .to-\[\#0d1117\] {
   .cdh-mode-arrow,
   .cdh-roadmap-glow {
     animation: none !important;
+  }
+
+  .cdh-robot-bob,
+  .cdh-destination-flag {
+    animation: none !important;
+  }
+
+  .cdh-robot-traveler {
+    transition: none !important;
   }
 
   .cdh-hero-grid {

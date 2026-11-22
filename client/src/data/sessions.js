@@ -704,7 +704,7 @@ export const initialSessions = [
   },
   {
     "id": 29,
-    "sessionNumber": 27,
+    "sessionNumber": 59,
     "module": "Phase 4: CI/CD — Git, GitHub & Jenkins Pipelines",
     "moduleId": "m4",
     "title": "Jenkins Plugins Ecosystem & Enterprise Integrations",

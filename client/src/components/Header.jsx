@@ -9,6 +9,8 @@ import {
   Copy,
   Gamepad2,
   GraduationCap,
+  Bot,
+  Flag,
   Laptop,
   PlayCircle,
   RotateCw,
@@ -322,6 +324,13 @@ export const Header = ({
                       className="cdh-rail-fill absolute left-0 top-1/2 h-1 -translate-y-1/2 rounded-full bg-gradient-to-r from-emerald-400 via-cyan-300 to-violet-400 transition-[width] duration-700"
                       style={{ width: `${(animStep / (JOURNEY_STEPS.length - 1)) * 100}%` }}
                     />
+                    <div
+                      className="cdh-robot-traveler absolute left-0 top-1/2 z-20 -translate-x-1/2 -translate-y-1/2 transition-[left] duration-700 ease-in-out"
+                      style={{ left: `${(animStep / (JOURNEY_STEPS.length - 1)) * 100}%` }}
+                    >
+                      <Bot className="cdh-robot-bob h-6 w-6 rounded-full bg-[#071419] p-0.5 text-cyan-200 drop-shadow-[0_0_8px_rgba(103,232,249,0.8)]" />
+                    </div>
+                    <Flag className="cdh-destination-flag absolute right-0 top-1/2 z-10 h-4 w-4 -translate-y-1/2 text-violet-200 drop-shadow-[0_0_8px_rgba(196,181,253,0.7)]" />
                     <div className="relative flex h-full items-center justify-between">
                       {JOURNEY_STEPS.map((step, index) => (
                         <span

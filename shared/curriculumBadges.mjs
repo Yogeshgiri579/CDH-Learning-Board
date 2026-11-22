@@ -35,7 +35,7 @@ export const CURRICULUM_MODULE_BADGES = [
     title: 'CI/CD',
     subtitle: 'GIT & JENKINS',
     fullName: 'CI/CD Git & Jenkins Module',
-    sessions: [22, 23, 24, 25, 26, 27, 28, 29],
+    sessions: [22, 23, 24, 25, 26, 27, 28, 29, 59],
     requiredPosts: 5,
     gradient: { from: '#e11d74', to: '#88053a' },
   },

@@ -62,17 +62,18 @@ const getAvatarGradient = (str = 'user') => {
   return AVATAR_GRADIENTS[index];
 };
 
-export const LeaderboardModal = ({ isOpen, onClose }) => {
+export const LeaderboardModal = ({ isOpen, onClose, totalSessions = 60, refreshKey = 0 }) => {
   const { user } = useAuth();
   const [leaderboard, setLeaderboard] = useState(() => cachedLeaderboardData || []);
   const [loading, setLoading] = useState(!cachedLeaderboardData);
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState('rankings'); // 'rankings' | 'badges'
-  const [displayCount, setDisplayCount] = useState(50);
+  const [displayCount, setDisplayCount] = useState(25);
   const [toastText, setToastText] = useState('');
   const badgesScrollRef = useRef(null);
   const toastTimerRef = useRef(null);
   const searchInputRef = useRef(null);
+  const lastRefreshKeyRef = useRef(refreshKey);
 
   const scrollBadges = (direction) => {
     if (badgesScrollRef.current) {
@@ -175,10 +176,11 @@ export const LeaderboardModal = ({ isOpen, onClose }) => {
   };
 
   useEffect(() => {
-    if (isOpen) {
-      fetchLeaderboard();
-    }
-  }, [isOpen]);
+    if (!isOpen) return;
+    const shouldRefresh = lastRefreshKeyRef.current !== refreshKey;
+    lastRefreshKeyRef.current = refreshKey;
+    fetchLeaderboard(shouldRefresh);
+  }, [isOpen, refreshKey]);
 
   // Memoized filter for instantaneous 60fps search
   const filteredLeaderboard = useMemo(() => {
@@ -208,7 +210,7 @@ export const LeaderboardModal = ({ isOpen, onClose }) => {
       onClick={onClose}
     >
       <div 
-        className="relative bg-[#0d1117] border border-[#30363d] w-full max-w-4xl max-h-[90vh] rounded-2xl shadow-2xl overflow-hidden flex flex-col text-[#f0f6fc] will-change-transform"
+        className="relative bg-[#0d1117] border border-[#30363d] w-full max-w-4xl max-h-[90vh] rounded-2xl shadow-2xl overflow-hidden flex flex-col text-[#f0f6fc]"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Floating Toast Notification */}
@@ -329,7 +331,10 @@ export const LeaderboardModal = ({ isOpen, onClose }) => {
                     <p className="text-xs font-bold text-white truncate max-w-[100px]">{top3[1].name}</p>
                     <span className="text-xs font-mono font-bold text-slate-300 mt-0.5">{top3[1].points} pts</span>
                     <div className="mt-1 text-[10px] text-emerald-400 font-semibold">
-                      {top3[1].completedCount}/55 Labs
+                      {top3[1].completedCount}/{totalSessions} Labs
+                    </div>
+                    <div className="mt-1 text-[10px] text-cyan-300 font-semibold">
+                      {top3[1].accuracy === null || top3[1].accuracy === undefined ? '—' : `${top3[1].accuracy}%`} accuracy
                     </div>
 
                     {user && (top3[1].id === user.id || top3[1].email?.toLowerCase() === user.email?.toLowerCase()) && (
@@ -357,7 +362,10 @@ export const LeaderboardModal = ({ isOpen, onClose }) => {
                     <span className="text-sm font-mono font-extrabold text-amber-400 mt-0.5">{top3[0].points} pts</span>
                     <div className="mt-1 flex items-center space-x-1 text-[10px] text-emerald-400 font-semibold">
                       <CheckCircle2 className="w-3 h-3" />
-                      <span>{top3[0].completedCount}/55 Labs</span>
+                      <span>{top3[0].completedCount}/{totalSessions} Labs</span>
+                    </div>
+                    <div className="mt-1 text-[10px] text-cyan-300 font-semibold">
+                      {top3[0].accuracy === null || top3[0].accuracy === undefined ? '—' : `${top3[0].accuracy}%`} accuracy
                     </div>
 
                     {user && (top3[0].id === user.id || top3[0].email?.toLowerCase() === user.email?.toLowerCase()) && (
@@ -384,7 +392,10 @@ export const LeaderboardModal = ({ isOpen, onClose }) => {
                     <p className="text-xs font-bold text-white truncate max-w-[100px]">{top3[2].name}</p>
                     <span className="text-xs font-mono font-bold text-amber-500 mt-0.5">{top3[2].points} pts</span>
                     <div className="mt-1 text-[10px] text-emerald-400 font-semibold">
-                      {top3[2].completedCount}/55 Labs
+                      {top3[2].completedCount}/{totalSessions} Labs
+                    </div>
+                    <div className="mt-1 text-[10px] text-cyan-300 font-semibold">
+                      {top3[2].accuracy === null || top3[2].accuracy === undefined ? '—' : `${top3[2].accuracy}%`} accuracy
                     </div>
 
                     {user && (top3[2].id === user.id || top3[2].email?.toLowerCase() === user.email?.toLowerCase()) && (
@@ -415,7 +426,7 @@ export const LeaderboardModal = ({ isOpen, onClose }) => {
                         <span className="text-[10px] px-1.5 py-0.2 rounded bg-[#238636] text-white font-bold">You</span>
                       </p>
                       <p className="text-[11px] text-[#8b949e]">
-                        {currentUserRank.completedCount} sessions completed • {currentUserRank.quizzesPassed} quizzes passed
+                            {currentUserRank.completedCount} sessions completed • {currentUserRank.quizzesPassed} quizzes passed • {currentUserRank.accuracy === null || currentUserRank.accuracy === undefined ? '—' : `${currentUserRank.accuracy}%`} accuracy
                       </p>
                     </div>
                   </div>
@@ -438,13 +449,14 @@ export const LeaderboardModal = ({ isOpen, onClose }) => {
 
               {/* Rankings Table (No External Images - Ultra Fast Native Render) */}
               <div className="border border-[#30363d] rounded-2xl overflow-x-auto custom-scrollbar bg-[#010409]">
-                <table className="w-full min-w-[560px] text-left text-xs border-collapse">
+                <table className="w-full min-w-[620px] text-left text-xs border-collapse">
                   <thead>
                     <tr className="bg-[#161b22] border-b border-[#30363d] text-[#8b949e] uppercase text-[10px] font-semibold">
                       <th className="py-3 px-4 w-16 text-center">Rank</th>
                       <th className="py-3 px-4">Student</th>
                       <th className="py-3 px-4 text-center">Sessions</th>
                       <th className="py-3 px-4 text-center">Quizzes</th>
+                      <th className="py-3 px-4 text-center">Accuracy</th>
                       <th className="py-3 px-4">Badges</th>
                       <th className="py-3 px-4 text-right">Points</th>
                       <th className="py-3 px-3 w-12 text-center">Share</th>
@@ -453,14 +465,14 @@ export const LeaderboardModal = ({ isOpen, onClose }) => {
                   <tbody className="divide-y divide-[#21262d]">
                     {loading && leaderboard.length === 0 ? (
                       <tr>
-                        <td colSpan={7} className="py-12 text-center text-[#8b949e]">
+                        <td colSpan={8} className="py-12 text-center text-[#8b949e]">
                           <RotateCw className="w-5 h-5 animate-spin mx-auto text-[#58a6ff] mb-2" />
                           <span>Loading leaderboard...</span>
                         </td>
                       </tr>
                     ) : filteredLeaderboard.length === 0 ? (
                       <tr>
-                        <td colSpan={7} className="py-12 px-4 text-center text-[#8b949e]">
+                        <td colSpan={8} className="py-12 px-4 text-center text-[#8b949e]">
                           <Trophy className="w-8 h-8 text-[#484f58] mx-auto mb-2 opacity-50" />
                           <span>No students found matching "{searchQuery || 'current filters'}"</span>
                         </td>
@@ -477,7 +489,6 @@ export const LeaderboardModal = ({ isOpen, onClose }) => {
                         return (
                           <tr 
                             key={student.id || student.rank} 
-                            style={{ contentVisibility: 'auto', containIntrinsicSize: '0 45px' }}
                             className={`transition-colors ${
                               isMe ? 'bg-[#58a6ff]/10 font-semibold' : 'hover:bg-[#161b22]/70'
                             }`}
@@ -508,10 +519,16 @@ export const LeaderboardModal = ({ isOpen, onClose }) => {
                               </div>
                             </td>
                             <td className="py-3 px-4 text-center font-mono text-[#c9d1d9]">
-                              {student.completedCount}/55
+                              {student.completedCount}/{totalSessions}
                             </td>
                             <td className="py-3 px-4 text-center font-mono text-emerald-400 font-semibold">
                               {student.quizzesPassed}
+                            </td>
+                            <td
+                              className="py-3 px-4 text-center font-mono text-cyan-300 font-semibold"
+                              title={student.questionsAttempted ? `${student.questionsAttempted} questions attempted` : 'No quiz attempts'}
+                            >
+                              {student.accuracy === null || student.accuracy === undefined ? '—' : `${student.accuracy}%`}
                             </td>
                             <td className="py-3 px-4">
                               <div className="flex items-center gap-1.5 min-h-[44px]">
@@ -569,7 +586,7 @@ export const LeaderboardModal = ({ isOpen, onClose }) => {
               {filteredLeaderboard.length > displayCount && (
                 <div className="text-center pt-2">
                   <button
-                    onClick={() => setDisplayCount((prev) => prev + 50)}
+                    onClick={() => setDisplayCount((prev) => prev + 25)}
                     className="px-4 py-1.5 rounded-xl border border-[#30363d] bg-[#161b22] hover:bg-[#21262d] text-xs font-semibold text-[#8b949e] hover:text-white transition-colors cursor-pointer"
                   >
                     Show More ({filteredLeaderboard.length - displayCount} remaining)

@@ -58,6 +58,7 @@ export function App() {
     moduleTitle: null,
   });
   const [leaderboardOpen, setLeaderboardOpen] = useState(false);
+  const [leaderboardRefreshKey, setLeaderboardRefreshKey] = useState(0);
   
   // Filters
   const [searchQuery, setSearchQuery] = useState('');
@@ -130,12 +131,12 @@ export function App() {
     let quiz = null;
     try {
       const res = await api.getQuizForSession(session.sessionNumber);
-      if (res && res.success && res.questions && res.questions.length > 0) {
+      if (res && res.success && res.questions && res.questions.length >= 5) {
         quiz = {
           id: `quiz_s${session.sessionNumber}`,
           title: `Session #${session.sessionNumber}: ${session.title} Quiz`,
           description: `Interactive knowledge check for Session #${session.sessionNumber}`,
-          questions: res.questions.map((q) => ({
+          questions: res.questions.slice(0, 8).map((q) => ({
             ...q,
             id: q._id || q.id,
           })),
@@ -146,7 +147,7 @@ export function App() {
     }
 
     if (!quiz) {
-      quiz = getQuizForSession(session);
+      quiz = await getQuizForSession(session);
     }
     if (quiz) {
       quiz = { ...quiz, questions: shuffleQuizAnswers(quiz.questions) };
@@ -171,6 +172,28 @@ export function App() {
     });
   };
 
+  const handleOpenPracticeQuiz = () => {
+    const nextSession = sessions.find((session) => !isCompleted(session.sessionNumber)) || sessions[0];
+    if (nextSession) handleOpenQuiz(nextSession);
+  };
+
+  const handleOpenNextQuiz = (currentSession, moduleId) => {
+    let nextSession;
+
+    if (currentSession) {
+      const currentIndex = sessions.findIndex(
+        (session) => session.sessionNumber === currentSession.sessionNumber
+      );
+      nextSession = currentIndex >= 0
+        ? sessions[(currentIndex + 1) % sessions.length]
+        : sessions.find((session) => session.moduleId === moduleId);
+    } else {
+      nextSession = sessions.find((session) => session.moduleId === moduleId);
+    }
+
+    if (nextSession) handleOpenQuiz(nextSession);
+  };
+
   const handleStartNow = () => {
     if (prepHubRef.current) {
       prepHubRef.current.scrollIntoView({ behavior: 'smooth' });
@@ -190,6 +213,8 @@ export function App() {
           setTimeout(() => searchInputRef.current?.focus(), 50);
         }}
         onCurriculumClick={handleStartNow}
+        onPracticeClick={handleOpenPracticeQuiz}
+        totalSessions={sessions.length}
         onCareerClick={() => {
           setSelectedModule('m7');
           setSelectedDifficulty('all');
@@ -208,7 +233,7 @@ export function App() {
       />
 
       {/* Progress & Milestone Banner */}
-      <ProgressBanner totalSessions={55} />
+      <ProgressBanner totalSessions={sessions.length} />
 
       {/* Main Content Area */}
       <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6" ref={prepHubRef}>
@@ -348,7 +373,7 @@ export function App() {
             {/* Results count & Free Trial Notice */}
             <div className="flex items-center justify-between px-1 text-xs text-[#8b949e]">
               <p>
-                Showing <span className="text-white font-bold">{filteredSessions.length}</span> of 55 sessions
+                Showing <span className="text-white font-bold">{filteredSessions.length}</span> of {sessions.length} sessions
                 {searchQuery && (
                   <span className="ml-2 font-semibold text-[#58a6ff]">
                     matching "{searchQuery}"
@@ -445,12 +470,20 @@ export function App() {
       {/* Quick Quiz Modal */}
       {quizModalState.isOpen && (
         <QuickQuizModal
+          key={quizModalState.session
+            ? `session-${quizModalState.session.sessionNumber}`
+            : `module-${quizModalState.quizData?.moduleId || quizModalState.quizData?.id}`}
           isOpen={quizModalState.isOpen}
           onClose={() => setQuizModalState({ isOpen: false, quizData: null, session: null, moduleTitle: null })}
           quizData={quizModalState.quizData}
           session={quizModalState.session}
           moduleTitle={quizModalState.moduleTitle}
           onOpenReader={handleOpenGitHub}
+          onNextQuiz={() => handleOpenNextQuiz(
+            quizModalState.session,
+            quizModalState.quizData?.moduleId
+          )}
+          onQuizProgress={() => setLeaderboardRefreshKey((key) => key + 1)}
         />
       )}
 
@@ -461,6 +494,8 @@ export function App() {
       <LeaderboardModal 
         isOpen={leaderboardOpen} 
         onClose={() => setLeaderboardOpen(false)} 
+        totalSessions={sessions.length}
+        refreshKey={leaderboardRefreshKey}
       />
 
       {/* Floating WhatsApp Community Button in Bottom Right */}

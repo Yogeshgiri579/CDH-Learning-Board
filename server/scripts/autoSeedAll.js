@@ -15,6 +15,7 @@ import dotenv from 'dotenv';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import fs from 'fs';
+import { buildSessionSummaryQuizzes } from '../utils/sessionQuizGenerator.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 dotenv.config({ path: join(__dirname, '../.env') });
@@ -240,7 +241,7 @@ async function listFolderFiles(folder) {
   } catch { return []; }
 }
 
-// ── All 59 session definitions ────────────────────────────
+// ── Session source definitions ────────────────────────────
 const ALL_SESSIONS = [
   { sessionNumber:  0, folder: 'Session-00-Program-Kickoff' },
   { sessionNumber:  1, folder: 'Session-01-DevOps-Introduction-Course-Overview' },
@@ -269,7 +270,7 @@ const ALL_SESSIONS = [
   { sessionNumber: 24, folder: 'Session-24-Jenkins-Introduction-Setup' },
   { sessionNumber: 25, folder: 'Session-25-Jenkins-Jobs-Maven' },
   { sessionNumber: 26, folder: 'Session-26-Jenkins-Pipelines' },
-  { sessionNumber: 27, folder: 'Session-27-Jenkins-Plugins' },
+  { sessionNumber: 27, folder: 'Session-27- GITLAB' },
   { sessionNumber: 28, folder: 'Session-28-Advanced-Jenkins-Jobs' },
   { sessionNumber: 29, folder: 'Session-29-Jenkins-MasterSlave-Architecture' },
   { sessionNumber: 30, folder: 'Session-30-Docker-Introduction' },
@@ -301,6 +302,14 @@ const ALL_SESSIONS = [
   { sessionNumber: 56, folder: 'Session-56-Project-7-MLOps-in-EKS' },
   { sessionNumber: 57, folder: 'Session-57-Project-8-AI-OPS-Automations' },
   { sessionNumber: 58, folder: 'Session-58-QA-Meet-Greet-Graduation' },
+  {
+    sessionNumber: 59,
+    folder: 'Session-27-Jenkins-Plugins',
+    moduleId: 'm4',
+    moduleName: 'Phase 4: CI/CD — Git, GitHub & Jenkins Pipelines',
+    difficulty: 'Intermediate',
+    duration: '65 mins',
+  },
 ];
 
 // ── Quiz questions generated from actual session notes content ──
@@ -437,8 +446,8 @@ const ALL_QUIZ_QUESTIONS = [
   { sessionNumber:26, moduleId:'m4', question:'How do you trigger a Jenkins pipeline automatically on a Git push?', options:['Manually click "Build Now" after every commit','Configure a GitHub/GitLab webhook pointing to the Jenkins URL — the webhook fires an HTTP POST on push events triggering the pipeline immediately','Set a cron schedule to poll the repo every 5 minutes','Email the Jenkins administrator to start the build'], correctIndex:1, explanation:'Webhooks are instant (push → build). Polling works but adds latency and wastes network resources. Webhooks are always preferred.', difficulty:'Intermediate', tags:['Jenkins','Webhooks','CI/CD','Automation'] },
 
   // ── Session 27 ─────────────────────────────────────────
-  { sessionNumber:27, moduleId:'m4', question:'What is the key advantage of Jenkins Shared Libraries?', options:['Storing Jenkins credentials securely in an encrypted vault','Reusing common pipeline code (functions, steps, variables) across multiple Jenkinsfiles from a central Git repository — DRY principle','Running Jenkins pipelines on Kubernetes pods','Visualising pipeline execution as a Gantt chart'], correctIndex:1, explanation:'Shared Libraries extract reusable pipeline logic once — all Jenkinsfiles import it, reducing duplication and making updates centralized.', difficulty:'Advanced', tags:['Jenkins','SharedLibraries','Groovy','DRY'] },
-  { sessionNumber:27, moduleId:'m4', question:'What does the Jenkins Blue Ocean plugin provide?', options:['Blue-green deployment automation for Kubernetes','A modern redesigned UI with visual pipeline editor and execution dashboard making pipeline creation and debugging more intuitive','Docker image scanning and vulnerability reporting','Kubernetes deployment operator for Jenkins agents'], correctIndex:1, explanation:'Blue Ocean provides a redesigned visual pipeline UI — stages, parallel branches, and failures are shown graphically instead of console output.', difficulty:'Beginner', tags:['Jenkins','BlueOcean','Plugins','UI'] },
+  { sessionNumber:59, moduleId:'m4', question:'What is the key advantage of Jenkins Shared Libraries?', options:['Storing Jenkins credentials securely in an encrypted vault','Reusing common pipeline code (functions, steps, variables) across multiple Jenkinsfiles from a central Git repository — DRY principle','Running Jenkins pipelines on Kubernetes pods','Visualising pipeline execution as a Gantt chart'], correctIndex:1, explanation:'Shared Libraries extract reusable pipeline logic once — all Jenkinsfiles import them, reducing duplication and making updates centralized.', difficulty:'Advanced', tags:['Jenkins','SharedLibraries','Groovy','DRY'] },
+  { sessionNumber:59, moduleId:'m4', question:'What does the Jenkins Blue Ocean plugin provide?', options:['Blue-green deployment automation for Kubernetes','A modern redesigned UI with visual pipeline editor and execution dashboard making pipeline creation and debugging more intuitive','Docker image scanning and vulnerability reporting','Kubernetes deployment operator for Jenkins agents'], correctIndex:1, explanation:'Blue Ocean provides a redesigned visual pipeline UI — stages, parallel branches, and failures are shown graphically instead of console output.', difficulty:'Beginner', tags:['Jenkins','BlueOcean','Plugins','UI'] },
 
   // ── Session 28 ─────────────────────────────────────────
   { sessionNumber:28, moduleId:'m4', question:'What is a Jenkins Multi-Branch Pipeline?', options:['A pipeline that runs simultaneously on multiple Jenkins controller nodes','A pipeline that automatically discovers all branches and PRs in a repository and creates/deletes pipeline jobs for each one containing a Jenkinsfile','A pipeline with multiple parallel execution stages','A pipeline for deploying to multiple cloud providers simultaneously'], correctIndex:1, explanation:'Multi-Branch Pipelines automatically scan repos and create jobs per branch/PR — ideal for feature branch CI where every branch gets its own pipeline.', difficulty:'Intermediate', tags:['Jenkins','MultiBranch','Pipeline','GitHub'] },
@@ -587,7 +596,7 @@ async function main() {
   const RAW  = 'https://raw.githubusercontent.com/CloudDevOpsHub/MultiCloud-DevOps-AI-Challenge/main';
 
   // ── STEP 1: Build sessionsData.js ─────────────────────
-  console.log('📂 Step 1: Processing all 59 sessions (using actual summary files)...');
+  console.log(`📂 Step 1: Processing ${ALL_SESSIONS.length} sessions (using actual summary files)...`);
   const sessionRecords = [];
 
   for (const s of ALL_SESSIONS) {
@@ -601,14 +610,17 @@ async function main() {
     const summaryFiles = allFiles.filter(f => f.name.endsWith('.md') && !isSupportFile(f.name));
     summaryFiles.sort((a, b) => rankSummaryFile(a.name) - rankSummaryFile(b.name));
 
-    // Pick best summary file
+    // Prefer a live session summary, then fall back to the folder README.
     const summaryFile = summaryFiles[0] || null;
+    const primaryFile = summaryFile || allFiles.find(f => f.name.toLowerCase() === 'readme.md') || allFiles[0] || null;
     let content = null;
     let usedFile = 'README.md'; // fallback label
 
-    if (summaryFile) {
-      content = await fetchRaw(summaryFile.download_url);
-      usedFile = summaryFile.name;
+    if (primaryFile) {
+      const rawUrl = primaryFile.download_url
+        || `${RAW}/${encodeURIComponent(folder)}/${encodeURIComponent(primaryFile.name)}`;
+      content = await fetchRaw(rawUrl);
+      usedFile = primaryFile.name;
       await sleep(150);
     }
 
@@ -616,14 +628,13 @@ async function main() {
     const preview = extractPreview(content, folder);
     const topics = extractTopics(content, folder);
     const labs = extractLabs(content, folder);
-    const moduleId = getModuleId(sessionNumber);
-    const moduleName = getModuleName(sessionNumber);
+    const moduleId = s.moduleId || getModuleId(sessionNumber);
+    const moduleName = s.moduleName || getModuleName(sessionNumber);
 
     // Build SessionFile records for ALL files in the folder
     const fileEntries = [];
     for (const f of allFiles) {
-      const isSummary = summaryFile && f.name === summaryFile.name;
-      const isDefault = isSummary; // the actual session note is the default
+      const isPrimary = primaryFile && f.name === primaryFile.name;
       const fileType = detectFileType(f.name);
       const encodedName = encodeURIComponent(f.name);
       const encodedFolder = encodeURIComponent(folder);
@@ -634,12 +645,12 @@ async function main() {
         githubUrl: `${BASE}/blob/main/${encodedFolder}/${encodedName}`,
         rawUrl: f.download_url || `${RAW}/${encodedFolder}/${encodedName}`,
         fileType,
-        description: isSummary
-          ? `📝 Live session notes — ${title}`
+        description: isPrimary
+          ? `Primary session notes — ${title}`
           : f.name.includes('Interview') ? '❌ Skipped — demo file' // keep but mark
           : f.name === 'README.md' ? '📌 Session folder README'
           : `${f.name}`,
-        isDefault,
+        isDefault: Boolean(isPrimary),
       });
     }
 
@@ -653,19 +664,24 @@ async function main() {
       summaryFile: usedFile,
       githubUrl: `${BASE}/tree/main/${encodeURIComponent(folder)}`,
       isFree: sessionNumber < 5,
-      difficulty: getDifficulty(sessionNumber),
-      duration: getDuration(sessionNumber),
+      difficulty: s.difficulty || getDifficulty(sessionNumber),
+      duration: s.duration || getDuration(sessionNumber),
       preview,
       topics,
       labs,
       _fileEntries: fileEntries,
+      _summaryContent: content,
     });
 
     process.stdout.write(`  ✓ S${String(sessionNumber).padStart(2,'0')} | file: ${usedFile.substring(0,55)} | ${title.substring(0,45)}\n`);
   }
 
-  // Write sessionsData.js (strip _fileEntries before writing)
-  const cleanRecords = sessionRecords.map(({ _fileEntries, summaryFile, ...rest }) => rest);
+  const quizQuestions = buildSessionSummaryQuizzes(sessionRecords, ALL_QUIZ_QUESTIONS);
+  const quizBankSource = `// Auto-generated from the selected primary notes for every session.\nexport const sessionQuizQuestions = [\n${quizQuestions.map((question) => `  ${JSON.stringify(question)}`).join(',\n')}\n];\n`;
+  fs.writeFileSync(join(__dirname, '../../shared/sessionQuizQuestions.mjs'), quizBankSource, 'utf8');
+
+  // Write sessionsData.js without internal file/content payloads.
+  const cleanRecords = sessionRecords.map(({ _fileEntries, _summaryContent, ...rest }) => rest);
   const jsContent = `// CloudDevOpsHub — Auto-generated by autoSeedAll.js v2
 // Source: actual live session note files (not README/Interview-QnA/Scenarios)
 // DO NOT edit manually — run the script to regenerate
@@ -689,14 +705,14 @@ export const sessionsData = ${JSON.stringify(cleanRecords, null, 2)};
   // ── STEP 3: Seed Quiz Questions ───────────────────────
   console.log('🧠 Step 3: Seeding quiz questions generated from actual session content...');
   await QuizQuestion.deleteMany({});
-  await QuizQuestion.insertMany(ALL_QUIZ_QUESTIONS);
-  console.log(`✅ ${ALL_QUIZ_QUESTIONS.length} quiz questions inserted\n`);
+  await QuizQuestion.insertMany(quizQuestions);
+  console.log(`✅ ${quizQuestions.length} quiz questions inserted\n`);
 
   // ── Summary ───────────────────────────────────────────
   const sessionCount = await SessionFile.distinct('sessionNumber');
   const quizCount = await QuizQuestion.countDocuments();
   const fileCount = await SessionFile.countDocuments();
-  const sessionsWithQuiz = [...new Set(ALL_QUIZ_QUESTIONS.map(q => q.sessionNumber))].length;
+  const sessionsWithQuiz = [...new Set(quizQuestions.map(q => q.sessionNumber))].length;
 
   console.log('═══════════════════════════════════════');
   console.log('🎉 SEED COMPLETE!');

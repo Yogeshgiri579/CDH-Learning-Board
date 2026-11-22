@@ -593,62 +593,25 @@ export const sessionQuizzes = {
   }
 };
 
-// Helper function to get or dynamically synthesize quiz for ANY session number 0-54
-export function getQuizForSession(session) {
+// Load the source-grounded quiz bank only when the server does not provide a complete quiz.
+export async function getQuizForSession(session) {
   if (!session) return null;
   const num = session.sessionNumber;
 
-  if (sessionQuizzes[num]) {
+  if (sessionQuizzes[num]?.questions?.length >= 5) {
     return sessionQuizzes[num];
   }
 
-  // Synthesize realistic topic-based questions from session metadata
-  const topics = session.topics || ['DevOps Architecture', 'Pipeline Automation', 'Cloud Resources'];
-  const topic1 = topics[0] || 'Core DevOps Workflow';
-  const topic2 = topics[1] || 'Configuration Management';
-  const lab = (session.labs && session.labs[0]) || 'Implement automated lab tasks and verify output';
+  const { sessionQuizQuestions } = await import('../../../shared/sessionQuizQuestions.mjs');
+  const questions = sessionQuizQuestions.filter((question) => question.sessionNumber === num);
+  if (questions.length < 5) return null;
 
   return {
+    id: `quiz_s${num}`,
     sessionNumber: num,
     title: `Session ${num.toString().padStart(2, '0')}: ${session.title}`,
-    questions: [
-      {
-        id: `s${num}_q1`,
-        question: `In "${session.title}", what is the primary focus regarding ${topic1}?`,
-        options: [
-          `Implementing structured best practices for ${topic1} to ensure high availability and reproducibility`,
-          `Deprecating all automation scripts in favor of manual changes`,
-          `Bypassing version control and deploying untested configurations`,
-          `Storing plain-text secrets directly inside source code repositories`
-        ],
-        correctIndex: 0,
-        explanation: `In production DevOps, mastering ${topic1} focuses on declarative automation, security hardening, and repeatable infrastructure patterns.`
-      },
-      {
-        id: `s${num}_q2`,
-        question: `When executing the hands-on lab: "${lab}", what is the recommended verification step?`,
-        options: [
-          'Assume the step succeeded without inspecting command exit status or logs',
-          'Verify execution status, validate resource state via CLI/API, and test health endpoints',
-          'Immediately reboot all nodes without capturing logs',
-          'Delete the configuration files upon completion'
-        ],
-        correctIndex: 1,
-        explanation: 'Best practice in cloud & DevOps labs requires validating the exact output, inspecting exit codes, and confirming health checks before marking tasks done.'
-      },
-      {
-        id: `s${num}_q3`,
-        question: `Regarding ${topic2}, which engineering principle is most critical for maintainable operations?`,
-        options: [
-          'Idempotency and declarative configuration as code',
-          'Hardcoding IP addresses and credentials across scripts',
-          'Running all production workloads as the root superuser',
-          'Disabling all monitoring alerts to reduce noise'
-        ],
-        correctIndex: 0,
-        explanation: 'Idempotency ensures that running an automation script multiple times produces the identical desired outcome without unwanted side effects.'
-      }
-    ]
+    moduleId: session.moduleId,
+    questions: questions.slice(0, 8),
   };
 }
 

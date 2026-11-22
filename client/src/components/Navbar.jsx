@@ -13,7 +13,14 @@ import {
 import { Github } from './GithubIcon';
 import { ThemeToggle } from './ThemeToggle';
 
-export const Navbar = ({ onSearchClick, onCurriculumClick, onCareerClick, onLeaderboardClick }) => {
+export const Navbar = ({
+  onSearchClick,
+  onCurriculumClick,
+  onPracticeClick,
+  onCareerClick,
+  onLeaderboardClick,
+  totalSessions = 60,
+}) => {
   const { user, token, loading, isAuthenticated, logout, openAuthModal, completedCount, quizPassedCount = 0 } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
@@ -79,7 +86,7 @@ export const Navbar = ({ onSearchClick, onCurriculumClick, onCareerClick, onLead
               Courses
             </button>
             <button
-              onClick={onCurriculumClick}
+              onClick={onPracticeClick || onCurriculumClick}
               className="rounded-full px-3 py-2 text-sm font-semibold text-slate-300 transition hover:bg-white/[0.06] hover:text-emerald-200 xl:px-3.5"
             >
               Practice
@@ -149,7 +156,7 @@ export const Navbar = ({ onSearchClick, onCurriculumClick, onCareerClick, onLead
                       {user?.email || user?.name || 'Learner'}
                     </span>
                     <span className="text-[10px] text-emerald-400 font-medium leading-none">
-                      {completedCount}/55 Completed
+                      {completedCount}/{totalSessions} Completed
                     </span>
                   </div>
 
@@ -169,7 +176,7 @@ export const Navbar = ({ onSearchClick, onCurriculumClick, onCareerClick, onLead
                     <div className="py-1">
                       <div className="px-3.5 py-1.5 text-xs text-[#8b949e] flex items-center justify-between">
                         <span>Sessions Done:</span>
-                        <span className="font-bold text-emerald-400">{completedCount} of 55</span>
+                        <span className="font-bold text-emerald-400">{completedCount} of {totalSessions}</span>
                       </div>
                       <div className="px-3.5 py-1.5 text-xs text-[#8b949e] flex items-center justify-between border-b border-[#21262d] pb-2">
                         <span>Quizzes Passed:</span>
@@ -265,7 +272,8 @@ export const Navbar = ({ onSearchClick, onCurriculumClick, onCareerClick, onLead
             </button>
             <button
               onClick={() => {
-                if (onCurriculumClick) onCurriculumClick();
+                if (onPracticeClick) onPracticeClick();
+                else if (onCurriculumClick) onCurriculumClick();
                 setMobileMenuOpen(false);
               }}
               className="w-full rounded-xl px-3 py-2.5 text-left text-sm font-semibold text-slate-300 transition hover:bg-white/[0.06]"
