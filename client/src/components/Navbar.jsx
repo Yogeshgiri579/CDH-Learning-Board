@@ -1,14 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { 
-  Search, 
   LogOut, 
   Menu, 
   X, 
   ArrowRight,
   Trophy,
   Cloud,
-  Code2
+  Code2,
+  Search
 } from 'lucide-react';
 import { Github } from './GithubIcon';
 import { ThemeToggle } from './ThemeToggle';
@@ -47,7 +47,7 @@ export const Navbar = ({
 
   return (
     <header className="sticky top-0 z-40 border-b border-emerald-300/10 bg-[#020a0b]/90 text-white shadow-[0_8px_30px_rgba(0,0,0,0.22)] backdrop-blur-xl">
-      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between gap-4 sm:h-[72px]">
           
           {/* Brand Logo */}
@@ -73,18 +73,6 @@ export const Navbar = ({
 
           {/* Center Navigation Links */}
           <div className="hidden items-center gap-1 min-[1200px]:flex xl:gap-2">
-            <button
-              onClick={() => onCurriculumClick ? onCurriculumClick() : window.scrollTo({ top: 0, behavior: 'smooth' })}
-              className="rounded-full px-3 py-2 text-sm font-semibold text-slate-300 transition hover:bg-white/[0.06] hover:text-emerald-200 xl:px-3.5"
-            >
-              Labs
-            </button>
-            <button
-              onClick={onCurriculumClick}
-              className="rounded-full px-3 py-2 text-sm font-semibold text-slate-300 transition hover:bg-white/[0.06] hover:text-emerald-200 xl:px-3.5"
-            >
-              Courses
-            </button>
             <button
               onClick={onPracticeClick || onCurriculumClick}
               className="rounded-full px-3 py-2 text-sm font-semibold text-slate-300 transition hover:bg-white/[0.06] hover:text-emerald-200 xl:px-3.5"
@@ -122,20 +110,18 @@ export const Navbar = ({
               <Github className="h-4 w-4" />
             </a>
 
-            {/* Quick Search Trigger */}
             <button
               onClick={onSearchClick}
               className="flex items-center space-x-2 rounded-full border border-white/15 bg-white/[0.03] px-3 py-2 text-xs text-slate-400 shadow-xs transition-all hover:bg-white/[0.08] hover:text-white focus:outline-none"
               title="Search Sessions (⌘K)"
             >
-              <Search className="w-3.5 h-3.5 text-[#8b949e]" />
-              <span className="hidden lg:inline text-[#c9d1d9]">Search topics...</span>
-              <kbd className="px-1.5 py-0.2 text-[10px] font-mono bg-[#21262d] border border-[#30363d] rounded text-[#8b949e] shadow-2xs">
+              <Search className="h-3.5 w-3.5 text-[#8b949e]" />
+              <span className="hidden text-[#c9d1d9] lg:inline">Search topics...</span>
+              <kbd className="rounded border border-[#30363d] bg-[#21262d] px-1.5 py-0.2 font-mono text-[10px] text-[#8b949e] shadow-2xs">
                 ⌘K
               </kbd>
             </button>
 
-            {/* Light / Dark Mode Toggle */}
             <ThemeToggle />
 
             {/* Auth Controls */}
@@ -260,15 +246,6 @@ export const Navbar = ({
             >
               <Search className="h-4 w-4" />
               Search topics
-            </button>
-            <button
-              onClick={() => {
-                if (onCurriculumClick) onCurriculumClick();
-                setMobileMenuOpen(false);
-              }}
-              className="w-full rounded-xl px-3 py-2.5 text-left text-sm font-semibold text-white transition hover:bg-white/[0.06]"
-            >
-              Labs &amp; Courses
             </button>
             <button
               onClick={() => {

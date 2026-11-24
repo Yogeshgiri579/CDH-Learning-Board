@@ -9,8 +9,6 @@ import {
   Copy,
   Gamepad2,
   GraduationCap,
-  Bot,
-  Flag,
   Laptop,
   PlayCircle,
   RotateCw,
@@ -58,19 +56,19 @@ const JOURNEY_STEPS = [
 const LEARNING_MODES = [
   {
     name: 'Beginner Mode',
-    detail: 'Foundations, Linux & Git',
+    detail: 'Upto 10 LPA',
     icon: Sprout,
     tone: 'green',
   },
   {
     name: 'Intermediate Mode',
-    detail: 'Cloud, containers & CI/CD',
+    detail: 'Upto 25 LPA',
     icon: Zap,
     tone: 'blue',
   },
   {
     name: 'Expert Mode',
-    detail: 'IaC, capstones & career prep',
+    detail: 'Approx. 40+ LPA Target',
     icon: GraduationCap,
     tone: 'violet',
   },
@@ -125,18 +123,6 @@ export const Header = ({
   const [selectedMode, setSelectedMode] = useState('');
   const copyTimerRef = useRef(null);
 
-  useEffect(() => {
-    if (activeTab !== 'journey' || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      return undefined;
-    }
-
-    const interval = window.setInterval(() => {
-      setAnimStep((step) => (step + 1) % JOURNEY_STEPS.length);
-    }, 2600);
-
-    return () => window.clearInterval(interval);
-  }, [activeTab]);
-
   useEffect(() => () => window.clearTimeout(copyTimerRef.current), []);
 
   const handleStepAction = (index) => {
@@ -173,8 +159,8 @@ export const Header = ({
       <div className="cdh-hero-glow cdh-hero-glow-one pointer-events-none absolute" aria-hidden="true" />
       <div className="cdh-hero-glow cdh-hero-glow-two pointer-events-none absolute" aria-hidden="true" />
 
-      <div className="relative mx-auto max-w-7xl px-4 pb-8 pt-10 sm:px-6 sm:pb-10 sm:pt-14 lg:px-8 lg:pt-16">
-        <div className="grid items-center gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:gap-10">
+      <div className="relative mx-auto max-w-[1380px] px-4 pb-7 pt-8 sm:px-6 sm:pb-8 sm:pt-10 lg:px-10 lg:pb-9 lg:pt-12">
+        <div className="grid items-center gap-8 lg:grid-cols-[0.92fr_1.08fr] lg:gap-10">
           <div className="cdh-hero-copy min-w-0 space-y-6">
             <div className="cdh-enter inline-flex items-center gap-2 rounded-full border border-emerald-400/40 bg-emerald-400/[0.08] px-3.5 py-2 text-xs font-semibold text-emerald-100 shadow-[0_0_20px_rgba(34,197,94,0.08)]">
               <Zap className="h-3.5 w-3.5 fill-emerald-300 text-emerald-300" />
@@ -226,7 +212,7 @@ export const Header = ({
                 className="inline-flex items-center gap-2 rounded-full border border-slate-400/50 bg-slate-900/40 px-4 py-3 text-sm font-semibold text-slate-100 transition hover:border-emerald-300/70 hover:bg-emerald-300/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-300"
               >
                 <PlayCircle className="h-4 w-4 text-emerald-300" />
-                Preview a Session
+                Watch How It Works (2 min)
               </button>
             </div>
           </div>
@@ -284,7 +270,7 @@ export const Header = ({
 
               {activeTab === 'journey' ? (
                 <div className="p-4 sm:p-5">
-                  <div className="grid grid-cols-2 gap-2.5 min-[1200px]:grid-cols-4">
+                  <div className="cdh-journey-grid grid grid-cols-2 gap-2.5 min-[1200px]:grid-cols-4">
                     {JOURNEY_STEPS.map((step, index) => {
                       const StepIcon = step.icon;
                       const tone = toneStyles[step.tone];
@@ -310,39 +296,9 @@ export const Header = ({
                           <span className="mt-1.5 max-w-32 text-[10px] leading-4 text-slate-400 sm:text-[11px]">
                             {step.description}
                           </span>
-                          {isActive && (
-                            <span className="cdh-step-progress absolute inset-x-0 bottom-0 h-0.5 origin-left bg-gradient-to-r from-emerald-300 to-cyan-300" />
-                          )}
                         </button>
                       );
                     })}
-                  </div>
-
-                  <div className="relative mx-8 my-5 hidden h-2 sm:block" aria-hidden="true">
-                    <div className="absolute inset-x-0 top-1/2 h-1 -translate-y-1/2 rounded-full bg-slate-700/80" />
-                    <div
-                      className="cdh-rail-fill absolute left-0 top-1/2 h-1 -translate-y-1/2 rounded-full bg-gradient-to-r from-emerald-400 via-cyan-300 to-violet-400 transition-[width] duration-700"
-                      style={{ width: `${(animStep / (JOURNEY_STEPS.length - 1)) * 100}%` }}
-                    />
-                    <div
-                      className="cdh-robot-traveler absolute left-0 top-1/2 z-20 -translate-x-1/2 -translate-y-1/2 transition-[left] duration-700 ease-in-out"
-                      style={{ left: `${(animStep / (JOURNEY_STEPS.length - 1)) * 100}%` }}
-                    >
-                      <Bot className="cdh-robot-bob h-6 w-6 rounded-full bg-[#071419] p-0.5 text-cyan-200 drop-shadow-[0_0_8px_rgba(103,232,249,0.8)]" />
-                    </div>
-                    <Flag className="cdh-destination-flag absolute right-0 top-1/2 z-10 h-4 w-4 -translate-y-1/2 text-violet-200 drop-shadow-[0_0_8px_rgba(196,181,253,0.7)]" />
-                    <div className="relative flex h-full items-center justify-between">
-                      {JOURNEY_STEPS.map((step, index) => (
-                        <span
-                          key={step.label}
-                          className={`h-3.5 w-3.5 rounded-full border-2 transition-all duration-300 ${
-                            index <= animStep
-                              ? 'scale-110 border-emerald-200 bg-emerald-400 shadow-[0_0_12px_rgba(52,211,153,0.8)]'
-                              : 'border-slate-500 bg-[#071419]'
-                          }`}
-                        />
-                      ))}
-                    </div>
                   </div>
 
                   <div className="flex items-center gap-3 rounded-2xl border border-white/[0.08] bg-slate-950/55 px-3.5 py-3 sm:px-4">
@@ -444,6 +400,36 @@ export const Header = ({
           <div className="cdh-roadmap relative mt-8 px-3 pb-1 pt-3 sm:mt-9 sm:px-10">
             <div className="cdh-roadmap-track absolute left-[12%] right-[12%] top-7 h-1 rounded-full bg-gradient-to-r from-emerald-400 via-cyan-300 to-violet-400" aria-hidden="true" />
             <div className="cdh-roadmap-glow absolute left-[12%] right-[12%] top-[25px] h-2 rounded-full bg-gradient-to-r from-emerald-400 via-cyan-300 to-violet-400 blur-md" aria-hidden="true" />
+            <div className="cdh-mascot absolute bottom-2 z-20 hidden sm:block" role="img" aria-label="Robot running along the learning roadmap">
+              <span className="cdh-mascot-trail cdh-mascot-trail-one" />
+              <span className="cdh-mascot-trail cdh-mascot-trail-two" />
+              <span className="cdh-mascot-trail cdh-mascot-trail-three" />
+              <div className="cdh-mascot-runner">
+                <span className="cdh-mascot-shadow" />
+                <span className="cdh-mascot-antenna">
+                  <span className="cdh-mascot-antenna-light" />
+                </span>
+                <span className="cdh-mascot-ear cdh-mascot-ear-left"><span /></span>
+                <span className="cdh-mascot-ear cdh-mascot-ear-right"><span /></span>
+                <div className="cdh-mascot-head">
+                  <span className="cdh-mascot-visor">
+                    <span className="cdh-mascot-eye cdh-mascot-eye-left" />
+                    <span className="cdh-mascot-eye cdh-mascot-eye-right" />
+                    <span className="cdh-mascot-mouth" />
+                  </span>
+                  <span className="cdh-mascot-head-shine" />
+                </div>
+                <span className="cdh-mascot-neck" />
+                <div className="cdh-mascot-body">
+                  <span className="cdh-mascot-chest"><span className="cdh-mascot-core">&lt;/&gt;</span></span>
+                  <span className="cdh-mascot-belly" />
+                </div>
+                <span className="cdh-mascot-arm cdh-mascot-arm-left"><i /></span>
+                <span className="cdh-mascot-arm cdh-mascot-arm-right"><i /></span>
+                <span className="cdh-mascot-leg cdh-mascot-leg-left"><i /></span>
+                <span className="cdh-mascot-leg cdh-mascot-leg-right"><i /></span>
+              </div>
+            </div>
             <div className="relative grid grid-cols-4">
               {[
                 { label: 'Learn', icon: BookOpen, tone: 'green' },
